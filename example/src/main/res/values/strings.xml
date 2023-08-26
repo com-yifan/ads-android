@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">example</string>
+    <string name="csj">穿山甲</string>
+    <string name="ylh">优量汇</string>
+    <string name="ks">快手</string>
+    <string name="bd">百度</string>
+
+    <string name="open_debug">打开调试</string>
+    <string name="close_debug">关闭调试</string>
+    <string name="banner">横幅Banner</string>
+    <string name="splash">开屏splash</string>
+    <string name="inter">插屏广告</string>
+    <string name="draw">Draw信息流广告</string>
+    <string name="full">全屏视频广告</string>
+    <string name="reward">激励视频</string>
+    <string name="nativeModel">原生模板信息流RecyclerView</string>
+</resources>

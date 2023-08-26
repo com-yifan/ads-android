@@ -1,0 +1,82 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdk rootProject.ext.compileSdk
+    signingConfigs {
+        config {
+            keyAlias 'morecat'
+            keyPassword '20210913'
+            storeFile file('user.keystore')
+            storePassword '20210913'
+        }
+    }
+
+    defaultConfig {
+        applicationId "com.fc.example"
+        minSdkVersion rootProject.ext.minSdk
+        targetSdkVersion rootProject.ext.targetSdk
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86", "x86_64", "arm64-v8a"
+        }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled rootProject.ext.isReleaseSdk
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    // 聚合SDK
+    implementation(name: "yfsdk-v1.0.0", ext: "aar")
+    implementation 'com.google.code.gson:gson:2.8.9'
+
+    //百度广告SDK(适配+原sdk)
+    implementation(name: "yfbd-v1.0.0", ext: "aar")
+    implementation(name: "Baidu_MobAds_SDK-release_v9314", ext: "aar")
+
+    //穿山甲广告SDK(适配+原sdk)
+    implementation(name: "yfcsj-v1.0.0", ext: "aar")
+    implementation(name: "open_ad_sdk_5512", ext: "aar")
+
+    //快手广告SDK(适配+原sdk)
+    implementation(name: "yfks-v1.0.0", ext: "aar")
+    implementation(name: "kssdk-ad-33512", ext: "aar")
+
+    //优量汇广告SDK(适配+原sdk)
+    implementation(name: "yfylh-v1.0.0", ext: "aar")
+    implementation(name: "GDTSDK_4540", ext: "aar")
+
+    // 以下是demo的依赖，SDK本身不依赖
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:2.0.4'
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+
+    implementation 'com.github.getActivity:ToastUtils:9.6' //toast组件
+
+}
