@@ -90,3 +90,19 @@ Thumbs.db
 *.zip
 
 .idea
+
+.externalNativeBuild/
+.cxx/
+output.json
+
+.idea/
+misc.xml
+deploymentTargetDropDown.xml
+render.experimental.xml
+
+# Keystore files
+*.jks
+*.keystore
+
+# Android Profiling
+*.hprof
