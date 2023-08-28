@@ -53,20 +53,12 @@ dependencies {
     implementation(name: "yfsdk-v1.0.0", ext: "aar")
     implementation 'com.google.code.gson:gson:2.8.9'
 
-    //百度广告SDK(适配+原sdk)
-    implementation(name: "yfbd-v1.0.0", ext: "aar")
     implementation(name: "Baidu_MobAds_SDK-release_v9314", ext: "aar")
 
-    //穿山甲广告SDK(适配+原sdk)
-    implementation(name: "yfcsj-v1.0.0", ext: "aar")
     implementation(name: "open_ad_sdk_5512", ext: "aar")
 
-    //快手广告SDK(适配+原sdk)
-    implementation(name: "yfks-v1.0.0", ext: "aar")
     implementation(name: "kssdk-ad-33512", ext: "aar")
 
-    //优量汇广告SDK(适配+原sdk)
-    implementation(name: "yfylh-v1.0.0", ext: "aar")
     implementation(name: "GDTSDK_4540", ext: "aar")
 
     // 以下是demo的依赖，SDK本身不依赖
