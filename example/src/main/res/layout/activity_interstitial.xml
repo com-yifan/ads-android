@@ -1,23 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <Button
         android:id="@+id/loadAndShow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="loadAndShowAd"
         android:layout_alignParentBottom="true"
         android:text="加载并展示插屏广告" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/loadAndShow"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/loadOnlyAd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="加载插屏广告" />
+
+        <Button
+            android:id="@+id/showAd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/loadAndShow"
+            android:layout_weight="1"
+            android:text="展示插屏广告" />
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/show_area"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:orientation="vertical"
-        />
+        android:layout_marginTop="10dp"
+        android:orientation="vertical" />
 
 </RelativeLayout>

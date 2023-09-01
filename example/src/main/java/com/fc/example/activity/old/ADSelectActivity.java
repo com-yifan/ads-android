@@ -1,4 +1,4 @@
-package com.fc.example.activity.atype;
+package com.fc.example.activity.old;
 
 
 import android.content.Intent;

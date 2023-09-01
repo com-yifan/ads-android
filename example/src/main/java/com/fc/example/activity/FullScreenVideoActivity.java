@@ -3,7 +3,7 @@ package com.fc.example.activity;
 import android.os.Bundle;
 
 import com.fc.ads.callback.OnResultListener;
-import com.fc.ads.core.full.FCAdFullScreenVideo;
+import com.fc.ads.core.full.FCAdFullScreenVideoAds;
 import com.fc.ads.core.full.FCFullScreenVideoListener;
 import com.fc.ads.model.FCAdError;
 import com.fc.example.R;
@@ -17,7 +17,9 @@ import com.fc.example.base.BaseActivity;
  */
 public class FullScreenVideoActivity extends BaseActivity {
 
-    FCAdFullScreenVideo easyFullScreenVideo;
+//    FCAdFullScreenVideoAds easyFullScreenVideo;
+
+    FCFullScreenVideoListener listener;
 
     @Override
     public int getLayoutId() {
@@ -30,6 +32,14 @@ public class FullScreenVideoActivity extends BaseActivity {
         startFullVideo(potId);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (listener != null) {
+            listener = null;
+        }
+    }
+
     /**
      * 初始化获取展示全屏视频的广告对象。
      * 也可以选择先提前加载，然后在合适的时机再调用展示方法
@@ -37,7 +47,7 @@ public class FullScreenVideoActivity extends BaseActivity {
     private void startFullVideo(String adId) {
 
         //推荐：核心事件监听回调
-        FCFullScreenVideoListener listener = new FCFullScreenVideoListener() {
+        listener = new FCFullScreenVideoListener() {
 
             @Override
             public void onVideoComplete() {
@@ -56,7 +66,7 @@ public class FullScreenVideoActivity extends BaseActivity {
             }
 
             @Override
-            public void onAdSuccess(boolean isCache) {
+            public void onAdSuccess() {
                 logAndToast("广告加载成功");
             }
 
@@ -82,7 +92,7 @@ public class FullScreenVideoActivity extends BaseActivity {
             }
         };
         //初始化
-        FCAdFullScreenVideo easyFullScreenVideo = new FCAdFullScreenVideo(this, listener);
+        FCAdFullScreenVideoAds easyFullScreenVideo = new FCAdFullScreenVideoAds(this, listener);
         easyFullScreenVideo.toGetData(adId, new OnResultListener() {
             @Override
             public void onSuccess(String jsonString) {

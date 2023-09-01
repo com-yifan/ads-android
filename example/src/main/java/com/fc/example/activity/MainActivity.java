@@ -6,8 +6,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.fc.example.R;
-import com.fc.example.activity.atype.ADSelectActivity;
-import com.fc.example.activity.atype.FCBannerActivity;
+import com.fc.example.activity.old.ADSelectActivity;
+import com.fc.example.activity.old.BannerActivity;
 import com.fc.example.base.BaseActivity;
 import com.fc.example.global.GlobalConst;
 import com.fc.example.utils.AppUtils;

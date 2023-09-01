@@ -6,7 +6,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.fc.ads.callback.OnResultListener;
-import com.fc.ads.core.inter.FCAdInterstitial;
+import com.fc.ads.core.inter.FCAdInterstitialAds;
 import com.fc.ads.core.inter.FCInterstitialListener;
 import com.fc.ads.model.FCAdError;
 import com.fc.example.R;
@@ -20,6 +20,9 @@ import com.fc.example.base.BaseActivity;
  */
 public class InterstitialActivity extends BaseActivity {
 
+    private FCInterstitialListener listener;
+//    private FCAdInterstitialAds easyInterstitial;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_interstitial;
@@ -27,12 +30,28 @@ public class InterstitialActivity extends BaseActivity {
 
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        releaseListener();
+    }
+
+    @Override
     public void initView(Bundle savedInstanceState) {
         String potId = getIntent().getStringExtra("potId");
 
         findViewById(R.id.loadAndShow).setOnClickListener(view -> {
-            startInterstitial(potId, findViewById(R.id.show_area));
+            startInterstitial(potId, findViewById(R.id.show_area), false);
         });
+
+//        findViewById(R.id.loadOnlyAd).setOnClickListener(view -> {
+//            startInterstitial(potId, findViewById(R.id.show_area), true);
+//        });
+//
+//        findViewById(R.id.showAd).setOnClickListener(view -> {
+//            if (easyInterstitial != null) {
+//                easyInterstitial.show();
+//            }
+//        });
     }
 
     /**
@@ -42,9 +61,34 @@ public class InterstitialActivity extends BaseActivity {
      * <p>
      * 注意！！！：穿山甲默认为"新插屏广告"
      */
-    private FCAdInterstitial startInterstitial(String adId, ViewGroup viewGroup) {
-        //必须：核心事件监听回调
-        FCInterstitialListener listener = new FCInterstitialListener() {
+    private void startInterstitial(String adId, ViewGroup viewGroup, boolean isLoadOnly) {
+        releaseListener();
+        createListener();
+        //初始化
+        FCAdInterstitialAds easyInterstitial = new FCAdInterstitialAds(this, listener);
+        easyInterstitial.setViewGroup(viewGroup);
+        easyInterstitial.setKeyBackCloseAdOfSelfRender(true);
+        easyInterstitial.setClickCloseAdOfSelfRender(false);
+        easyInterstitial.setViewAcceptedSize(300, 533);
+        //必须：设置策略信息
+        easyInterstitial.toGetData(adId, new OnResultListener() {
+            @Override
+            public void onSuccess(String jsonString) {
+                easyInterstitial.setData(jsonString);
+//                if (isLoadOnly)
+//                    easyInterstitial.loadOnly();
+//                else
+                easyInterstitial.loadAndShow();
+            }
+
+            @Override
+            public void onFailed() {
+            }
+        });
+    }
+
+    public void createListener() {
+        listener = new FCInterstitialListener() {
 
             @Override
             public void loadImage(String url, ImageView view) {
@@ -53,7 +97,7 @@ public class InterstitialActivity extends BaseActivity {
             }
 
             @Override
-            public void onAdSuccess(boolean isCache) {
+            public void onAdSuccess() {
                 logAndToast("广告就绪");
             }
 
@@ -77,23 +121,11 @@ public class InterstitialActivity extends BaseActivity {
                 logAndToast("广告加载失败 code=" + fcAdError.code + " msg=" + fcAdError.msg);
             }
         };
-        //初始化
-        final FCAdInterstitial easyInterstitial = new FCAdInterstitial(this, listener);
-        easyInterstitial.setViewGroup(viewGroup);
-        easyInterstitial.setViewAcceptedSize(300, 530);
-        //必须：设置策略信息
-        easyInterstitial.toGetData(adId, new OnResultListener() {
-            @Override
-            public void onSuccess(String jsonString) {
-                easyInterstitial.setData(jsonString);
-                easyInterstitial.loadAndShow();
-            }
+    }
 
-            @Override
-            public void onFailed() {
-
-            }
-        });
-        return easyInterstitial;
+    private void releaseListener() {
+        if (listener != null) {
+            listener = null;
+        }
     }
 }

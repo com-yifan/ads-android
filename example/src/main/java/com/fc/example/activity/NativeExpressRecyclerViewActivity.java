@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.fc.ads.callback.OnResultListener;
-import com.fc.ads.core.nat.FCAdNativeExpress;
+import com.fc.ads.core.nat.FCAdNativeExpressAds;
 import com.fc.ads.core.nat.FCNativeExpressListener;
 import com.fc.ads.model.FCAdError;
 import com.fc.example.R;
@@ -159,7 +159,7 @@ public class NativeExpressRecyclerViewActivity extends BaseActivity {
                 }
 
                 @Override
-                public void onAdSuccess(boolean isCache) {
+                public void onAdSuccess() {
                     logAndToast("广告加载成功");
                 }
 
@@ -194,7 +194,7 @@ public class NativeExpressRecyclerViewActivity extends BaseActivity {
 
             };
             //初始化
-            final FCAdNativeExpress easyNativeExpress = new FCAdNativeExpress(mActivity, listener);
+            final FCAdNativeExpressAds easyNativeExpress = new FCAdNativeExpressAds(mActivity, listener);
             easyNativeExpress.setAdContainer(adContainer);
             logAndToast("广告请求中");
             //必须：设置策略信息

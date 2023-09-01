@@ -19,7 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.VideoView;
 
 import com.fc.ads.callback.OnResultListener;
-import com.fc.ads.core.draw.FCAdDraw;
+import com.fc.ads.core.draw.FCAdDrawAds;
 import com.fc.ads.core.draw.FCDrawListener;
 import com.fc.ads.model.FCAdError;
 import com.fc.example.R;
@@ -280,13 +280,13 @@ public class DrawActivity extends BaseActivity {
 
         @NonNull
         @Override
-        public DrawRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view_pager, parent, false);
             return new ViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull DrawRecyclerAdapter.ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             View view = new View(mContext);
             TestItem item = null;
             if (mDataList != null) {
@@ -329,7 +329,7 @@ public class DrawActivity extends BaseActivity {
             FCDrawListener listener = new FCDrawListener() {
 
                 @Override
-                public void onAdSuccess(boolean isCache) {
+                public void onAdSuccess() {
                     logAndToast("广告加载成功");
                 }
 
@@ -357,7 +357,7 @@ public class DrawActivity extends BaseActivity {
 
 
             };
-            FCAdDraw easyAdDraw = new FCAdDraw(mContext, listener);
+            FCAdDrawAds easyAdDraw = new FCAdDrawAds(mContext, listener);
             easyAdDraw.setAdContainer(adContainer);
             logAndToast("广告请求中");
             //必须：设置策略信息

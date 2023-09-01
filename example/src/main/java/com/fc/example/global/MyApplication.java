@@ -7,8 +7,10 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.webkit.WebView;
 
+import com.fc.ads.FCAdsConfig;
 import com.fc.ads.FCAdsManager;
 import com.fc.example.utils.AppUtils;
+import com.fc.example.utils.CrashHandler;
 import com.hjq.toast.ToastUtils;
 
 /**
@@ -22,6 +24,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        CrashHandler.init(this);
         AppUtils.init(this);
         ToastUtils.init(this);
 
@@ -32,9 +35,10 @@ public class MyApplication extends Application {
     }
 
     private void initSDK() {
-        FCAdsManager.getInstance().init(this, GlobalConst.APP_ID);
-        // 测试用的
-        FCAdsManager.getInstance().openDebug();
+        FCAdsConfig fcAdsConfig = new FCAdsConfig.FCAdsConfigBuilder(GlobalConst.APP_ID, "v1.0.0", "yfdemo")
+                .setDebug(true)
+                .builder();
+        FCAdsManager.getInstance().init(this, fcAdsConfig);
     }
 
     private String getProcessName(Context context) {

@@ -1,4 +1,4 @@
-package com.fc.example.activity;
+package com.fc.example.activity.old;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -69,7 +69,7 @@ public class BannerActivity extends BaseActivity {
             }
 
             @Override
-            public void onAdSuccess(boolean isCache) {
+            public void onAdSuccess() {
                 logAndToast("广告加载成功");
             }
 

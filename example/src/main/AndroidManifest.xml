@@ -32,7 +32,8 @@
 
         <activity
             android:name=".activity.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -40,16 +41,36 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.BannerActivity" />
-        <activity android:name=".activity.SplashActivity" />
-        <activity android:name=".activity.InterstitialActivity" />
-        <activity android:name=".activity.DrawActivity" />
-        <activity android:name=".activity.FullScreenVideoActivity" />
-        <activity android:name=".activity.RewardVideoActivity" />
-        <activity android:name=".activity.NativeExpressRecyclerViewActivity" />
-        <activity android:name=".activity.atype.ADSelectActivity" />
-        <activity android:name=".activity.atype.ShowActivity" />
-        <activity android:name=".activity.atype.FCBannerActivity" />
+        <activity
+            android:name=".activity.old.BannerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SplashActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.InterstitialActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DrawActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.FullScreenVideoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.RewardVideoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.NativeExpressRecyclerViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.old.ADSelectActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ShowActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.FCBannerActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

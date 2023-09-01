@@ -3,7 +3,7 @@ package com.fc.example.activity;
 import android.os.Bundle;
 
 import com.fc.ads.callback.OnResultListener;
-import com.fc.ads.core.reward.FCAdReward;
+import com.fc.ads.core.reward.FCAdRewardAds;
 import com.fc.ads.core.reward.FCRewardServerCallBackInf;
 import com.fc.ads.core.reward.FCRewardVideoListener;
 import com.fc.ads.model.FCAdError;
@@ -17,6 +17,9 @@ import com.fc.example.base.BaseActivity;
  * History: 2023/7/19
  */
 public class RewardVideoActivity extends BaseActivity {
+
+    FCRewardVideoListener listener;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_reward_video;
@@ -28,16 +31,24 @@ public class RewardVideoActivity extends BaseActivity {
         startReward(potId);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (listener != null) {
+            listener = null;
+        }
+    }
+
     /* *
      * 加载并展示激励视频广告。
      * 也可以选择性先提前加载，然后在合适的时机再调用展示方法
      */
     private void startReward(String adId) {
         //必须：核心事件监听回调
-        FCRewardVideoListener listener = new FCRewardVideoListener() {
+        listener = new FCRewardVideoListener() {
 
             @Override
-            public void onAdSuccess(boolean isCache) {
+            public void onAdSuccess() {
                 logAndToast("广告加载成功");
             }
 
@@ -54,6 +65,7 @@ public class RewardVideoActivity extends BaseActivity {
             @Override
             public void onAdClosed() {
                 logAndToast("广告关闭");
+                RewardVideoActivity.this.finish();
             }
 
             @Override
@@ -88,7 +100,7 @@ public class RewardVideoActivity extends BaseActivity {
             }
         };
         //初始化，注意需要时再初始化，不要复用。
-        final FCAdReward easyRewardVideo = new FCAdReward(this, listener);
+        final FCAdRewardAds easyRewardVideo = new FCAdRewardAds(this, listener);
         easyRewardVideo.toGetData(adId, new OnResultListener() {
             @Override
             public void onSuccess(String jsonString) {

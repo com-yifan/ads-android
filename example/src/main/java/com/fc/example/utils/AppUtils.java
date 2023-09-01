@@ -76,7 +76,7 @@ public class AppUtils {
     public static int getVersionCode() {
         int versionCode = 0;
         Object vc = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             vc = getBuildConfigValue("VERSION_CODE");
         }
         if (vc != null) {
@@ -87,7 +87,7 @@ public class AppUtils {
 
     public static String getVersionName() {
         Object vn = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             vn = getBuildConfigValue("VERSION_NAME");
         }
         if (vn != null) {
@@ -99,7 +99,7 @@ public class AppUtils {
 
     public static Boolean getLogDebug() {
         Object logDebug = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             logDebug = getBuildConfigValue("LOG_DEBUG");
         }
         if (logDebug != null) {
