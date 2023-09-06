@@ -1,7 +1,5 @@
 package com.fc.example.activity;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,7 +7,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.fc.ads.callback.OnResultListener;
 import com.fc.ads.core.splash.YFAdSplashAds;
@@ -30,6 +30,8 @@ import java.lang.reflect.Method;
  */
 public class SplashActivity extends BaseActivity {
     FrameLayout adContainer;
+
+    LinearLayout adLogoLly;
 
     int type;
 
@@ -55,11 +57,10 @@ public class SplashActivity extends BaseActivity {
         String potId = getIntent().getStringExtra("potId");
 
         adContainer = findViewById(R.id.splash_container);
-
-        Bitmap logo = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
+        adLogoLly = findViewById(R.id.ll_logo);
 
         if (!TextUtils.isEmpty(potId)) {
-            loadSplash(true, logo, potId);
+            loadSplash(adContainer, potId);
         }
     }
 
@@ -71,15 +72,13 @@ public class SplashActivity extends BaseActivity {
      * @param singleActivity 是否为单独activity中展示开屏广告
      * @param callBack       跳转回调，在回调中进行跳转主页或其他操作
      */
-    private void loadSplash(boolean singleActivity, Bitmap logo, String adId) {
+    private void loadSplash(ViewGroup adContainer, String adId) {
         releaseListener();
         createListener();
-        YFAdSplashAds fcAdSplash = new YFAdSplashAds(this, logo, listener);
+        YFAdSplashAds fcAdSplash = new YFAdSplashAds(this, adContainer, listener);
         fcAdSplash.toGetData(adId, new OnResultListener() {
             @Override
             public void onSuccess(String jsonString) {
-                //注意：如果开屏页是fragment或者dialog实现，这里需要置为false。默认为true，代表开屏和首页为两个不同的activity
-                fcAdSplash.setShowInSingleActivity(singleActivity);
                 //必须：设置策略信息
                 fcAdSplash.setData(jsonString);
                 //必须：请求并展示广告
@@ -100,6 +99,9 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void onAdSuccess() {
                 logAndToast("广告加载成功 ");
+                if (adLogoLly.getVisibility() == View.GONE) {
+                    adLogoLly.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override

@@ -198,10 +198,10 @@ public class MyApplication extends Application {
 
 ## 2.5 隐私开关
 
-**目前SDK已支持工信部隐私敏感权限要求；**</br>
-**敏感权限，用户同意则使用，若用户拒绝则不再获取；**</br>
-**申请权限界面由应用依据自身情况、用户真实选择，使用如下API更新隐私信息权限开关。**</br>
-**<font color="red">注意</font>：目前OAID不属于个人信息保护法律范畴，建议提供获取的能力。**</br>
+* 目前SDK已支持工信部隐私敏感权限要求</br>
+* 敏感权限，用户同意则使用，若用户拒绝则不再获取</br>
+* 申请权限界面由应用依据自身情况、用户真实选择，使用如下API更新隐私信息权限开关</br>
+  <font color="red">注意</font>：目前OAID不属于个人信息保护法律范畴，建议提供获取的能力。</br>
 
 **主要API**
 
@@ -222,20 +222,24 @@ public class MyApplication extends Application {
 
 ## 2.6 合规三步走
 
-**您需要确保App有<font color="blue">《隐私政策》</font>
-，并且在用户首次启动App时就弹出<font color="blue">《隐私政策》</font>取得用户同意；**</br>
-**您务必告知用户，您选择亿帆SDK服务；请在<font color="blue">《隐私政策》</font>中增加如下参考条款：**
-**</br>
-**“我们的产品集成亿帆SDK，亿帆SDK需要收集您的设备Mac地址、唯一设备识别码(IMEI/android ID)
-、SIM卡IMSI信息、地理位置信息以提供个性化推荐内容，提升用户体验。”**</br>
-**您务必确保用户同意<font color="blue">《隐私政策》</font>之后，再初始化亿帆SDK。**</br>
+* 您需要确保App有[《隐私政策》]()并且在用户首次启动App时就弹出[《隐私政策》]()取得用户同意</br>
+  </br>
+* 您务必告知用户，您选择亿帆SDK服务；请在[《隐私政策》]()
+  中增加如下参考条款：我们的产品集成亿帆SDK，亿帆SDK需要收集您的设备Mac地址、唯一设备识别码(
+  IMEI/android ID)、SIM卡IMSI信息、地理位置信息以提供个性化推荐内容，提升用户体验。</br>
+  </br>
+* 您务必确保用户同意[《隐私政策》]()之后，再初始化亿帆SDK。</br>
 
 ## 2.7 关闭个性化
 
-为遵循《个人信息保护法》相关法规，亿帆SDK将为开发者提供个性化广告关闭能力接口，开发者可以调用接口，为开发者媒体应用的用户提供个性化广告关闭能力。 </
-br>
-开发者应遵循法律法规要求，在客户端为用户创建可便捷查找的个性化广告关闭按钮，并保证用户点击关闭按钮后调用亿帆SDK关闭能力接口，保证个性化广告关闭功能真实有效。</
-br>
+*
+
+为遵循《个人信息保护法》相关法规，亿帆SDK将为开发者提供个性化广告关闭能力接口，开发者可以调用接口，为开发者媒体应用的用户提供个性化广告关闭能力。 </br>
+</br>
+
+*
+
+开发者应遵循法律法规要求，在客户端为用户创建可便捷查找的个性化广告关闭按钮，并保证用户点击关闭按钮后调用亿帆SDK关闭能力接口，保证个性化广告关闭功能真实有效。</br>
 
 **主要API**
 
@@ -957,11 +961,10 @@ public void initView(Bundle savedInstanceState) {
     String potId = getIntent().getStringExtra("potId");
 
     adContainer = findViewById(R.id.splash_container);
-
-    Bitmap logo = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
+    adLogoLly = findViewById(R.id.ll_logo);
 
     if (!TextUtils.isEmpty(potId)) {
-        loadSplash(true, logo, potId);
+        loadSplash(adContainer, potId);
     }
 }
 
@@ -973,15 +976,13 @@ public void initView(Bundle savedInstanceState) {
  * @param singleActivity 是否为单独activity中展示开屏广告
  * @param callBack       跳转回调，在回调中进行跳转主页或其他操作
  */
-private void loadSplash(boolean singleActivity, Bitmap logo, String adId) {
+private void loadSplash(ViewGroup adContainer, String adId) {
     releaseListener();
     createListener();
-    YFAdSplashAds fcAdSplash = new YFAdSplashAds(this, logo, listener);
+    YFAdSplashAds fcAdSplash = new YFAdSplashAds(this, adContainer, listener);
     fcAdSplash.toGetData(adId, new OnResultListener() {
         @Override
         public void onSuccess(String jsonString) {
-            //注意：如果开屏页是fragment或者dialog实现，这里需要置为false。默认为true，代表开屏和首页为两个不同的activity
-            fcAdSplash.setShowInSingleActivity(singleActivity);
             //必须：设置策略信息
             fcAdSplash.setData(jsonString);
             //必须：请求并展示广告
@@ -1002,6 +1003,9 @@ private void createListener() {
         @Override
         public void onAdSuccess() {
             logAndToast("广告加载成功 ");
+            if (adLogoLly.getVisibility() == View.GONE) {
+                adLogoLly.setVisibility(View.VISIBLE);
+            }
         }
 
         @Override
@@ -1058,12 +1062,12 @@ protected void onDestroy() {
 
 **YFAdSplashAds**
 
-| 方法名                                                                           | 方法介绍                                       |
-|:------------------------------------------------------------------------------|:-------------------------------------------|
-| public YFAdRewardAds(Activity activity, YFRewardVideoListener baseAdListener) | 开屏广告位构造方法                                  |
-| public void toGetData(String adId, OnResultListener onResultListener)         | 配置信息从缓存中读取，如果存在未过期，则缓存返回，否者请求网络，成功后回调。     |
-| public void setData(String strategyJson)                                      | 必须！！设置策略信息，注意json格式一定要正确，否则有可能解析策略失败导致无广告。 |
-| public void loadAndShow()                                                     | 展示当前广告                                     |
+| 方法名                                                                                             | 方法介绍                                       |
+|:------------------------------------------------------------------------------------------------|:-------------------------------------------|
+| public YFAdSplashAds(Activity activity, ViewGroup adContainer, YFSplashListener baseAdListener) | 开屏广告位构造方法                                  |
+| public void toGetData(String adId, OnResultListener onResultListener)                           | 配置信息从缓存中读取，如果存在未过期，则缓存返回，否者请求网络，成功后回调。     |
+| public void setData(String strategyJson)                                                        | 必须！！设置策略信息，注意json格式一定要正确，否则有可能解析策略失败导致无广告。 |
+| public void loadAndShow()                                                                       | 展示当前广告                                     |
 
 **YFSplashListener** 同 **BaseAdListener**回调监听
 

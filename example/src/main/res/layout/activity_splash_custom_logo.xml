@@ -15,5 +15,22 @@
 
     </FrameLayout>
 
+    <!--  自定义logo区域 -->
+    <LinearLayout
+        android:id="@+id/ll_logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/ad_log"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@mipmap/logo" />
+    </LinearLayout>
+
 </LinearLayout>
 

@@ -56,7 +56,7 @@ public class InterstitialActivity extends BaseActivity {
         //初始化
         YFAdInterstitialAds easyInterstitial = new YFAdInterstitialAds(this, listener);
         easyInterstitial.setKeyBackCloseAdOfSelfRender(true);
-        easyInterstitial.setClickCloseAdOfSelfRender(false);
+        easyInterstitial.setClickCloseAdOfSelfRender(true);
         easyInterstitial.setViewAcceptedSize(300, 533);
         //必须：设置策略信息
         easyInterstitial.toGetData(adId, new OnResultListener() {
