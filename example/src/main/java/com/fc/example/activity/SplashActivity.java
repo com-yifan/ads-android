@@ -1,6 +1,7 @@
 package com.fc.example.activity;
 
-import android.graphics.Color;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,13 +9,11 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import com.fc.ads.callback.OnResultListener;
-import com.fc.ads.core.splash.FCAdSplashAds;
-import com.fc.ads.core.splash.FCSplashListener;
+import com.fc.ads.core.splash.YFAdSplashAds;
+import com.fc.ads.core.splash.YFSplashListener;
 import com.fc.ads.model.FCAdError;
 import com.fc.example.R;
 import com.fc.example.base.BaseActivity;
@@ -24,18 +23,17 @@ import com.fc.example.utils.StatusBar;
 import java.lang.reflect.Method;
 
 /**
- * Copyright: 风船科技
+ * Copyright: 亿帆
  * Author: JonXhnChn
  * Description:
  * History: 2023/7/18
  */
 public class SplashActivity extends BaseActivity {
-    LinearLayout logo;
     FrameLayout adContainer;
 
     int type;
 
-    private FCSplashListener listener;
+    private YFSplashListener listener;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,11 +56,11 @@ public class SplashActivity extends BaseActivity {
 
         adContainer = findViewById(R.id.splash_container);
 
-        logo = findViewById(R.id.ll_logo);
+        Bitmap logo = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
+
         if (!TextUtils.isEmpty(potId)) {
-            loadSplash(adContainer, true, potId);
+            loadSplash(true, logo, potId);
         }
-        logo.setOnClickListener(v -> finish());
     }
 
     /* *
@@ -73,10 +71,10 @@ public class SplashActivity extends BaseActivity {
      * @param singleActivity 是否为单独activity中展示开屏广告
      * @param callBack       跳转回调，在回调中进行跳转主页或其他操作
      */
-    private void loadSplash(final ViewGroup adContainer, boolean singleActivity, String adId) {
+    private void loadSplash(boolean singleActivity, Bitmap logo, String adId) {
         releaseListener();
         createListener();
-        FCAdSplashAds fcAdSplash = new FCAdSplashAds(this, adContainer, listener);
+        YFAdSplashAds fcAdSplash = new YFAdSplashAds(this, logo, listener);
         fcAdSplash.toGetData(adId, new OnResultListener() {
             @Override
             public void onSuccess(String jsonString) {
@@ -91,28 +89,22 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void onFailed() {
                 logAndToast("广告请求失败");
+                finish();
             }
         });
         logAndToast("广告请求中");
     }
 
     private void createListener() {
-        listener = new FCSplashListener() {
+        listener = new YFSplashListener() {
             @Override
             public void onAdSuccess() {
                 logAndToast("广告加载成功 ");
-                // 设置当前布局为不可见，但是需要位置绘制出来
-                if (logo != null) {
-                    logo.setVisibility(View.VISIBLE);
-                }
             }
 
             @Override
             public void onAdExposure() {
                 //设置开屏父布局背景色为白色
-                if (adContainer != null) {
-                    adContainer.setBackgroundColor(Color.WHITE);
-                }
                 logAndToast("广告展示成功");
             }
 
@@ -132,6 +124,7 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void onAdFailed(FCAdError fcAdError) {
                 logAndToast("广告加载失败 code=" + fcAdError.code + " msg=" + fcAdError.msg);
+                finish();
             }
 
         };

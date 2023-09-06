@@ -1,7 +1,7 @@
 package com.fc.example.global;
 
 /**
- * Copyright: 风船科技
+ * Copyright: 亿帆
  * Author: JonXhnChn
  * Description:
  * History: 2023/7/17

@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.fc.ads.callback.OnResultListener;
-import com.fc.ads.core.banner.FCADBanner;
-import com.fc.ads.core.banner.FCBannerListener;
+import com.fc.ads.core.banner.YFADBanner;
+import com.fc.ads.core.banner.YFBannerListener;
 import com.fc.ads.model.FCAdError;
 import com.fc.ads.utils.ScreenUtil;
 import com.fc.example.R;
@@ -25,7 +25,7 @@ public class FCBannerActivity extends BaseActivity {
     TextView potIdTV;
     //    FCADBanner easyAdBanner;
     private RelativeLayout adView;
-    private FCBannerListener listener;
+    private YFBannerListener listener;
 
     @Override
     public int getLayoutId() {
@@ -48,7 +48,7 @@ public class FCBannerActivity extends BaseActivity {
 
 
     void initListener() {
-        listener = new FCBannerListener() {
+        listener = new YFBannerListener() {
             @Override
             public void loadImage(String url, ImageView view) {
                 Glide.with(FCBannerActivity.this).load(url).into(view);
@@ -117,7 +117,7 @@ public class FCBannerActivity extends BaseActivity {
     }
 
     public void loadAndShowAd(View view) {
-        final FCADBanner showADBanner = new FCADBanner(this, adView, listener);
+        final YFADBanner showADBanner = new YFADBanner(this, adView, listener);
         logAndToast("广告请求中");
         showADBanner.toGetData(potId, new OnResultListener() {
             @Override

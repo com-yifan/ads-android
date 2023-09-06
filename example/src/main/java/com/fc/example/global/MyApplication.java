@@ -7,14 +7,14 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.webkit.WebView;
 
-import com.fc.ads.FCAdsConfig;
-import com.fc.ads.FCAdsManager;
+import com.fc.ads.YFAdsConfig;
+import com.fc.ads.YFAdsManager;
 import com.fc.example.utils.AppUtils;
 import com.fc.example.utils.CrashHandler;
 import com.hjq.toast.ToastUtils;
 
 /**
- * Copyright: 风船科技
+ * Copyright: 亿帆
  * Author: JonXhnChn
  * Description:
  * History: 2023/7/17
@@ -35,10 +35,10 @@ public class MyApplication extends Application {
     }
 
     private void initSDK() {
-        FCAdsConfig fcAdsConfig = new FCAdsConfig.FCAdsConfigBuilder(GlobalConst.APP_ID, "v1.0.0", "yfdemo")
+        YFAdsConfig fcAdsConfig = new YFAdsConfig.YFAdsConfigBuilder(GlobalConst.APP_ID, "v1.0.0", "yfdemo")
                 .setDebug(true)
                 .builder();
-        FCAdsManager.getInstance().init(this, fcAdsConfig);
+        YFAdsManager.getInstance().init(this, fcAdsConfig);
     }
 
     private String getProcessName(Context context) {

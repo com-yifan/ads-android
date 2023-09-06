@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.fc.ads.callback.OnResultListener;
-import com.fc.ads.core.nat.FCAdNativeExpressAds;
-import com.fc.ads.core.nat.FCNativeExpressListener;
+import com.fc.ads.core.nat.YFAdNativeExpressAds;
+import com.fc.ads.core.nat.YFNativeExpressListener;
 import com.fc.ads.model.FCAdError;
 import com.fc.example.R;
 import com.fc.example.base.BaseActivity;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Copyright: 风船科技
+ * Copyright: 亿帆
  * Author: JonXhnChn
  * Description:
  * History: 2023/7/19
@@ -150,7 +150,7 @@ public class NativeExpressRecyclerViewActivity extends BaseActivity {
 
 
             //推荐：核心事件监听回调
-            FCNativeExpressListener listener = new FCNativeExpressListener() {
+            YFNativeExpressListener listener = new YFNativeExpressListener() {
 
                 @Override
                 public void onAdRenderSuccess() {
@@ -194,7 +194,7 @@ public class NativeExpressRecyclerViewActivity extends BaseActivity {
 
             };
             //初始化
-            final FCAdNativeExpressAds easyNativeExpress = new FCAdNativeExpressAds(mActivity, listener);
+            final YFAdNativeExpressAds easyNativeExpress = new YFAdNativeExpressAds(mActivity, listener);
             easyNativeExpress.setAdContainer(adContainer);
             logAndToast("广告请求中");
             //必须：设置策略信息

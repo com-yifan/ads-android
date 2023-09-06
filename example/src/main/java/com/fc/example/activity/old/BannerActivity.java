@@ -9,8 +9,8 @@ import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.fc.ads.callback.OnResultListener;
-import com.fc.ads.core.banner.FCADBanner;
-import com.fc.ads.core.banner.FCBannerListener;
+import com.fc.ads.core.banner.YFADBanner;
+import com.fc.ads.core.banner.YFBannerListener;
 import com.fc.ads.model.FCAdError;
 import com.fc.ads.utils.ScreenUtil;
 import com.fc.example.R;
@@ -19,7 +19,7 @@ import com.fc.example.global.GlobalConst;
 import com.fc.example.utils.AppUtils;
 
 /**
- * Copyright: 风船科技
+ * Copyright: 亿帆
  * Author: JonXhnChn
  * Description:
  * History: 2023/7/17
@@ -62,7 +62,7 @@ public class BannerActivity extends BaseActivity {
      */
     private void loadBanner(/*String jsonFileName, */ViewGroup adContainer, String adId) {
         //必须：核心事件监听回调
-        FCBannerListener listener = new FCBannerListener() {
+        YFBannerListener listener = new YFBannerListener() {
             @Override
             public void loadImage(String url, ImageView view) {
                 Glide.with(view.getContext()).load(url).into(view);
@@ -94,7 +94,7 @@ public class BannerActivity extends BaseActivity {
             }
 
         };
-        FCADBanner easyAdBanner = new FCADBanner(this, adContainer, listener);
+        YFADBanner easyAdBanner = new YFADBanner(this, adContainer, listener);
         logAndToast("广告请求中");
         easyAdBanner.toGetData(adId, new OnResultListener() {
             @Override

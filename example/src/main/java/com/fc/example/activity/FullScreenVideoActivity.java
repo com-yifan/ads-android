@@ -3,14 +3,14 @@ package com.fc.example.activity;
 import android.os.Bundle;
 
 import com.fc.ads.callback.OnResultListener;
-import com.fc.ads.core.full.FCAdFullScreenVideoAds;
-import com.fc.ads.core.full.FCFullScreenVideoListener;
+import com.fc.ads.core.full.YFAdFullScreenVideoAds;
+import com.fc.ads.core.full.YFFullScreenVideoListener;
 import com.fc.ads.model.FCAdError;
 import com.fc.example.R;
 import com.fc.example.base.BaseActivity;
 
 /**
- * Copyright: 风船科技
+ * Copyright: 亿帆
  * Author: JonXhnChn
  * Description:
  * History: 2023/7/18
@@ -19,7 +19,7 @@ public class FullScreenVideoActivity extends BaseActivity {
 
 //    FCAdFullScreenVideoAds easyFullScreenVideo;
 
-    FCFullScreenVideoListener listener;
+    YFFullScreenVideoListener listener;
 
     @Override
     public int getLayoutId() {
@@ -47,7 +47,7 @@ public class FullScreenVideoActivity extends BaseActivity {
     private void startFullVideo(String adId) {
 
         //推荐：核心事件监听回调
-        listener = new FCFullScreenVideoListener() {
+        listener = new YFFullScreenVideoListener() {
 
             @Override
             public void onVideoComplete() {
@@ -92,7 +92,7 @@ public class FullScreenVideoActivity extends BaseActivity {
             }
         };
         //初始化
-        FCAdFullScreenVideoAds easyFullScreenVideo = new FCAdFullScreenVideoAds(this, listener);
+        YFAdFullScreenVideoAds easyFullScreenVideo = new YFAdFullScreenVideoAds(this, listener);
         easyFullScreenVideo.toGetData(adId, new OnResultListener() {
             @Override
             public void onSuccess(String jsonString) {

@@ -3,22 +3,22 @@ package com.fc.example.activity;
 import android.os.Bundle;
 
 import com.fc.ads.callback.OnResultListener;
-import com.fc.ads.core.reward.FCAdRewardAds;
-import com.fc.ads.core.reward.FCRewardServerCallBackInf;
-import com.fc.ads.core.reward.FCRewardVideoListener;
+import com.fc.ads.core.reward.YFAdRewardAds;
+import com.fc.ads.core.reward.YFRewardServerCallBackInf;
+import com.fc.ads.core.reward.YFRewardVideoListener;
 import com.fc.ads.model.FCAdError;
 import com.fc.example.R;
 import com.fc.example.base.BaseActivity;
 
 /**
- * Copyright: 风船科技
+ * Copyright: 亿帆
  * Author: JonXhnChn
  * Description:
  * History: 2023/7/19
  */
 public class RewardVideoActivity extends BaseActivity {
 
-    FCRewardVideoListener listener;
+    YFRewardVideoListener listener;
 
     @Override
     public int getLayoutId() {
@@ -45,7 +45,7 @@ public class RewardVideoActivity extends BaseActivity {
      */
     private void startReward(String adId) {
         //必须：核心事件监听回调
-        listener = new FCRewardVideoListener() {
+        listener = new YFRewardVideoListener() {
 
             @Override
             public void onAdSuccess() {
@@ -95,12 +95,12 @@ public class RewardVideoActivity extends BaseActivity {
             }
 
             @Override
-            public void onRewardServerInf(FCRewardServerCallBackInf inf) {
+            public void onRewardServerInf(YFRewardServerCallBackInf inf) {
                 logAndToast("onRewardServerInf" + inf);
             }
         };
         //初始化，注意需要时再初始化，不要复用。
-        final FCAdRewardAds easyRewardVideo = new FCAdRewardAds(this, listener);
+        final YFAdRewardAds easyRewardVideo = new YFAdRewardAds(this, listener);
         easyRewardVideo.toGetData(adId, new OnResultListener() {
             @Override
             public void onSuccess(String jsonString) {

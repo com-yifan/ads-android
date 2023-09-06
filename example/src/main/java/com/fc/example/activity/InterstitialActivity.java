@@ -1,26 +1,25 @@
 package com.fc.example.activity;
 
 import android.os.Bundle;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.fc.ads.callback.OnResultListener;
-import com.fc.ads.core.inter.FCAdInterstitialAds;
-import com.fc.ads.core.inter.FCInterstitialListener;
+import com.fc.ads.core.inter.YFAdInterstitialAds;
+import com.fc.ads.core.inter.YFInterstitialListener;
 import com.fc.ads.model.FCAdError;
 import com.fc.example.R;
 import com.fc.example.base.BaseActivity;
 
 /**
- * Copyright: 风船科技
+ * Copyright: 亿帆
  * Author: JonXhnChn
  * Description:
  * History: 2023/7/18
  */
 public class InterstitialActivity extends BaseActivity {
 
-    private FCInterstitialListener listener;
+    private YFInterstitialListener listener;
 //    private FCAdInterstitialAds easyInterstitial;
 
     @Override
@@ -40,18 +39,8 @@ public class InterstitialActivity extends BaseActivity {
         String potId = getIntent().getStringExtra("potId");
 
         findViewById(R.id.loadAndShow).setOnClickListener(view -> {
-            startInterstitial(potId, findViewById(R.id.show_area), false);
+            startInterstitial(potId);
         });
-
-//        findViewById(R.id.loadOnlyAd).setOnClickListener(view -> {
-//            startInterstitial(potId, findViewById(R.id.show_area), true);
-//        });
-//
-//        findViewById(R.id.showAd).setOnClickListener(view -> {
-//            if (easyInterstitial != null) {
-//                easyInterstitial.show();
-//            }
-//        });
     }
 
     /**
@@ -61,12 +50,11 @@ public class InterstitialActivity extends BaseActivity {
      * <p>
      * 注意！！！：穿山甲默认为"新插屏广告"
      */
-    private void startInterstitial(String adId, ViewGroup viewGroup, boolean isLoadOnly) {
+    private void startInterstitial(String adId) {
         releaseListener();
         createListener();
         //初始化
-        FCAdInterstitialAds easyInterstitial = new FCAdInterstitialAds(this, listener);
-        easyInterstitial.setViewGroup(viewGroup);
+        YFAdInterstitialAds easyInterstitial = new YFAdInterstitialAds(this, listener);
         easyInterstitial.setKeyBackCloseAdOfSelfRender(true);
         easyInterstitial.setClickCloseAdOfSelfRender(false);
         easyInterstitial.setViewAcceptedSize(300, 533);
@@ -75,9 +63,6 @@ public class InterstitialActivity extends BaseActivity {
             @Override
             public void onSuccess(String jsonString) {
                 easyInterstitial.setData(jsonString);
-//                if (isLoadOnly)
-//                    easyInterstitial.loadOnly();
-//                else
                 easyInterstitial.loadAndShow();
             }
 
@@ -88,7 +73,7 @@ public class InterstitialActivity extends BaseActivity {
     }
 
     public void createListener() {
-        listener = new FCInterstitialListener() {
+        listener = new YFInterstitialListener() {
 
             @Override
             public void loadImage(String url, ImageView view) {

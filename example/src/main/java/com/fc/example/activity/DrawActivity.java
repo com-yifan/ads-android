@@ -19,8 +19,8 @@ import android.widget.RelativeLayout;
 import android.widget.VideoView;
 
 import com.fc.ads.callback.OnResultListener;
-import com.fc.ads.core.draw.FCAdDrawAds;
-import com.fc.ads.core.draw.FCDrawListener;
+import com.fc.ads.core.draw.YFAdDrawAds;
+import com.fc.ads.core.draw.YFDrawListener;
 import com.fc.ads.model.FCAdError;
 import com.fc.example.R;
 import com.fc.example.base.BaseActivity;
@@ -35,7 +35,7 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
- * Copyright: 风船科技
+ * Copyright: 亿帆
  * Author: JonXhnChn
  * Description:
  * History: 2023/7/18
@@ -326,7 +326,7 @@ public class DrawActivity extends BaseActivity {
 
         private void loadDraw(String adId, ViewGroup adContainer) {
 
-            FCDrawListener listener = new FCDrawListener() {
+            YFDrawListener listener = new YFDrawListener() {
 
                 @Override
                 public void onAdSuccess() {
@@ -357,7 +357,7 @@ public class DrawActivity extends BaseActivity {
 
 
             };
-            FCAdDrawAds easyAdDraw = new FCAdDrawAds(mContext, listener);
+            YFAdDrawAds easyAdDraw = new YFAdDrawAds(mContext, listener);
             easyAdDraw.setAdContainer(adContainer);
             logAndToast("广告请求中");
             //必须：设置策略信息
