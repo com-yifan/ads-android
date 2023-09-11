@@ -12,20 +12,21 @@ import android.view.View;
 import android.widget.Toast;
 
 /**
- * <pre>
- *     author: Blankj
- *     blog  : http://blankj.com
- *     time  : 2016/09/29
- *     desc  : 吐司相关工具类
- * </pre>
- */
+ * 吐司相关工具类.
+ *
+ * @author JamesQian
+ * @copyright 亿帆
+ * @date 2023/9/11 9:35
+ * @version 1.0
+ **/
 public final class ToastUtils {
 
     private static final int DEFAULT_TOAST_TIME = 2500;
     private static Toast sToast;
     private static int gravity = Gravity.BOTTOM;
     private static int xOffset = 0;
-    private static int yOffset = (int) (32 * AppUtils.getContext().getResources().getDisplayMetrics().density + 0.5);
+    private static int yOffset =
+            (int) (32 * AppUtils.getContext().getResources().getDisplayMetrics().density + 0.5);
     //        private static int yOffset = 0;
     @SuppressLint("StaticFieldLeak")
     private static View customView;
@@ -36,7 +37,7 @@ public final class ToastUtils {
     }
 
     /**
-     * 设置吐司位置
+     * 设置吐司位置.
      *
      * @param gravity 位置
      * @param xOffset x偏移
@@ -49,40 +50,53 @@ public final class ToastUtils {
     }
 
     /**
-     * 获取吐司view
+     * 获取吐司view.
      *
-     * @return view 自定义view
-     */
+     * @author JamesQian
+     * @date 2023/9/11 9:36
+     * @return android.view.View
+     **/
     public static View getView() {
-        if (customView != null) return customView;
-        if (sToast != null) return sToast.getView();
+        if (customView != null) {
+            return customView;
+        }
+        if (sToast != null) {
+            return sToast.getView();
+        }
         return null;
     }
 
-    /**
-     * 设置吐司view
-     *
-     * @param layoutId 视图
-     */
+   /**
+    * 设置吐司view.
+    *
+    * @author JamesQian
+    * @date 2023/9/11 9:36
+    * @param layoutId layoutId
+    **/
     public static void setView(@LayoutRes int layoutId) {
-        LayoutInflater inflate = (LayoutInflater) AppUtils.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflate = (LayoutInflater) AppUtils.getContext()
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         ToastUtils.customView = inflate.inflate(layoutId, null);
     }
 
     /**
-     * 设置吐司view
+     * 设置吐司view.
      *
-     * @param view 视图
-     */
+     * @author JamesQian
+     * @date 2023/9/11 9:37
+     * @param view view
+     **/
     public static void setView(View view) {
         ToastUtils.customView = view;
     }
 
     /**
-     * 安全地显示短时吐司
+     * 安全地显示短时吐司.
      *
-     * @param text 文本
-     */
+     * @author JamesQian
+     * @date 2023/9/11 9:37
+     * @param text text
+     **/
     public static void showShortSafe(final CharSequence text) {
         sHandler.post(new Runnable() {
             @Override
@@ -93,24 +107,12 @@ public final class ToastUtils {
     }
 
     /**
-     * 安全地延时显示短时吐司
+     * 安全地显示短时吐司.
      *
-     * @param text 文本
-     */
-    public static void showShortSafeDelay(final CharSequence text) {
-        sHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                show(text, Toast.LENGTH_SHORT);
-            }
-        }, 1000);
-    }
-
-    /**
-     * 安全地显示短时吐司
-     *
-     * @param resId 资源Id
-     */
+     * @author JamesQian
+     * @date 2023/9/11 9:37
+     * @param resId resId
+     **/
     public static void showShortSafe(final @StringRes int resId) {
         sHandler.post(new Runnable() {
             @Override
@@ -121,11 +123,13 @@ public final class ToastUtils {
     }
 
     /**
-     * 安全地显示短时吐司
+     * 安全地显示短时吐司.
      *
-     * @param resId 资源Id
-     * @param args  参数R
-     */
+     * @author JamesQian
+     * @date 2023/9/11 9:37
+     * @param resId resId
+     * @param args args
+     **/
     public static void showShortSafe(final @StringRes int resId, final Object... args) {
         sHandler.post(new Runnable() {
             @Override
@@ -136,7 +140,7 @@ public final class ToastUtils {
     }
 
     /**
-     * 安全地显示短时吐司
+     * 安全地显示短时吐司.
      *
      * @param format 格式
      * @param args   参数
@@ -151,7 +155,24 @@ public final class ToastUtils {
     }
 
     /**
-     * 安全地显示长时吐司
+     * 安全地延时显示短时吐司.
+     *
+     * @author JamesQian
+     * @date 2023/9/11 9:37
+     * @param text text
+     **/
+    public static void showShortSafeDelay(final CharSequence text) {
+        sHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                show(text, Toast.LENGTH_SHORT);
+            }
+        }, 1000);
+    }
+
+
+    /**
+     * 安全地显示长时吐司.
      *
      * @param text 文本
      */
@@ -165,7 +186,7 @@ public final class ToastUtils {
     }
 
     /**
-     * 安全地显示长时吐司
+     * 安全地显示长时吐司.
      *
      * @param resId 资源Id
      */
@@ -179,7 +200,7 @@ public final class ToastUtils {
     }
 
     /**
-     * 安全地显示长时吐司
+     * 安全地显示长时吐司.
      *
      * @param resId 资源Id
      * @param args  参数
@@ -194,7 +215,7 @@ public final class ToastUtils {
     }
 
     /**
-     * 安全地显示长时吐司
+     * 安全地显示长时吐司.
      *
      * @param format 格式
      * @param args   参数
@@ -209,7 +230,7 @@ public final class ToastUtils {
     }
 
     /**
-     * 显示短时吐司
+     * 显示短时吐司.
      *
      * @param text 文本
      */
@@ -218,7 +239,7 @@ public final class ToastUtils {
     }
 
     /**
-     * 显示短时吐司
+     * 显示短时吐司.
      *
      * @param resId 资源Id
      */
@@ -227,7 +248,7 @@ public final class ToastUtils {
     }
 
     /**
-     * 显示短时吐司
+     * 显示短时吐司.
      *
      * @param resId 资源Id
      * @param args  参数
@@ -237,7 +258,7 @@ public final class ToastUtils {
     }
 
     /**
-     * 显示短时吐司
+     * 显示短时吐司.
      *
      * @param format 格式
      * @param args   参数
@@ -247,7 +268,7 @@ public final class ToastUtils {
     }
 
     /**
-     * 显示长时吐司
+     * 显示长时吐司.
      *
      * @param text 文本
      */
@@ -256,7 +277,7 @@ public final class ToastUtils {
     }
 
     /**
-     * 显示长时吐司
+     * 显示长时吐司.
      *
      * @param resId 资源Id
      */
@@ -265,7 +286,7 @@ public final class ToastUtils {
     }
 
     /**
-     * 显示长时吐司
+     * 显示长时吐司.
      *
      * @param resId 资源Id
      * @param args  参数
@@ -275,7 +296,7 @@ public final class ToastUtils {
     }
 
     /**
-     * 显示长时吐司
+     * 显示长时吐司.
      *
      * @param format 格式
      * @param args   参数
@@ -285,7 +306,7 @@ public final class ToastUtils {
     }
 
     /**
-     * 显示吐司
+     * 显示吐司.
      *
      * @param resId    资源Id
      * @param duration 显示时长
@@ -295,7 +316,7 @@ public final class ToastUtils {
     }
 
     /**
-     * 显示吐司
+     * 显示吐司.
      *
      * @param resId    资源Id
      * @param duration 显示时长
@@ -306,7 +327,7 @@ public final class ToastUtils {
     }
 
     /**
-     * 显示吐司
+     * 显示吐司.
      *
      * @param format   格式
      * @param duration 显示时长
@@ -317,7 +338,7 @@ public final class ToastUtils {
     }
 
     /**
-     * 显示吐司
+     * 显示吐司.
      *
      * @param text     文本
      * @param duration 显示时长
@@ -338,7 +359,7 @@ public final class ToastUtils {
     }
 
     /**
-     * 取消吐司显示
+     * 取消吐司显示.
      */
     public static void cancel() {
         if (sToast != null) {

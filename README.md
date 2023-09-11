@@ -403,6 +403,21 @@ repositories {
 #baidu end
 ```
 
+如果您的工程中接入了资源混淆插件AndResGuard，为了保证SDK的资源可以被正常使用，需要在build.gradle中新增白名单配置，内容如下：
+
+```
+andResGuard {
+  // 白名单配置
+  whiteList = [
+               "R.integer.min_screen_width_bucket",
+               "R.style.DialogAnimationUp",
+               "R.style.DialogAnimationRight",
+               "R.style.DialogFullScreen",
+               "R.drawable.gdt_*"
+               ]
+}
+```
+
 ## 3.3  快手SDK
 
 ## 3.3.1 添加依赖
@@ -525,7 +540,7 @@ repositories {
 
 # 4. 加载广告
 
-目前亿帆SDK支持以下物理广告位类型：[Banner位](#label1)、[插屏](#label2)、[激励视频](#label3)、[开屏](#label4)、[模板信息流](#label5)、[全屏视频](#label6)、[draw信息流](#label7)。 </br>
+目前亿帆SDK支持以下物理广告位类型：[Banner位](#41-banner位banner和信息流)、[插屏](#42-插屏)、[激励视频](#43-激励视频)、[开屏](#44-开屏)、[模板信息流](#45-模板信息流)、[全屏视频](#46-全屏视频)、[draw信息流](#47-draw信息流)。 </br>
 请根据自身广告位类型进行对接。</br>
 
 **<font color="red">注意</font>：
@@ -572,7 +587,7 @@ Banner位广告和自渲染广告依附广告容器的上下文必须是Activity
 | 9917       | 没有该sdk                 |
 | 9920       | 自渲染失败                  |
 
-## <a id="label1">4.1 Banner位（Banner和信息流）</a>
+## 4.1 Banner位（Banner和信息流）
 
 具体可参见demo中FCBannerActivity
 
@@ -617,9 +632,9 @@ void initListener() {
 }
     
 public void loadAndShowAd(View view) {
-    final YFADBanner showADBanner = new YFADBanner(this, adView, listener);
+    final YFAdBanner showAdBanner = new YFAdBanner(this, adView, listener);
     logAndToast("广告请求中");
-    showADBanner.toGetData(potId, new OnResultListener() {
+    showAdBanner.toGetData(potId, new OnResultListener() {
         @Override
         public void onSuccess(String jsonString) {
             //如果集成穿山甲，这里必须配置，建议尺寸要和穿山甲后台中的"代码位尺寸"宽高比例一致，值单位为dp，这里示例使用的广告位宽高比为640：100。
@@ -650,7 +665,7 @@ protected void onDestroy() {
 
 ```
 
-其中以下代码中涉及到自渲染，目前使用的接入方的图片框架，如果接入方没有对应图片框架，建议接入[Glide的框架](#label5g)
+其中以下代码中涉及到自渲染，目前使用的接入方的图片框架，如果接入方没有对应图片框架，建议接入[Glide的框架](#5-glide图片加载框架)
 
 ```
 @Override
@@ -665,7 +680,7 @@ public void loadImage(String url, ImageView view) {
 
 | 方法名                                                                                          | 方法介绍                                                               |
 |:---------------------------------------------------------------------------------------------|:-------------------------------------------------------------------|
-| public YFADBanner(Activity activity, final ViewGroup adContainer, YFBannerListener listener) | Banner位广告位构造方法                                                     |
+| public YFAdBanner(Activity activity, final ViewGroup adContainer, YFBannerListener listener) | Banner位广告位构造方法                                                     |
 | public void setViewAcceptedSize(int expressViewWidth, int expressViewHeight)                 | 期望模板广告view的size,单位dp；注意：参数请按照平台勾选的比例去进行请求。现有1:1，3:2 ，2:3 三种比例可供选择。 |
 | public void toGetData(String adId, OnResultListener onResultListener)                        | 配置信息从缓存中读取，如果存在未过期，则缓存返回，否者请求网络，成功后回调。                             |
 | public void setData(String strategyJson)                                                     | 必须！！设置策略信息，注意json格式一定要正确，否则有可能解析策略失败导致无广告。                         |
@@ -677,7 +692,7 @@ public void loadImage(String url, ImageView view) {
 |:--------------------------------------------|:------------------------------------|
 | void loadImage(String url, ImageView view); | 接入方的图片框架，如果接入方没有对应图片框架，建议接入Glide的框架 |
 
-## <a id="label2">4.2 插屏</a>
+## 4.2 插屏
 
 具体可参见demo中InterstitialActivity
 
@@ -751,7 +766,7 @@ private void releaseListener() {
 
 ```
 
-其中以下代码中涉及到自渲染，目前使用的接入方的图片框架，如果接入方没有对应图片框架，建议接入[Glide的框架](#label5g)
+其中以下代码中涉及到自渲染，目前使用的接入方的图片框架，如果接入方没有对应图片框架，建议接入[Glide的框架](#5-glide图片加载框架)
 
 ```
 @Override
@@ -780,7 +795,7 @@ public void loadImage(String url, ImageView view) {
 |:--------------------------------------------|:------------------------------------|
 | void loadImage(String url, ImageView view); | 接入方的图片框架，如果接入方没有对应图片框架，建议接入Glide的框架 |
 
-## <a id="label3">4.3 激励视频</a>
+## 4.3 激励视频
 
 具体可参见demo中RewardVideoActivity
 
@@ -881,7 +896,7 @@ private void startReward(String adId) {
 | void onAdReward();                                     | 激励发放                                                   |
 | void onRewardServerInf(YFRewardServerCallBackInf inf); | 激励视频返回的服务器回调信息，穿山甲一直支持，优量汇自v4.330.1200 开始支持,百度9.13开始支持 |
 
-## <a id="label4">4.4 开屏</a>
+## 4.4 开屏
 
 具体可参见demo中SplashActivity
 
@@ -918,8 +933,8 @@ private void setFullScreen() {
           Method getWindowInsetsController = View.class.getDeclaredMethod("getWindowInsetsController");
           getWindowInsetsController.setAccessible(true);
           Object insetsController = getWindowInsetsController.invoke(decorView);
-          Class<?> WindowInsetsController = Class.forName("android.view.WindowInsetsController");
-          Method hide = WindowInsetsController.getMethod("hide", int.class);
+          Class<?> windowInsetsController = Class.forName("android.view.WindowInsetsController");
+          Method hide = windowInsetsController.getMethod("hide", int.class);
           hide.setAccessible(true);
           hide.invoke(insetsController, 3);
       } catch (Throwable e) {
@@ -1071,7 +1086,7 @@ protected void onDestroy() {
 
 **YFSplashListener** 同 **BaseAdListener**回调监听
 
-## <a id="label5">4.5 模板信息流</a>
+## 4.5 模板信息流
 
 具体可参见demo中NativeExpressRecyclerViewActivity
 
@@ -1181,7 +1196,7 @@ private void loadNativeExpress(String adId, ViewGroup adContainer) {
 | void onAdRenderFailed()  | 渲染失败 |
 | void onAdRenderSuccess() | 渲染成功 |
 
-## <a id="label6">4.6 全屏视频</a>
+## 4.6 全屏视频
 
 具体可参见demo中FullScreenVideoActivity
 
@@ -1283,7 +1298,7 @@ private void startFullVideo(String adId) {
 | void onVideoComplete(); | 视频播放完毕 |
 | void onVideoSkip();     | 跳过视频   |
 
-## <a id="label7">4.7 draw信息流</a>
+## 4.7 draw信息流
 
 具体可参见demo中DrawActivity
 
@@ -1358,7 +1373,7 @@ easyAdDraw.toGetData(adId, new OnResultListener() {
 
 **YFDrawListener** 同 **BaseAdListener**
 
-# <a id="label5g">5. Glide图片加载框架</a>
+# 5. Glide图片加载框架
 
 如果接入方没有图片加载框架，亿帆自渲染图片加载，推荐继承Glide，具体接入如下：
 

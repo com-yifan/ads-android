@@ -10,13 +10,14 @@ import android.support.v7.app.AppCompatActivity;
 import java.lang.reflect.Field;
 
 /**
- * Copyright：  四维智联
+ * App的工具类.
  *
- * @author ：JonXhnCn
- * Description：
- * History: 2021/3/25
- */
-public class AppUtils {
+ * @author JamesQian
+ * @copyright 亿帆
+ * @date 2023/9/11 9:14
+ * @version 1.0
+ **/
+public final class AppUtils {
     // 两次点击间隔不能少于1000ms
     private static final int MIN_DELAY_TIME = 600;
     @SuppressLint("StaticFieldLeak")
@@ -30,7 +31,7 @@ public class AppUtils {
     }
 
     /**
-     * 初始化工具类
+     * 初始化工具类.
      *
      * @param context 上下文
      */
@@ -39,7 +40,7 @@ public class AppUtils {
     }
 
     /**
-     * 获取ApplicationContext
+     * 获取ApplicationContext.
      *
      * @return ApplicationContext
      */
@@ -50,7 +51,13 @@ public class AppUtils {
         throw new NullPointerException("u should init first");
     }
 
-    //防止按钮过快点击
+    /**
+     * 防止按钮过快点击.
+     *
+     * @author JamesQian
+     * @date 2023/9/11 9:15
+     * @return boolean
+     **/
     public static boolean isFastClick() {
         boolean flag = true;
         long currentClickTime = System.currentTimeMillis();
@@ -61,6 +68,14 @@ public class AppUtils {
         return flag;
     }
 
+    /**
+     * 获取配置信息.
+     *
+     * @author JamesQian
+     * @date 2023/9/11 9:15
+     * @param fieldName fieldName
+     * @return java.lang.Object
+     **/
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static Object getBuildConfigValue(String fieldName) {
         try {
@@ -73,6 +88,13 @@ public class AppUtils {
         return null;
     }
 
+    /**
+     * 获取版本号.
+     *
+     * @author JamesQian
+     * @date 2023/9/11 9:15
+     * @return int
+     **/
     public static int getVersionCode() {
         int versionCode = 0;
         Object vc = null;
@@ -85,6 +107,13 @@ public class AppUtils {
         return versionCode;
     }
 
+    /**
+     * 获取版本名称.
+     *
+     * @author JamesQian
+     * @date 2023/9/11 9:15
+     * @return java.lang.String
+     **/
     public static String getVersionName() {
         Object vn = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -97,6 +126,13 @@ public class AppUtils {
         }
     }
 
+    /**
+     * 一句话描述.
+     *
+     * @author JamesQian
+     * @date 2023/9/11 9:15
+     * @return java.lang.Boolean
+     **/
     public static Boolean getLogDebug() {
         Object logDebug = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -110,7 +146,7 @@ public class AppUtils {
     }
 
     /**
-     * 获取context中对应类型的资源id
+     * 获取context中对应类型的资源id.
      *
      * @param type    资源类型，"layout","string","drawable","color"等
      * @param resName 资源名称
@@ -121,11 +157,13 @@ public class AppUtils {
     }
 
     /**
-     * 根据context获取Activity
+     * 根据context获取Activity.
      *
-     * @param context
-     * @return
-     */
+     * @author JamesQian
+     * @date 2023/9/11 9:16
+     * @param context context
+     * @return android.support.v7.app.AppCompatActivity
+     **/
     public static AppCompatActivity findActivityByContext(Context context) {
         while (context instanceof ContextWrapper) {
             if (context instanceof AppCompatActivity) {
@@ -136,10 +174,24 @@ public class AppUtils {
         return null;
     }
 
+    /**
+     * 是否debug模式.
+     *
+     * @author JamesQian
+     * @date 2023/9/11 9:16
+     * @return boolean
+     **/
     public static boolean isDebug() {
         return isDebug;
     }
 
+    /**
+     * 设置debug模式.
+     *
+     * @author JamesQian
+     * @date 2023/9/11 9:16
+     * @param isDebug isDebug
+     **/
     public static void setDebug(boolean isDebug) {
         AppUtils.isDebug = isDebug;
     }

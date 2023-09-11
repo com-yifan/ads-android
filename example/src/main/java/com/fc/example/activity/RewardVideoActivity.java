@@ -11,11 +11,13 @@ import com.fc.example.R;
 import com.fc.example.base.BaseActivity;
 
 /**
- * Copyright: 亿帆
- * Author: JonXhnChn
- * Description:
- * History: 2023/7/19
- */
+ * 激励视频页面.
+ *
+ * @author JamesQian
+ * @copyright 亿帆
+ * @date 2023/9/11 10:31
+ * @version 1.0
+ **/
 public class RewardVideoActivity extends BaseActivity {
 
     YFRewardVideoListener listener;
@@ -71,6 +73,7 @@ public class RewardVideoActivity extends BaseActivity {
             @Override
             public void onAdFailed(FCAdError fcAdError) {
                 logAndToast("广告加载失败 code=" + fcAdError.code + " msg=" + fcAdError.msg);
+                RewardVideoActivity.this.finish();
             }
 
 

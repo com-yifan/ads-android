@@ -9,7 +9,7 @@ import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.fc.ads.callback.OnResultListener;
-import com.fc.ads.core.banner.YFADBanner;
+import com.fc.ads.core.banner.YFAdBanner;
 import com.fc.ads.core.banner.YFBannerListener;
 import com.fc.ads.model.FCAdError;
 import com.fc.ads.utils.ScreenUtil;
@@ -19,11 +19,13 @@ import com.fc.example.global.GlobalConst;
 import com.fc.example.utils.AppUtils;
 
 /**
- * Copyright: 亿帆
- * Author: JonXhnChn
- * Description:
- * History: 2023/7/17
- */
+ * banner的展示页面.
+ *
+ * @author JamesQian
+ * @version 1.0
+ * @copyright 亿帆
+ * @date 2023/9/9 11:12
+ **/
 public class BannerActivity extends BaseActivity {
     private RelativeLayout rl;
 
@@ -56,7 +58,7 @@ public class BannerActivity extends BaseActivity {
     }
 
     /**
-     * 加载并展示banner广告
+     * 加载并展示banner广告.
      *
      * @param adContainer banner广告的承载布局
      */
@@ -94,13 +96,14 @@ public class BannerActivity extends BaseActivity {
             }
 
         };
-        YFADBanner easyAdBanner = new YFADBanner(this, adContainer, listener);
+        YFAdBanner easyAdBanner = new YFAdBanner(this, adContainer, listener);
         logAndToast("广告请求中");
         easyAdBanner.toGetData(adId, new OnResultListener() {
             @Override
             public void onSuccess(String jsonString) {
                 //如果集成穿山甲，这里必须配置，建议尺寸要和穿山甲后台中的"代码位尺寸"宽高比例一致，值单位为dp，这里示例使用的广告位宽高比为640：100。
-                int adWidth = ScreenUtil.px2dip(AppUtils.getContext(), ScreenUtil.getScreenWidth(AppUtils.getContext()));
+                int adWidth = ScreenUtil.px2dip(AppUtils.getContext(),
+                        ScreenUtil.getScreenWidth(AppUtils.getContext()));
                 int adHeight = (int) (((double) adWidth / (double) 640) * 100);
                 //如果高度传入0代表自适应高度
                 easyAdBanner.setViewAcceptedSize(adWidth, adHeight);

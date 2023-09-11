@@ -12,11 +12,13 @@ import com.fc.example.R;
 import com.fc.example.base.BaseActivity;
 
 /**
- * Copyright: 亿帆
- * Author: JonXhnChn
- * Description:
- * History: 2023/7/18
- */
+ * 插屏广告.
+ *
+ * @author JamesQian
+ * @copyright 亿帆
+ * @date 2023/9/11 10:30
+ * @version 1.0
+ **/
 public class InterstitialActivity extends BaseActivity {
 
     private YFInterstitialListener listener;
@@ -44,11 +46,11 @@ public class InterstitialActivity extends BaseActivity {
     }
 
     /**
-     * 初始话插屏广告。
-     * 可以选择性先提前加载，然后在合适的时机再调用展示方法
-     * 或者直接调用加载并展示广告
+     * 初始话插屏广告.
+     * 可以选择性先提前加载，然后在合适的时机再调用展示方法.
+     * 或者直接调用加载并展示广告.
      * <p>
-     * 注意！！！：穿山甲默认为"新插屏广告"
+     * 注意！！！：穿山甲默认为"新插屏广告".
      */
     private void startInterstitial(String adId) {
         releaseListener();
@@ -72,6 +74,12 @@ public class InterstitialActivity extends BaseActivity {
         });
     }
 
+    /**
+     * 创建监听.
+     *
+     * @author JamesQian
+     * @date 2023/9/11 10:31
+     **/
     public void createListener() {
         listener = new YFInterstitialListener() {
 

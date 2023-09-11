@@ -1,12 +1,17 @@
 package com.fc.example.global;
 
 /**
- * Copyright: 亿帆
- * Author: JonXhnChn
- * Description:
- * History: 2023/7/17
- */
-public class GlobalConst {
+ * 全局配置信息.
+ *
+ * @author JamesQian
+ * @copyright 亿帆
+ * @date 2023/9/9 16:40
+ * @version 1.0
+ **/
+public final class GlobalConst {
+
+    private GlobalConst() {
+    }
 
     public static final int TYPE_BANNER = 0;
     public static final int TYPE_SPLASH = 1;
@@ -52,5 +57,6 @@ public class GlobalConst {
     public static final String NATIVE_PRESS_ID = "0a29f771-de25-41d6-90e7-1269a6a9d85a";
     public static final String KS_NATIVE_PRESS_ID = "08f3a964-1dae-4193-9f5a-ba533fc50f39";
     public static final String YLH_NATIVE_PRESS_ID = "ced1f04c-635b-46a4-b848-883ef168b126";
-    public static final String BD_NATIVE_PRESS_ID = "3a0f8283-150b-4b71-aa24-b7688e5d0039";     //子渲染
+    public static final String BD_NATIVE_PRESS_ID = "3a0f8283-150b-4b71-aa24-b7688e5d0039";
+    //子渲染
 }

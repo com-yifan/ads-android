@@ -7,12 +7,22 @@ import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+/**
+ * ViewPagerLayoutManager.
+ *
+ * @author JamesQian
+ * @copyright 亿帆
+ * @date 2023/9/11 9:45
+ * @version 1.0
+ **/
 public class ViewPagerLayoutManager extends LinearLayoutManager
         implements RecyclerView.OnChildAttachStateChangeListener {
 
     private PagerSnapHelper mPagerSnapHelper;
     private OnViewPagerListener mOnViewPagerListener;
-    private int mDrift;// 位移，用来判断移动方向
+
+    // 位移，用来判断移动方向
+    private int mDrift;
 
     {
         mPagerSnapHelper = new PagerSnapHelper();
@@ -42,24 +52,19 @@ public class ViewPagerLayoutManager extends LinearLayoutManager
             }
             int positionIdle = getPosition(viewIdle);
             if (mOnViewPagerListener != null && getChildCount() == 1) {
-                mOnViewPagerListener.onPageSelected(positionIdle, positionIdle == getItemCount() - 1);
+                mOnViewPagerListener.onPageSelected(positionIdle,
+                        positionIdle == getItemCount() - 1);
             }
         }
     }
 
-    /**
-     * 监听竖直方向的相对偏移量
-     */
     @Override
-    public int scrollVerticallyBy(int dy, RecyclerView.Recycler recycler, RecyclerView.State state) {
+    public int scrollVerticallyBy(int dy, RecyclerView.Recycler recycler,
+                                  RecyclerView.State state) {
         this.mDrift = dy;
         return super.scrollVerticallyBy(dy, recycler, state);
     }
 
-
-    /**
-     * 监听水平方向的相对偏移量
-     */
     @Override
     public int scrollHorizontallyBy(int dx, RecyclerView.Recycler recycler,
                                     RecyclerView.State state) {
@@ -68,8 +73,12 @@ public class ViewPagerLayoutManager extends LinearLayoutManager
     }
 
     /**
-     * 设置监听
-     */
+     * 设置监听.
+     *
+     * @author JamesQian
+     * @date 2023/9/11 9:46
+     * @param listener listener
+     **/
     public void setOnViewPagerListener(OnViewPagerListener listener) {
         this.mOnViewPagerListener = listener;
     }
@@ -84,11 +93,13 @@ public class ViewPagerLayoutManager extends LinearLayoutManager
     @Override
     public void onChildViewDetachedFromWindow(@NonNull View view) {
         if (mDrift >= 0) {
-            if (mOnViewPagerListener != null)
+            if (mOnViewPagerListener != null) {
                 mOnViewPagerListener.onPageRelease(true, getPosition(view));
+            }
         } else {
-            if (mOnViewPagerListener != null)
+            if (mOnViewPagerListener != null) {
                 mOnViewPagerListener.onPageRelease(false, getPosition(view));
+            }
         }
     }
 }

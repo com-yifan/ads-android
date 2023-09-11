@@ -14,11 +14,13 @@ import com.fc.example.utils.CrashHandler;
 import com.hjq.toast.ToastUtils;
 
 /**
- * Copyright: 亿帆
- * Author: JonXhnChn
- * Description:
- * History: 2023/7/17
- */
+ * 全局Application.
+ *
+ * @author JamesQian
+ * @copyright 亿帆
+ * @date 2023/9/9 17:25
+ * @version 1.0
+ **/
 public class MyApplication extends Application {
 
     @Override
@@ -35,15 +37,19 @@ public class MyApplication extends Application {
     }
 
     private void initSDK() {
-        YFAdsConfig fcAdsConfig = new YFAdsConfig.YFAdsConfigBuilder(GlobalConst.APP_ID, "v1.0.0", "yfdemo")
-                .setDebug(true)
-                .builder();
+        YFAdsConfig fcAdsConfig =
+                new YFAdsConfig.YFAdsConfigBuilder(GlobalConst.APP_ID, "v1.0.0", "yfdemo")
+                        .setDebug(true)
+                        .builder();
         YFAdsManager.getInstance().init(this, fcAdsConfig);
     }
 
     private String getProcessName(Context context) {
-        if (context == null) return null;
-        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        if (context == null) {
+            return null;
+        }
+        ActivityManager manager =
+                (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningAppProcessInfo processInfo : manager.getRunningAppProcesses()) {
             if (processInfo.pid == android.os.Process.myPid()) {
                 return processInfo.processName;
@@ -53,8 +59,7 @@ public class MyApplication extends Application {
     }
 
     /**
-     * 在Android 9开始不允许同一个应用的多个进程中使用WebView，否则会出现Crash。
-     * 通过改方法规避。
+     * 在Android 9开始不允许同一个应用的多个进程中使用WebView，否则会出现Crash.
      */
     private void fixWebView() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {

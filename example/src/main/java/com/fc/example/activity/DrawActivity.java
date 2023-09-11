@@ -35,17 +35,22 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
- * Copyright: 亿帆
- * Author: JonXhnChn
- * Description:
- * History: 2023/7/18
- */
+ * Draw流.
+ *
+ * @author JamesQian
+ * @version 1.0
+ * @copyright 亿帆
+ * @date 2023/9/9 15:10
+ **/
 public class DrawActivity extends BaseActivity {
     private static final int TYPE_COMMON_ITEM = 1;
     private static final int TYPE_AD_ITEM = 2;
     private static final String TAG = "DrawActivity";
-    private final int[] imgs = {R.mipmap.video11, R.mipmap.video12, R.mipmap.video13, R.mipmap.video14, R.mipmap.img_video_2};
-    private final int[] videos = {R.raw.video11, R.raw.video12, R.raw.video13, R.raw.video14, R.raw.video_2};
+    private final int[] imgs =
+            {R.mipmap.video11, R.mipmap.video12, R.mipmap.video13, R.mipmap.video14,
+                    R.mipmap.img_video_2};
+    private final int[] videos =
+            {R.raw.video11, R.raw.video12, R.raw.video13, R.raw.video14, R.raw.video_2};
     RecyclerView mRecyclerView;
     private LinearLayout mBottomLayout;
     private RelativeLayout mTopLayout;
@@ -166,9 +171,11 @@ public class DrawActivity extends BaseActivity {
                         int mVideoWidth = mp.getVideoWidth();
                         //获取视频资源的高度
                         int mVideoHeight = mp.getVideoHeight();
-                        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) videoView.getLayoutParams();
+                        FrameLayout.LayoutParams layoutParams =
+                                (FrameLayout.LayoutParams) videoView.getLayoutParams();
                         if (mVideoWidth > 0 && mVideoHeight > 0 && layoutParams != null) {
-                            int[] size = UIUtils.getScreenSize(DrawActivity.this.getApplicationContext());
+                            int[] size = UIUtils.getScreenSize(
+                                    DrawActivity.this.getApplicationContext());
                             layoutParams.width = mVideoWidth * size[1] / mVideoHeight;
                             layoutParams.height = size[1];
                             layoutParams.leftMargin = -(layoutParams.width - size[0]) / 2;
@@ -216,7 +223,9 @@ public class DrawActivity extends BaseActivity {
         View itemView = mRecyclerView.getChildAt(index);
         if (itemView != null) {
             final FrameLayout videoLayout = itemView.findViewById(R.id.video_layout);
-            if (videoLayout == null) return;
+            if (videoLayout == null) {
+                return;
+            }
             View view = videoLayout.getChildAt(0);
             if (view instanceof VideoView) {
                 final VideoView videoView = (VideoView) videoLayout.getChildAt(0);
@@ -236,7 +245,9 @@ public class DrawActivity extends BaseActivity {
 
     private View getView() {
         FullScreenVideoView videoView = new FullScreenVideoView(this);
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+        FrameLayout.LayoutParams layoutParams =
+                new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+                        FrameLayout.LayoutParams.MATCH_PARENT);
         videoView.setLayoutParams(layoutParams);
         return videoView;
     }
@@ -247,19 +258,18 @@ public class DrawActivity extends BaseActivity {
             visibilable = false;
         }
         Log.d(TAG, "是否展示：visibilable=" + visibilable);
-        holder.img_play.setVisibility(visibilable ? View.VISIBLE : View.GONE);
-        holder.img_thumb.setVisibility(visibilable ? View.VISIBLE : View.GONE);
+        holder.imgPlay.setVisibility(visibilable ? View.VISIBLE : View.GONE);
+        holder.imgThumb.setVisibility(visibilable ? View.VISIBLE : View.GONE);
 
     }
 
     private static class TestItem {
 
-        public int type = 0;
+        public int type;
         public int videoId;
         public int imgId;
 
-
-        public TestItem(int type) {
+        TestItem(int type) {
             this.type = type;
         }
 
@@ -269,6 +279,14 @@ public class DrawActivity extends BaseActivity {
         }
     }
 
+    /**
+     * DrawRecyclerAdapter.
+     *
+     * @author JamesQian
+     * @version 1.0
+     * @copyright 亿帆
+     * @date 2023/9/9 15:10
+     **/
     public class DrawRecyclerAdapter extends RecyclerView.Adapter<DrawRecyclerAdapter.ViewHolder> {
         private Activity mContext;
         private List<TestItem> mDataList;
@@ -280,8 +298,10 @@ public class DrawActivity extends BaseActivity {
 
         @NonNull
         @Override
-        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view_pager, parent, false);
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
+                                                                 int viewType) {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_view_pager, parent, false);
             return new ViewHolder(view);
         }
 
@@ -292,9 +312,10 @@ public class DrawActivity extends BaseActivity {
             if (mDataList != null) {
                 item = mDataList.get(position);
                 if (item.type == TYPE_COMMON_ITEM) {
-                    holder.img_thumb.setImageResource(item.imgId);
+                    holder.imgThumb.setImageResource(item.imgId);
                     view = getView();
-                    ((VideoView) view).setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + item.videoId));
+                    ((VideoView) view).setVideoURI(Uri.parse(
+                            "android.resource://" + getPackageName() + "/" + item.videoId));
                     holder.videoLayout.removeAllViews();
                     if (view.getParent() != null) {
                         ((ViewGroup) view.getParent()).removeView(view);
@@ -376,22 +397,30 @@ public class DrawActivity extends BaseActivity {
             });
         }
 
+        /**
+         * ViewHolder.
+         *
+         * @author JamesQian
+         * @version 1.0
+         * @copyright 亿帆
+         * @date 2023/9/9 15:11
+         **/
         public class ViewHolder extends RecyclerView.ViewHolder {
-            ImageView img_thumb;
-            CircleImageView img_head_icon;
-            ImageView img_play;
+            ImageView imgThumb;
+            CircleImageView imgHeadIcon;
+            ImageView imgPlay;
             RelativeLayout rootView;
             FrameLayout videoLayout;
             LinearLayout verticalIconLauout;
 
             public ViewHolder(View itemView) {
                 super(itemView);
-                img_thumb = itemView.findViewById(R.id.img_thumb);
+                imgThumb = itemView.findViewById(R.id.img_thumb);
                 videoLayout = itemView.findViewById(R.id.video_layout);
-                img_play = itemView.findViewById(R.id.img_play);
+                imgPlay = itemView.findViewById(R.id.img_play);
                 rootView = itemView.findViewById(R.id.root_view);
                 verticalIconLauout = itemView.findViewById(R.id.vertical_icon);
-                img_head_icon = itemView.findViewById(R.id.head_icon);
+                imgHeadIcon = itemView.findViewById(R.id.head_icon);
 
             }
         }

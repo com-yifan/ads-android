@@ -23,11 +23,13 @@ import com.fc.example.utils.StatusBar;
 import java.lang.reflect.Method;
 
 /**
- * Copyright: 亿帆
- * Author: JonXhnChn
- * Description:
- * History: 2023/7/18
- */
+ * 开屏页面.
+ *
+ * @author JamesQian
+ * @copyright 亿帆
+ * @date 2023/9/11 9:19
+ * @version 1.0
+ **/
 public class SplashActivity extends BaseActivity {
     FrameLayout adContainer;
 
@@ -146,9 +148,6 @@ public class SplashActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    /**
-     * 跳转到主页面
-     */
     private void goToMainActivity() {
 //        ToastUtils.showShort("跳转首页");
 //        Intent intent = new Intent(this, MainActivity.class);
@@ -173,24 +172,17 @@ public class SplashActivity extends BaseActivity {
 //            getWindow().getDecorView().getWindowInsetsController().hide(
 //                    WindowInsets.Type.statusBars() | WindowInsets.Type.navigationBars());
 
-            /**
-             * 如果编译的sdk小于30，使用如下反射的方式。
-             *
-             * 由于Android版本限制，可能会遇到错误(建议还是使用大于30的sdk编译)：
-             * Error: Reflective access to getWindowInsetsController is forbidden when targeting API 29 and above [BlockedPrivateApi]
-             *  Explanation for issues of type "BlockedPrivateApi":
-             *    Usage of restricted non-SDK interface is forbidden for this targetSDK.
-             *    Accessing non-SDK methods or fields through reflection has a high
-             *    likelihood to break your app between versions, and is being restricted to
-             *    facilitate future app compatibility.
-             */
+            // 如果编译的sdk小于30，使用如下反射的方式.
+            // 由于Android版本限制，可能会遇到错误(建议还是使用大于30的sdk编译).
             try {
                 View decorView = getWindow().getDecorView();
-                Method getWindowInsetsController = View.class.getDeclaredMethod("getWindowInsetsController");
+                Method getWindowInsetsController =
+                        View.class.getDeclaredMethod("getWindowInsetsController");
                 getWindowInsetsController.setAccessible(true);
                 Object insetsController = getWindowInsetsController.invoke(decorView);
-                Class<?> WindowInsetsController = Class.forName("android.view.WindowInsetsController");
-                Method hide = WindowInsetsController.getMethod("hide", int.class);
+                Class<?> windowInsetsController =
+                        Class.forName("android.view.WindowInsetsController");
+                Method hide = windowInsetsController.getMethod("hide", int.class);
                 hide.setAccessible(true);
                 hide.invoke(insetsController, 3);
             } catch (Throwable e) {

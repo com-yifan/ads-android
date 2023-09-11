@@ -11,7 +11,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class CrashHandler implements Thread.UncaughtExceptionHandler {
+/**
+ * 崩溃捕获.
+ *
+ * @author JamesQian
+ * @version 1.0
+ * @copyright 亿帆
+ * @date 2023/9/9 14:02
+ **/
+public final class CrashHandler implements Thread.UncaughtExceptionHandler {
 
     private static Thread.UncaughtExceptionHandler defaultUncaughtExceptionHandler;
     private static Context mContext;
@@ -19,6 +27,13 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     private CrashHandler() {
     }
 
+    /**
+     * 初始化.
+     *
+     * @param applicationContext applicationContext
+     * @author JamesQian
+     * @date 2023/9/9 14:02
+     **/
     public static void init(Context applicationContext) {
         mContext = applicationContext;
         defaultUncaughtExceptionHandler =
@@ -26,8 +41,16 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         Thread.setDefaultUncaughtExceptionHandler(new CrashHandler());
     }
 
+    /**
+     * crash捕获.
+     *
+     * @param t         t
+     * @param throwable throwable
+     * @author JamesQian
+     * @date 2023/9/9 14:02
+     **/
     @Override
-    public void uncaughtException(@NonNull Thread t, @NonNull Throwable e) {
+    public void uncaughtException(@NonNull Thread t, @NonNull Throwable throwable) {
         File dir = new File(mContext.getExternalCacheDir(), "crash_info");
         if (!dir.exists()) {
             dir.mkdirs();
@@ -40,21 +63,21 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             pw.println("time: " + System.currentTimeMillis());
             pw.println("thread: " + t.getName());
             pw.println(getPhoneInfo());
-            e.printStackTrace(pw);
             pw.flush();
             pw.close();
         } catch (IOException | PackageManager.NameNotFoundException ioException) {
             ioException.printStackTrace();
         } finally {
             if (defaultUncaughtExceptionHandler != null) {
-                defaultUncaughtExceptionHandler.uncaughtException(t, e);
+                defaultUncaughtExceptionHandler.uncaughtException(t, throwable);
             }
         }
     }
 
     private String getPhoneInfo() throws PackageManager.NameNotFoundException {
         PackageManager pm = mContext.getPackageManager();
-        PackageInfo pi = pm.getPackageInfo(mContext.getPackageName(), PackageManager.GET_ACTIVITIES);
+        PackageInfo pi =
+                pm.getPackageInfo(mContext.getPackageName(), PackageManager.GET_ACTIVITIES);
         StringBuilder sb = new StringBuilder();
         //App版本
         sb.append("App Version: ");
@@ -74,5 +97,4 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         sb.append(Build.MODEL + "\n");
         return sb.toString();
     }
-
 }

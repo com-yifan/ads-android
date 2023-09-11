@@ -10,11 +10,11 @@ import com.fc.example.R;
 import com.fc.example.base.BaseActivity;
 
 /**
- * Copyright: 亿帆
- * Author: JonXhnChn
- * Description:
- * History: 2023/7/18
- */
+ * 全屏广告页面.
+ *
+ * @author JamesQian
+ * @date 2023/9/11 10:28
+ **/
 public class FullScreenVideoActivity extends BaseActivity {
 
 //    FCAdFullScreenVideoAds easyFullScreenVideo;
@@ -41,8 +41,8 @@ public class FullScreenVideoActivity extends BaseActivity {
     }
 
     /**
-     * 初始化获取展示全屏视频的广告对象。
-     * 也可以选择先提前加载，然后在合适的时机再调用展示方法
+     * 初始化获取展示全屏视频的广告对象.
+     * 也可以选择先提前加载，然后在合适的时机再调用展示方法.
      */
     private void startFullVideo(String adId) {
 
@@ -84,11 +84,13 @@ public class FullScreenVideoActivity extends BaseActivity {
             @Override
             public void onAdClosed() {
                 logAndToast("广告关闭");
+                FullScreenVideoActivity.this.finish();
             }
 
             @Override
             public void onAdFailed(FCAdError fcAdError) {
                 logAndToast("广告加载失败 code=" + fcAdError.code + " msg=" + fcAdError.msg);
+                FullScreenVideoActivity.this.finish();
             }
         };
         //初始化

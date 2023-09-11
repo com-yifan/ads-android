@@ -10,19 +10,26 @@ import android.view.WindowManager;
  * Created by bytedance on 2019/9/5.
  */
 
-public class UIUtils {
+public final class UIUtils {
+
+    private UIUtils() {
+    }
+
     /**
-     * 获取全面屏宽高
+     * 获取全面屏宽高.
      *
-     * @param context
-     * @return
-     */
+     * @author JamesQian
+     * @date 2023/9/11 9:40
+     * @param context context
+     * @return int[]
+     **/
     public static int[] getScreenSize(Context context) {
         int[] size = new int[]{0, 0};
         if (context == null) {
             return size;
         }
-        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        WindowManager windowManager =
+                (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = windowManager.getDefaultDisplay();
         DisplayMetrics dm = new DisplayMetrics();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
