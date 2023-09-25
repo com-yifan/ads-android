@@ -58,11 +58,6 @@ public class FCBannerActivity extends BaseActivity {
     void initListener() {
         listener = new YFBannerListener() {
             @Override
-            public void loadImage(String url, ImageView view) {
-                Glide.with(FCBannerActivity.this).load(url).into(view);
-            }
-
-            @Override
             public void onAdSuccess() {
                 logAndToast("广告加载成功");
             }

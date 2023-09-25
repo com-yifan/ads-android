@@ -6,8 +6,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.fc.example.R;
-import com.fc.example.activity.old.ADSelectActivity;
-import com.fc.example.activity.old.BannerActivity;
 import com.fc.example.base.BaseActivity;
 import com.fc.example.global.GlobalConst;
 import com.fc.example.utils.AppUtils;
@@ -31,6 +29,7 @@ public class MainActivity extends BaseActivity {
     public void initView(Bundle savedInstanceState) {
         debugBtn = findViewById(R.id.debug);
         debugBtn.setText(AppUtils.isDebug() ? R.string.close_debug : R.string.open_debug);
+        debugBtn.setVisibility(View.GONE);
     }
 
     /**
@@ -41,12 +40,8 @@ public class MainActivity extends BaseActivity {
      * @param view view
      **/
     public void clickBanner(View view) {
-        if (AppUtils.isDebug()) {
-            startActivity(new Intent(MainActivity.this, BannerActivity.class));
-        } else {
-            startActivity(new Intent(this, FCBannerActivity.class).putExtra("potId",
-                    GlobalConst.AD_ID));
-        }
+        startActivity(new Intent(this, FCBannerActivity.class).putExtra("potId",
+                GlobalConst.AD_ID));
     }
 
     /**
@@ -69,13 +64,8 @@ public class MainActivity extends BaseActivity {
      * @param view view
      **/
     public void clickSplash(View view) {
-        if (AppUtils.isDebug()) {
-            startActivity(new Intent(this, ADSelectActivity.class).putExtra("type",
-                    GlobalConst.TYPE_SPLASH));
-        } else {
-            startActivity(new Intent(this, SplashActivity.class).putExtra("potId",
-                    GlobalConst.SPLASH_AD_ID));
-        }
+        startActivity(new Intent(this, SplashActivity.class).putExtra("potId",
+                GlobalConst.SPLASH_AD_ID));
     }
 
     /**
@@ -86,13 +76,8 @@ public class MainActivity extends BaseActivity {
      * @param view view
      **/
     public void clickInti(View view) {
-        if (AppUtils.isDebug()) {
-            startActivity(new Intent(this, ADSelectActivity.class).putExtra("type",
-                    GlobalConst.TYPE_INTR));
-        } else {
-            startActivity(new Intent(this, InterstitialActivity.class).putExtra("potId",
-                    GlobalConst.INSERT_AD_ID));
-        }
+        startActivity(new Intent(this, InterstitialActivity.class).putExtra("potId",
+                GlobalConst.INSERT_AD_ID));
     }
 
     /**
@@ -103,13 +88,8 @@ public class MainActivity extends BaseActivity {
      * @param view view
      **/
     public void clickDraw(View view) {
-        if (AppUtils.isDebug()) {
-            startActivity(new Intent(this, ADSelectActivity.class).putExtra("type",
-                    GlobalConst.TYPE_DRAW));
-        } else {
-            startActivity(
-                    new Intent(this, DrawActivity.class).putExtra("potId", GlobalConst.DRAW_AD_ID));
-        }
+        startActivity(
+                new Intent(this, DrawActivity.class).putExtra("potId", GlobalConst.DRAW_AD_ID));
     }
 
     /**
@@ -120,13 +100,8 @@ public class MainActivity extends BaseActivity {
      * @param view view
      **/
     public void clickFullVideo(View view) {
-        if (AppUtils.isDebug()) {
-            startActivity(new Intent(this, ADSelectActivity.class).putExtra("type",
-                    GlobalConst.TYPE_FULL_SCREEN));
-        } else {
-            startActivity(new Intent(this, FullScreenVideoActivity.class).putExtra("potId",
-                    GlobalConst.FULL_SCREEN_VIDEO_AD_ID));
-        }
+        startActivity(new Intent(this, FullScreenVideoActivity.class).putExtra("potId",
+                GlobalConst.FULL_SCREEN_VIDEO_AD_ID));
     }
 
     /**
@@ -137,13 +112,8 @@ public class MainActivity extends BaseActivity {
      * @param view view
      **/
     public void clickReward(View view) {
-        if (AppUtils.isDebug()) {
-            startActivity(new Intent(this, ADSelectActivity.class).putExtra("type",
-                    GlobalConst.TYPE_REWARD));
-        } else {
-            startActivity(new Intent(this, RewardVideoActivity.class).putExtra("potId",
-                    GlobalConst.REWARD_AD_ID));
-        }
+        startActivity(new Intent(this, RewardVideoActivity.class).putExtra("potId",
+                GlobalConst.REWARD_AD_ID));
     }
 
     /**
@@ -154,14 +124,9 @@ public class MainActivity extends BaseActivity {
      * @param view view
      **/
     public void onNativeExpressRecyclerView(View view) {
-        if (AppUtils.isDebug()) {
-            startActivity(new Intent(this, ADSelectActivity.class).putExtra("type",
-                    GlobalConst.TYPE_NATI));
-        } else {
-            startActivity(
-                    new Intent(this, NativeExpressRecyclerViewActivity.class).putExtra("potId",
-                            GlobalConst.NATIVE_PRESS_ID));
-        }
+        startActivity(
+                new Intent(this, NativeExpressRecyclerViewActivity.class).putExtra("potId",
+                        GlobalConst.NATIVE_PRESS_ID));
     }
 
 }

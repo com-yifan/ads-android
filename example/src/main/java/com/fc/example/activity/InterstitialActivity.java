@@ -82,13 +82,6 @@ public class InterstitialActivity extends BaseActivity {
      **/
     public void createListener() {
         listener = new YFInterstitialListener() {
-
-            @Override
-            public void loadImage(String url, ImageView view) {
-                // 使用宿主自身的图片框架，如果没有则推荐使用Glide
-                Glide.with(view.getContext()).load(url).into(view);
-            }
-
             @Override
             public void onAdSuccess() {
                 logAndToast("广告就绪");
