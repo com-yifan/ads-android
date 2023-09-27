@@ -113,6 +113,8 @@ android.useAndroidX=true</font>来打开Jetifier。
         ...
         // yfsdk start
         implementation (name: 'yfsdk', ext: 'aar')
+        implementation 'com.google.code.gson:gson:2.8.9'
+        implementation 'com.github.bumptech.glide:glide:4.8.0'
         // yfsdk end
         ...
     }
