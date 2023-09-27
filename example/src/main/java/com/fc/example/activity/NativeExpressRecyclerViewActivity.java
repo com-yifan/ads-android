@@ -219,7 +219,7 @@ public class NativeExpressRecyclerViewActivity extends BaseActivity {
                 }
 
                 @Override
-                public void onFailed() {
+                public void onFailed(int errorCode, String message) {
 
                 }
             });

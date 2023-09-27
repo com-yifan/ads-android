@@ -103,7 +103,7 @@ public class FullScreenVideoActivity extends BaseActivity {
             }
 
             @Override
-            public void onFailed() {
+            public void onFailed(int errorCode, String message) {
             }
         });
     }

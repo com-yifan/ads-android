@@ -33,6 +33,12 @@ android {
         release {
             minifyEnabled rootProject.ext.isReleaseSdk
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
+            minifyEnabled rootProject.ext.isReleaseSdk
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
     compileOptions {
@@ -50,7 +56,7 @@ repositories {
 
 dependencies {
     // 聚合SDK
-    implementation(name: "yfsdk-v1.0.0.09251122", ext: "aar")
+    implementation(name: "yfsdk-v1.0.0.09271034", ext: "aar")
     implementation 'com.google.code.gson:gson:2.8.9'
 
     implementation(name: "Baidu_MobAds_SDK-release_v9314", ext: "aar")

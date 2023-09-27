@@ -2,9 +2,11 @@ package com.fc.example.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.fc.ads.utils.FCAdsConst;
 import com.fc.example.R;
 import com.fc.example.base.BaseActivity;
 import com.fc.example.global.GlobalConst;
@@ -29,7 +31,6 @@ public class MainActivity extends BaseActivity {
     public void initView(Bundle savedInstanceState) {
         debugBtn = findViewById(R.id.debug);
         debugBtn.setText(AppUtils.isDebug() ? R.string.close_debug : R.string.open_debug);
-        debugBtn.setVisibility(View.GONE);
     }
 
     /**
@@ -53,7 +54,14 @@ public class MainActivity extends BaseActivity {
      **/
     public void clickDebug(View view) {
         AppUtils.setDebug(!AppUtils.isDebug());
-        debugBtn.setText(AppUtils.isDebug() ? R.string.close_debug : R.string.open_debug);
+        Log.d("main", "clickDebug " + AppUtils.isDebug());
+        if (AppUtils.isDebug()) {
+            debugBtn.setText(R.string.close_debug);
+            FCAdsConst.IS_REQ = true;
+        } else {
+            debugBtn.setText(R.string.open_debug);
+            FCAdsConst.IS_REQ = false;
+        }
     }
 
     /**

@@ -13,14 +13,6 @@ public final class GlobalConst {
     private GlobalConst() {
     }
 
-    public static final int TYPE_BANNER = 0;
-    public static final int TYPE_SPLASH = 1;
-    public static final int TYPE_DRAW = 2;
-    public static final int TYPE_REWARD = 3;
-    public static final int TYPE_INTR = 4;
-    public static final int TYPE_NATI = 5;
-    public static final int TYPE_FULL_SCREEN = 6;
-
     public static final int ERROR_NUM = -1;
 
     public static final String APP_ID = "edd7b801541f4371a1f40212a76869fd";
@@ -35,7 +27,7 @@ public final class GlobalConst {
     public static final String INSERT_AD_ID = "92cc655a182942e8ad6d10d45c9fcf75";
 
     //draw视频信息流广告
-    public static final String DRAW_AD_ID = "6d719ef558654bcdb83463b2d0b5a3be";
+    public static final String DRAW_AD_ID = "e4f3d7df761b44939b92f6e3d8f2590e";
 
     //全屏视频流广告
     public static final String FULL_SCREEN_VIDEO_AD_ID = "f06e23358aac471bb12e94c7e67e1e66";
@@ -44,6 +36,6 @@ public final class GlobalConst {
     public static final String REWARD_AD_ID = "2211058e4ccc4dc480479ef99e250f30";
 
     //信息流广告
-    public static final String NATIVE_PRESS_ID = "0a29f771-de25-41d6-90e7-1269a6a9d85a";
+    public static final String NATIVE_PRESS_ID = "6d719ef558654bcdb83463b2d0b5a3be";
     //子渲染
 }

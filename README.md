@@ -656,10 +656,6 @@ Banner位广告和自渲染广告依附广告容器的上下文必须是Activity
 ```
 void initListener() {
     listener = new YFBannerListener() {
-        @Override
-        public void loadImage(String url, ImageView view) {
-            Glide.with(FCBannerActivity.this).load(url).into(view);
-        }
 
         @Override
         public void onAdSuccess() {
@@ -706,7 +702,7 @@ public void loadAndShowAd(View view) {
         }
 
         @Override
-        public void onFailed() {
+        public void onFailed(int errorCode, String message) {
 
         }
     });
@@ -722,15 +718,6 @@ protected void onDestroy() {
 
 ```
 
-其中以下代码中涉及到自渲染，目前使用的接入方的图片框架，如果接入方没有对应图片框架，建议接入[Glide的框架](#5-glide图片加载框架)
-
-```
-@Override
-public void loadImage(String url, ImageView view) {
-  Glide.with(FCBannerActivity.this).load(url).into(view);
-}
-```
-
 **主要API**
 
 **YFADBanner**
@@ -744,10 +731,6 @@ public void loadImage(String url, ImageView view) {
 | public void loadAndShow()                                                                    | 展示当前广告                                                             |
 
 **YFBannerListener**
-
-| 方法名                                         | 方法介绍                                |
-|:--------------------------------------------|:------------------------------------|
-| void loadImage(String url, ImageView view); | 接入方的图片框架，如果接入方没有对应图片框架，建议接入Glide的框架 |
 
 ## 4.2 插屏
 
@@ -774,19 +757,13 @@ private void startInterstitial(String adId) {
         }
 
         @Override
-        public void onFailed() {
+        public void onFailed(int errorCode, String message) {
         }
     });
 }
 
 public void createListener() {
     listener = new YFInterstitialListener() {
-
-        @Override
-        public void loadImage(String url, ImageView view) {
-            // 使用宿主自身的图片框架，如果没有则推荐使用Glide
-            Glide.with(view.getContext()).load(url).into(view);
-        }
 
         @Override
         public void onAdSuccess() {
@@ -823,15 +800,6 @@ private void releaseListener() {
 
 ```
 
-其中以下代码中涉及到自渲染，目前使用的接入方的图片框架，如果接入方没有对应图片框架，建议接入[Glide的框架](#5-glide图片加载框架)
-
-```
-@Override
-public void loadImage(String url, ImageView view) {
-  Glide.with(FCBannerActivity.this).load(url).into(view);
-}
-```
-
 **主要API**
 
 **YFAdInterstitialAds**
@@ -847,10 +815,6 @@ public void loadImage(String url, ImageView view) {
 | public void loadAndShow()                                                     | 展示当前广告                                                                                            |
 
 **YFInterstitialListener**
-
-| 方法名                                         | 方法介绍                                |
-|:--------------------------------------------|:------------------------------------|
-| void loadImage(String url, ImageView view); | 接入方的图片框架，如果接入方没有对应图片框架，建议接入Glide的框架 |
 
 ## 4.3 激励视频
 
@@ -925,7 +889,7 @@ private void startReward(String adId) {
         }
 
         @Override
-        public void onFailed() {
+        public void onFailed(int errorCode, String message) {
         }
     });
 }
@@ -1062,7 +1026,7 @@ private void loadSplash(ViewGroup adContainer, String adId) {
         }
 
         @Override
-        public void onFailed() {
+        public void onFailed(int errorCode, String message) {
             logAndToast("广告请求失败");
             finish();
         }
@@ -1225,7 +1189,7 @@ private void loadNativeExpress(String adId, ViewGroup adContainer) {
         }
 
         @Override
-        public void onFailed() {
+        public void onFailed(int errorCode, String message) {
 
         }
     });
@@ -1329,7 +1293,7 @@ private void startFullVideo(String adId) {
         }
 
         @Override
-        public void onFailed() {
+        public void onFailed(int errorCode, String message) {
         }
     });
 }
@@ -1408,7 +1372,7 @@ easyAdDraw.toGetData(adId, new OnResultListener() {
     }
 
     @Override
-    public void onFailed() {
+    public void onFailed(int errorCode, String message) {
 
     }
 });

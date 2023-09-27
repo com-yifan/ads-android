@@ -1,9 +1,7 @@
 package com.fc.example.activity;
 
 import android.os.Bundle;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.fc.ads.callback.OnResultListener;
 import com.fc.ads.core.inter.YFAdInterstitialAds;
 import com.fc.ads.core.inter.YFInterstitialListener;
@@ -69,7 +67,7 @@ public class InterstitialActivity extends BaseActivity {
             }
 
             @Override
-            public void onFailed() {
+            public void onFailed(int errorCode, String message) {
             }
         });
     }
@@ -82,6 +80,7 @@ public class InterstitialActivity extends BaseActivity {
      **/
     public void createListener() {
         listener = new YFInterstitialListener() {
+
             @Override
             public void onAdSuccess() {
                 logAndToast("广告就绪");

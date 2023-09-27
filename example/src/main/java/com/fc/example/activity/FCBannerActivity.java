@@ -4,11 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.fc.ads.callback.OnResultListener;
 import com.fc.ads.core.banner.YFAdBanner;
 import com.fc.ads.core.banner.YFBannerListener;
@@ -122,7 +120,7 @@ public class FCBannerActivity extends BaseActivity {
             }
 
             @Override
-            public void onFailed() {
+            public void onFailed(int errorCode, String message) {
 
             }
         });

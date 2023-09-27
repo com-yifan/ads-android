@@ -112,7 +112,7 @@ public class RewardVideoActivity extends BaseActivity {
             }
 
             @Override
-            public void onFailed() {
+            public void onFailed(int errorCode, String message) {
             }
         });
         //必须：设置策略信息
