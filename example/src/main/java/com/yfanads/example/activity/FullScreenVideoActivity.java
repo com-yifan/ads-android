@@ -1,13 +1,13 @@
-package com.fc.example.activity;
+package com.yfanads.example.activity;
 
 import android.os.Bundle;
 
-import com.fc.ads.callback.OnResultListener;
-import com.fc.ads.core.full.YFAdFullScreenVideoAds;
-import com.fc.ads.core.full.YFFullScreenVideoListener;
-import com.fc.ads.model.FCAdError;
-import com.fc.example.R;
-import com.fc.example.base.BaseActivity;
+import com.yfanads.android.callback.OnResultListener;
+import com.yfanads.android.core.full.YFAdFullScreenVideoAds;
+import com.yfanads.android.core.full.YFFullScreenVideoListener;
+import com.yfanads.android.model.YFAdError;
+import com.yfanads.example.R;
+import com.yfanads.example.base.BaseActivity;
 
 /**
  * 全屏广告页面.
@@ -16,8 +16,6 @@ import com.fc.example.base.BaseActivity;
  * @date 2023/9/11 10:28
  **/
 public class FullScreenVideoActivity extends BaseActivity {
-
-//    FCAdFullScreenVideoAds easyFullScreenVideo;
 
     YFFullScreenVideoListener listener;
 
@@ -88,8 +86,8 @@ public class FullScreenVideoActivity extends BaseActivity {
             }
 
             @Override
-            public void onAdFailed(FCAdError fcAdError) {
-                logAndToast("广告加载失败 code=" + fcAdError.code + " msg=" + fcAdError.msg);
+            public void onAdFailed(YFAdError yfAdError) {
+                logAndToast("广告加载失败 code=" + yfAdError.code + " msg=" + yfAdError.msg);
                 FullScreenVideoActivity.this.finish();
             }
         };
@@ -98,8 +96,7 @@ public class FullScreenVideoActivity extends BaseActivity {
         easyFullScreenVideo.toGetData(adId, new OnResultListener() {
             @Override
             public void onSuccess(String jsonString) {
-                easyFullScreenVideo.setData(jsonString);
-                easyFullScreenVideo.loadAndShow();
+                easyFullScreenVideo.loadAndShow(jsonString);
             }
 
             @Override

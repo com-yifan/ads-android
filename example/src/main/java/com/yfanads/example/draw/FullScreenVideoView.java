@@ -1,4 +1,4 @@
-package com.fc.example.draw;
+package com.yfanads.example.draw;
 
 import android.content.Context;
 import android.util.AttributeSet;

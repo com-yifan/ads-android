@@ -56,9 +56,11 @@ repositories {
 
 dependencies {
     // 聚合SDK
-    implementation(name: "yfsdk-v1.0.0.09271034", ext: "aar")
+    implementation(name: "yfsdk-v5.0.0.10131829", ext: "aar")
     implementation 'com.google.code.gson:gson:2.8.9'
     implementation 'com.github.bumptech.glide:glide:4.8.0'
+    // 因为2.8.0及以上需要项目支持androidX，且2.7.0已经能满足日常需求，包体积更小（159kb）
+    implementation 'com.airbnb.android:lottie:2.7.0'
 
     implementation(name: "Baidu_MobAds_SDK-release_v9314", ext: "aar")
 

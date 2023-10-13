@@ -1,4 +1,4 @@
-package com.fc.example.activity;
+package com.yfanads.example.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,14 +7,13 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.fc.ads.callback.OnResultListener;
-import com.fc.ads.core.banner.YFAdBanner;
-import com.fc.ads.core.banner.YFBannerListener;
-import com.fc.ads.model.FCAdError;
-import com.fc.ads.utils.ScreenUtil;
-import com.fc.example.R;
-import com.fc.example.base.BaseActivity;
-import com.fc.example.utils.AppUtils;
+import com.yfanads.android.callback.OnResultListener;
+import com.yfanads.android.core.banner.YFAdBanner;
+import com.yfanads.android.core.banner.YFBannerListener;
+import com.yfanads.android.model.YFAdError;
+import com.yfanads.android.utils.ScreenUtil;
+import com.yfanads.example.R;
+import com.yfanads.example.base.BaseActivity;
 
 /**
  * Banner实例.
@@ -24,12 +23,10 @@ import com.fc.example.utils.AppUtils;
  * @copyright 亿帆
  * @date 2023/9/9 15:45
  **/
-public class FCBannerActivity extends BaseActivity {
+public class YFBannerActivity extends BaseActivity {
 
     String potId;
     TextView textView;
-    TextView potIdView;
-    //    FCADBanner easyAdBanner;
     private RelativeLayout adView;
     private YFBannerListener listener;
 
@@ -44,8 +41,6 @@ public class FCBannerActivity extends BaseActivity {
         potId = intent.getStringExtra("potId");
         textView = findViewById(R.id.title);
         textView.setText(getATitle());
-        potIdView = findViewById(R.id.potId);
-        potIdView.setText(potId);
 
         adView = findViewById(R.id.banner_layout);
 
@@ -76,8 +71,8 @@ public class FCBannerActivity extends BaseActivity {
             }
 
             @Override
-            public void onAdFailed(FCAdError fcAdError) {
-                logAndToast("广告加载失败 code=" + fcAdError.code + " msg=" + fcAdError.msg);
+            public void onAdFailed(YFAdError yfAdError) {
+                logAndToast("广告加载失败 code=" + yfAdError.code + " msg=" + yfAdError.msg);
             }
         };
     }
@@ -107,16 +102,15 @@ public class FCBannerActivity extends BaseActivity {
         showADBanner.toGetData(potId, new OnResultListener() {
             @Override
             public void onSuccess(String jsonString) {
-                //如果集成穿山甲，这里必须配置，建议尺寸要和穿山甲后台中的"代码位尺寸"宽高比例一致，值单位为dp，这里示例使用的广告位宽高比为640：100。
-                int adWidth = ScreenUtil.px2dip(AppUtils.getContext(),
-                        ScreenUtil.getScreenWidth(AppUtils.getContext()));
-                int adHeight = (int) (((double) adWidth / (double) 640) * 100);
+                // 这里示例使用的广告位宽高比为640：100。
+                int width = ScreenUtil.px2dip(getApplicationContext(),
+                        (float) (ScreenUtil.getScreenWidth(getApplicationContext())));
+                Log.d("TEST", "width = " + width + " , screen width ="
+                        + ScreenUtil.getScreenWidth(getApplicationContext()));
                 //如果高度传入0代表自适应高度
-                showADBanner.setViewAcceptedSize(adWidth, adHeight);
-                Log.d("TEST", "设置数据");
-                showADBanner.setData(jsonString);
+                showADBanner.setViewAcceptedSize(width, 250);
                 Log.d("TEST", "开始加载");
-                showADBanner.loadAndShow();
+                showADBanner.loadAndShow(jsonString);
             }
 
             @Override

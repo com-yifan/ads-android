@@ -1,4 +1,4 @@
-package com.fc.example.utils;
+package com.yfanads.example.utils;
 
 import android.app.Activity;
 import android.os.Build;

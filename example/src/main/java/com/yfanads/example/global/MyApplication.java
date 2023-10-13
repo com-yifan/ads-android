@@ -1,4 +1,4 @@
-package com.fc.example.global;
+package com.yfanads.example.global;
 
 import android.app.ActivityManager;
 import android.app.Application;
@@ -7,11 +7,11 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.webkit.WebView;
 
-import com.fc.ads.YFAdsConfig;
-import com.fc.ads.YFAdsManager;
-import com.fc.example.utils.AppUtils;
-import com.fc.example.utils.CrashHandler;
 import com.hjq.toast.ToastUtils;
+import com.yfanads.android.YFAdsConfig;
+import com.yfanads.android.YFAdsManager;
+import com.yfanads.example.utils.AppUtils;
+import com.yfanads.example.utils.CrashHandler;
 
 /**
  * 全局Application.
@@ -38,7 +38,7 @@ public class MyApplication extends Application {
 
     private void initSDK() {
         YFAdsConfig fcAdsConfig =
-                new YFAdsConfig.YFAdsConfigBuilder(GlobalConst.APP_ID, "v1.0.0", "yfdemo")
+                new YFAdsConfig.YFAdsConfigBuilder(GlobalConst.APP_ID, "v1.0.1", "岁友社区")
                         .setDebug(true)
                         .builder();
         YFAdsManager.getInstance().init(this, fcAdsConfig);

@@ -1,8 +1,7 @@
-package com.fc.example.activity;
+package com.yfanads.example.activity;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -11,14 +10,14 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import com.fc.ads.callback.OnResultListener;
-import com.fc.ads.core.splash.YFAdSplashAds;
-import com.fc.ads.core.splash.YFSplashListener;
-import com.fc.ads.model.FCAdError;
-import com.fc.example.R;
-import com.fc.example.base.BaseActivity;
-import com.fc.example.global.GlobalConst;
-import com.fc.example.utils.StatusBar;
+import com.yfanads.android.callback.OnResultListener;
+import com.yfanads.android.core.splash.YFAdSplashAds;
+import com.yfanads.android.core.splash.YFSplashListener;
+import com.yfanads.android.model.YFAdError;
+import com.yfanads.example.R;
+import com.yfanads.example.base.BaseActivity;
+import com.yfanads.example.global.GlobalConst;
+import com.yfanads.example.utils.StatusBar;
 
 import java.lang.reflect.Method;
 
@@ -40,7 +39,7 @@ public class SplashActivity extends BaseActivity {
     private YFSplashListener listener;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
@@ -67,7 +66,7 @@ public class SplashActivity extends BaseActivity {
     }
 
     /* *
-     * 加载开屏广告，开屏推荐使用加载并展示开屏广告方式，所有的广告均支持请求和展示分离，如有必要，可分别调用加载广告和展示广告，可参考"插屏广告"中的处理示例。
+     * 加载开屏广告，开屏推荐使用加载并展示开屏广告方式
      *
      * @param adContainer    广告承载布局，不可为空
      * @param logoContainer  底部logo布局，可以为空
@@ -81,10 +80,8 @@ public class SplashActivity extends BaseActivity {
         fcAdSplash.toGetData(adId, new OnResultListener() {
             @Override
             public void onSuccess(String jsonString) {
-                //必须：设置策略信息
-                fcAdSplash.setData(jsonString);
                 //必须：请求并展示广告
-                fcAdSplash.loadAndShow();
+                fcAdSplash.loadAndShow(jsonString);
             }
 
             @Override
@@ -126,8 +123,8 @@ public class SplashActivity extends BaseActivity {
             }
 
             @Override
-            public void onAdFailed(FCAdError fcAdError) {
-                logAndToast("广告加载失败 code=" + fcAdError.code + " msg=" + fcAdError.msg);
+            public void onAdFailed(YFAdError yfAdError) {
+                logAndToast("广告加载失败 code=" + yfAdError.code + " msg=" + yfAdError.msg);
                 finish();
             }
 

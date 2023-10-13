@@ -1,4 +1,4 @@
-package com.fc.example.utils;
+package com.yfanads.example.utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

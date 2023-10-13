@@ -1,22 +1,23 @@
-package com.fc.example.activity;
+package com.yfanads.example.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 
-import com.fc.ads.callback.OnResultListener;
-import com.fc.ads.core.reward.YFAdRewardAds;
-import com.fc.ads.core.reward.YFRewardServerCallBackInf;
-import com.fc.ads.core.reward.YFRewardVideoListener;
-import com.fc.ads.model.FCAdError;
-import com.fc.example.R;
-import com.fc.example.base.BaseActivity;
+import com.yfanads.android.callback.OnResultListener;
+import com.yfanads.android.core.reward.YFAdRewardAds;
+import com.yfanads.android.core.reward.YFRewardServerCallBackInf;
+import com.yfanads.android.core.reward.YFRewardVideoListener;
+import com.yfanads.android.model.YFAdError;
+import com.yfanads.example.R;
+import com.yfanads.example.base.BaseActivity;
 
 /**
  * 激励视频页面.
  *
  * @author JamesQian
+ * @version 1.0
  * @copyright 亿帆
  * @date 2023/9/11 10:31
- * @version 1.0
  **/
 public class RewardVideoActivity extends BaseActivity {
 
@@ -71,8 +72,8 @@ public class RewardVideoActivity extends BaseActivity {
             }
 
             @Override
-            public void onAdFailed(FCAdError fcAdError) {
-                logAndToast("广告加载失败 code=" + fcAdError.code + " msg=" + fcAdError.msg);
+            public void onAdFailed(YFAdError yfAdError) {
+                logAndToast("广告加载失败 code=" + yfAdError.code + " msg=" + yfAdError.msg);
                 RewardVideoActivity.this.finish();
             }
 
@@ -93,13 +94,11 @@ public class RewardVideoActivity extends BaseActivity {
             }
 
             @Override
-            public void onAdReward() {
-                logAndToast("激励发放");
-            }
-
-            @Override
             public void onRewardServerInf(YFRewardServerCallBackInf inf) {
-                logAndToast("onRewardServerInf" + inf);
+                logAndToast("奖励发放成功");
+                if (inf != null) {
+                    onRewardServer(inf.rewardInf);
+                }
             }
         };
         //初始化，注意需要时再初始化，不要复用。
@@ -107,8 +106,7 @@ public class RewardVideoActivity extends BaseActivity {
         easyRewardVideo.toGetData(adId, new OnResultListener() {
             @Override
             public void onSuccess(String jsonString) {
-                easyRewardVideo.setData(jsonString);
-                easyRewardVideo.loadAndShow();
+                easyRewardVideo.loadAndShow(jsonString);
             }
 
             @Override
@@ -116,6 +114,23 @@ public class RewardVideoActivity extends BaseActivity {
             }
         });
         //必须：设置策略信息
+    }
+
+    private void onRewardServer(YFRewardServerCallBackInf.RewardInf rewardInf) {
+
+        Log.d("reward", "type = " + rewardInf.type);
+
+        if (rewardInf instanceof YFRewardServerCallBackInf.BDRewardInf) {
+            Log.d("reward", "type = BDRewardInf ");
+        } else if (rewardInf instanceof YFRewardServerCallBackInf.YlhRewardInf) {
+            Log.d("reward", "type = YlhRewardInf");
+        } else if (rewardInf instanceof YFRewardServerCallBackInf.KsRewardInf) {
+            Log.d("reward", "type = KsRewardInf");
+        } else if (rewardInf instanceof YFRewardServerCallBackInf.CsjRewardInf) {
+            Log.d("reward", "type = CsjRewardInf");
+        } else {
+            Log.d("reward", "type = Other");
+        }
     }
 
 }

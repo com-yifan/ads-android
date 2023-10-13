@@ -1,12 +1,11 @@
-package com.fc.example.base;
+package com.yfanads.example.base;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-import com.fc.example.utils.ToastUtils;
+import com.yfanads.example.utils.ToastUtils;
 
 /**
  * 基础Activity.
@@ -16,7 +15,7 @@ import com.fc.example.utils.ToastUtils;
  **/
 public abstract class BaseActivity extends AppCompatActivity {
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         initView(savedInstanceState);

@@ -1,13 +1,13 @@
-package com.fc.example.activity;
+package com.yfanads.example.activity;
 
 import android.os.Bundle;
 
-import com.fc.ads.callback.OnResultListener;
-import com.fc.ads.core.inter.YFAdInterstitialAds;
-import com.fc.ads.core.inter.YFInterstitialListener;
-import com.fc.ads.model.FCAdError;
-import com.fc.example.R;
-import com.fc.example.base.BaseActivity;
+import com.yfanads.android.callback.OnResultListener;
+import com.yfanads.android.core.inter.YFAdInterstitialAds;
+import com.yfanads.android.core.inter.YFInterstitialListener;
+import com.yfanads.android.model.YFAdError;
+import com.yfanads.example.R;
+import com.yfanads.example.base.BaseActivity;
 
 /**
  * 插屏广告.
@@ -20,7 +20,6 @@ import com.fc.example.base.BaseActivity;
 public class InterstitialActivity extends BaseActivity {
 
     private YFInterstitialListener listener;
-//    private FCAdInterstitialAds easyInterstitial;
 
     @Override
     public int getLayoutId() {
@@ -55,15 +54,11 @@ public class InterstitialActivity extends BaseActivity {
         createListener();
         //初始化
         YFAdInterstitialAds easyInterstitial = new YFAdInterstitialAds(this, listener);
-        easyInterstitial.setKeyBackCloseAdOfSelfRender(true);
-        easyInterstitial.setClickCloseAdOfSelfRender(true);
-        easyInterstitial.setViewAcceptedSize(300, 533);
         //必须：设置策略信息
         easyInterstitial.toGetData(adId, new OnResultListener() {
             @Override
             public void onSuccess(String jsonString) {
-                easyInterstitial.setData(jsonString);
-                easyInterstitial.loadAndShow();
+                easyInterstitial.loadAndShow(jsonString);
             }
 
             @Override
@@ -102,8 +97,8 @@ public class InterstitialActivity extends BaseActivity {
             }
 
             @Override
-            public void onAdFailed(FCAdError fcAdError) {
-                logAndToast("广告加载失败 code=" + fcAdError.code + " msg=" + fcAdError.msg);
+            public void onAdFailed(YFAdError yfAdError) {
+                logAndToast("广告加载失败 code=" + yfAdError.code + " msg=" + yfAdError.msg);
             }
         };
     }

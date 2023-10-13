@@ -50,10 +50,16 @@
 
 ##---------------End: proguard configuration for Gson  ----------
 
--keep class com.fc.ads.** { *; }
+-keep class com.yfanads.android.** { *; }
+-keep class com.yfanads.ads.** { *; }
 -keep class com.google.** { *; }
 -dontwarn okio.**
 -dontwarn com.ak.**
 -dontwarn android.webkit.**
 -dontwarn com.bytedance.sdk.**
 -keep class android.** { *; }
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}

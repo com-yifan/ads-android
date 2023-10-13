@@ -1,4 +1,4 @@
-package com.fc.example.activity;
+package com.yfanads.example.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -11,12 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.fc.ads.callback.OnResultListener;
-import com.fc.ads.core.nat.YFAdNativeExpressAds;
-import com.fc.ads.core.nat.YFNativeExpressListener;
-import com.fc.ads.model.FCAdError;
-import com.fc.example.R;
-import com.fc.example.base.BaseActivity;
+import com.yfanads.android.callback.OnResultListener;
+import com.yfanads.android.core.nat.YFAdNativeExpressAds;
+import com.yfanads.android.core.nat.YFNativeExpressListener;
+import com.yfanads.android.model.YFAdError;
+import com.yfanads.example.R;
+import com.yfanads.example.base.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -199,7 +199,7 @@ public class NativeExpressRecyclerViewActivity extends BaseActivity {
                 }
 
                 @Override
-                public void onAdFailed(FCAdError fcAdError) {
+                public void onAdFailed(YFAdError fcAdError) {
                     isNativeLoading = false;
                     logAndToast("广告加载失败 code=" + fcAdError.code + " msg=" + fcAdError.msg);
                 }
@@ -214,8 +214,7 @@ public class NativeExpressRecyclerViewActivity extends BaseActivity {
             easyNativeExpress.toGetData(adId, new OnResultListener() {
                 @Override
                 public void onSuccess(String jsonString) {
-                    easyNativeExpress.setData(jsonString);
-                    easyNativeExpress.loadAndShow();
+                    easyNativeExpress.loadAndShow(jsonString);
                 }
 
                 @Override

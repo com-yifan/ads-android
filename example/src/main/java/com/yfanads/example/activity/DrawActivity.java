@@ -1,4 +1,4 @@
-package com.fc.example.activity;
+package com.yfanads.example.activity;
 
 import android.app.Activity;
 import android.media.MediaPlayer;
@@ -18,16 +18,16 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.VideoView;
 
-import com.fc.ads.callback.OnResultListener;
-import com.fc.ads.core.draw.YFAdDrawAds;
-import com.fc.ads.core.draw.YFDrawListener;
-import com.fc.ads.model.FCAdError;
-import com.fc.example.R;
-import com.fc.example.base.BaseActivity;
-import com.fc.example.draw.FullScreenVideoView;
-import com.fc.example.draw.OnViewPagerListener;
-import com.fc.example.draw.ViewPagerLayoutManager;
-import com.fc.example.utils.UIUtils;
+import com.yfanads.android.callback.OnResultListener;
+import com.yfanads.android.core.draw.YFAdDrawAds;
+import com.yfanads.android.core.draw.YFDrawListener;
+import com.yfanads.android.model.YFAdError;
+import com.yfanads.example.R;
+import com.yfanads.example.base.BaseActivity;
+import com.yfanads.example.draw.FullScreenVideoView;
+import com.yfanads.example.draw.OnViewPagerListener;
+import com.yfanads.example.draw.ViewPagerLayoutManager;
+import com.yfanads.example.utils.UIUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -372,7 +372,7 @@ public class DrawActivity extends BaseActivity {
                 }
 
                 @Override
-                public void onAdFailed(FCAdError fcAdError) {
+                public void onAdFailed(YFAdError fcAdError) {
                     logAndToast("广告加载失败 code=" + fcAdError.code + " msg=" + fcAdError.msg);
                 }
 
@@ -385,9 +385,8 @@ public class DrawActivity extends BaseActivity {
             easyAdDraw.toGetData(adId, new OnResultListener() {
                 @Override
                 public void onSuccess(String jsonString) {
-                    easyAdDraw.setData(jsonString);
                     //必须：请求并展示广告
-                    easyAdDraw.loadAndShow();
+                    easyAdDraw.loadAndShow(jsonString);
                 }
 
                 @Override

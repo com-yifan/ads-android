@@ -1,4 +1,4 @@
-package com.fc.example.global;
+package com.yfanads.example.global;
 
 /**
  * 全局配置信息.
