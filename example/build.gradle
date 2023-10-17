@@ -63,13 +63,13 @@ dependencies {
     // 因为2.8.0及以上需要项目支持androidX，且2.7.0已经能满足日常需求，包体积更小（159kb）
     implementation 'com.airbnb.android:lottie:2.7.0'
 
-    implementation(name: "Baidu_MobAds_SDK-release_v9314", ext: "aar")
+    implementation(name: "Baidu_MobAds_SDK-release_v93223", ext: "aar")
 
-    implementation(name: "open_ad_sdk_5512", ext: "aar")
+    implementation(name: "open_ad_sdk_5615", ext: "aar")
 
-    implementation(name: "kssdk-ad-33512", ext: "aar")
+    implementation(name: "kssdk-ad-33533", ext: "aar")
 
-    implementation(name: "GDTSDK_4540", ext: "aar")
+    implementation(name: "GDTSDK_4542", ext: "aar")
 
     // 以下是demo的依赖，SDK本身不依赖
     implementation 'de.hdodenhof:circleimageview:2.2.0'
