@@ -295,16 +295,17 @@ public class MyApplication extends Application {
 | public void setLimitPersonal(boolean limitPersonal)              | 设置是否允许SDK使用个性化推荐。true不使用，false使用。默认为false                                                |
 
 ## 2.6 合规三步走
+* [参考合规指南](http://www.yfanads.cn/guideline.html)
 
-* 您需要确保App有<font color=#0099ff face="黑体">隐私政策</font>
-  并且在用户首次启动App时就弹出<font color=#0099ff face="黑体">隐私政策</font>取得用户同意</br>
+* 您需要确保App有<font color=#0099ff face="黑体">[隐私政策](http://www.yfanads.cn/privacy.html)</font>
+  并且在用户首次启动App时就弹出<font color=#0099ff face="黑体">[隐私政策](http://www.yfanads.cn/privacy.html)</font>取得用户同意</br>
   </br>
-* 您务必告知用户，您选择亿帆SDK服务；请在<font color=#0099ff face="黑体">隐私政策</font>
+* 您务必告知用户，您选择亿帆SDK服务；请在<font color=#0099ff face="黑体">[隐私政策](http://www.yfanads.cn/privacy.html)</font>
   中增加如下参考条款：</br>
   我们的产品集成亿帆SDK，亿帆SDK需要收集您的设备Mac地址、唯一设备识别码(
   IMEI/android ID)、SIM卡IMSI信息、地理位置信息以提供个性化推荐内容，提升用户体验。</br>
   </br>
-* 您务必确保用户同意<font color=#0099ff face="黑体">隐私政策</font>之后，再初始化亿帆SDK。</br>
+* 您务必确保用户同意<font color=#0099ff face="黑体">[隐私政策](http://www.yfanads.cn/privacy.html)</font>之后，再初始化亿帆SDK。</br>
 
 ## 2.7 关闭个性化
 

@@ -23,7 +23,7 @@ import com.yfanads.example.base.BaseActivity;
  * @copyright 亿帆
  * @date 2023/9/9 15:45
  **/
-public class YFBannerActivity extends BaseActivity {
+public class BannerActivity extends BaseActivity {
 
     String potId;
     TextView textView;
@@ -105,10 +105,11 @@ public class YFBannerActivity extends BaseActivity {
                 // 这里示例使用的广告位宽高比为640：100。
                 int width = ScreenUtil.px2dip(getApplicationContext(),
                         (float) (ScreenUtil.getScreenWidth(getApplicationContext())));
-                Log.d("TEST", "width = " + width + " , screen width ="
-                        + ScreenUtil.getScreenWidth(getApplicationContext()));
+                // 52是底部高
+                int height = width * 9 / 20 - 52;
+                Log.d("TEST", "width = " + width + " , screen width =" + height);
                 //如果高度传入0代表自适应高度
-                showADBanner.setViewAcceptedSize(width, 250);
+                showADBanner.setViewAcceptedSize(width, height);
                 Log.d("TEST", "开始加载");
                 showADBanner.loadAndShow(jsonString);
             }

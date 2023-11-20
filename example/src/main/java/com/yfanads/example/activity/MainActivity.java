@@ -40,7 +40,7 @@ public class MainActivity extends BaseActivity {
      * @date 2023/9/9 17:24
      **/
     public void clickBanner(View view) {
-        startActivity(new Intent(this, YFBannerActivity.class).putExtra("potId",
+        startActivity(new Intent(this, BannerActivity.class).putExtra("potId",
                 GlobalConst.AD_ID));
     }
 
@@ -129,78 +129,5 @@ public class MainActivity extends BaseActivity {
                 new Intent(this, NativeExpressRecyclerViewActivity.class).putExtra("potId",
                         GlobalConst.NATIVE_PRESS_ID));
     }
-
-//    private void startAndroidINFO() {
-//        String text = "获取设备手机制造商：" + getManufacturer() + "\r\n";
-//        text += "获取设备AndroidID：" + getAndroidID() + "\r\n";
-//        text += "获取设备型号：" + getModel() + "\r\n";
-//        text += "获取唯一设备 ID：" + getUdid() + "\r\n";
-//        text += "获取设备 AppVersionCode：" + getVersionCode() + "\r\n";
-//        text += "获取唯一设备 AppVersionName：" + getVerName() + "\r\n";
-//        text += "获取设备系统版本号：" + getSDKVersionName() + "\r\n";
-//        text += "获取设备系统版本码：" + getSDKVersionCode() + "\r\n";
-//
-//        YFLog.debug(text);
-//
-//    }
-//
-//    public String getManufacturer() {
-//        return Build.MANUFACTURER;
-//    }
-//
-//    public String getAndroidID() {
-//        String id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-//        return id == null ? "" : id;
-//    }
-//
-//    public String getModel() {
-//        String model = Build.MODEL;
-//        if (model != null) {
-//            model = model.trim().replaceAll("\\s*", "");
-//        } else {
-//            model = "";
-//        }
-//        return model;
-//    }
-//
-//    public String getUdid() {
-//        String androidID = getAndroidID();
-//        return "2" + UUID.nameUUIDFromBytes(androidID.getBytes()).toString().replace("-", "");
-//    }
-//
-//    /**
-//     * 获取软件版本号
-//     */
-//    public int getVersionCode() {
-//        int versionCode = 0;
-//        //获取软件版本号，对应AndroidManifest.xml下android：versionCode
-//        try {
-//            versionCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
-//        } catch (PackageManager.NameNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        return versionCode;
-//    }
-//
-//    /**
-//     * 获取版本号名称
-//     */
-//    public String getVerName() {
-//        String verName = "";
-//        try {
-//            verName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-//        } catch (PackageManager.NameNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        return verName;
-//    }
-//
-//    public String getSDKVersionName() {
-//        return Build.VERSION.RELEASE;
-//    }
-//
-//    public int getSDKVersionCode() {
-//        return Build.VERSION.SDK_INT;
-//    }
 
 }

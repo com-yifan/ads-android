@@ -98,9 +98,9 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void onAdSuccess() {
                 logAndToast("广告加载成功 ");
-                if (adLogoLly.getVisibility() == View.GONE) {
-                    adLogoLly.setVisibility(View.VISIBLE);
-                }
+//                if (adLogoLly.getVisibility() == View.GONE) {
+//                    adLogoLly.setVisibility(View.VISIBLE);
+//                }
             }
 
             @Override
