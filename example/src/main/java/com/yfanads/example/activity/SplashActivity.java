@@ -1,5 +1,6 @@
 package com.yfanads.example.activity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
@@ -25,9 +27,9 @@ import java.lang.reflect.Method;
  * 开屏页面.
  *
  * @author JamesQian
+ * @version 1.0
  * @copyright 亿帆
  * @date 2023/9/11 9:19
- * @version 1.0
  **/
 public class SplashActivity extends BaseActivity {
     FrameLayout adContainer;
@@ -38,6 +40,8 @@ public class SplashActivity extends BaseActivity {
 
     private YFSplashListener listener;
 
+    private boolean isFromInit = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,9 +49,16 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     public int getLayoutId() {        //设置颜色为半透明
+        // Set the activity to fullscreen
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+        );
         StatusBar.setColor(this, android.R.color.transparent);
         //隐藏状态栏
         StatusBar.hide(this);
+
+
         return R.layout.activity_splash_custom_logo;
     }
 
@@ -56,6 +67,11 @@ public class SplashActivity extends BaseActivity {
         setFullScreen();
         type = getIntent().getIntExtra("type", GlobalConst.ERROR_NUM);
         String potId = getIntent().getStringExtra("potId");
+
+        if (TextUtils.isEmpty(potId)) {
+            isFromInit = true;
+            potId = GlobalConst.SPLASH_AD_ID;
+        }
 
         adContainer = findViewById(R.id.splash_container);
         adLogoLly = findViewById(R.id.ll_logo);
@@ -98,9 +114,9 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void onAdSuccess() {
                 logAndToast("广告加载成功 ");
-//                if (adLogoLly.getVisibility() == View.GONE) {
-//                    adLogoLly.setVisibility(View.VISIBLE);
-//                }
+                if (adLogoLly.getVisibility() == View.GONE) {
+                    adLogoLly.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -146,10 +162,11 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void goToMainActivity() {
-//        ToastUtils.showShort("跳转首页");
-//        Intent intent = new Intent(this, MainActivity.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//        startActivity(intent);
+        if (isFromInit) {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
         finish();
     }
 
