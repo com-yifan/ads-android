@@ -2,14 +2,15 @@ package com.yfanads.example.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.yfanads.android.callback.OnResultListener;
 import com.yfanads.android.core.nat.YFAdNativeExpressAds;
@@ -124,7 +125,6 @@ public class NativeExpressRecyclerViewActivity extends BaseActivity {
             mData = list;
         }
 
-        @Override
         public int getItemCount() {
             if (mData != null) {
                 return mData.size();
@@ -133,13 +133,11 @@ public class NativeExpressRecyclerViewActivity extends BaseActivity {
             }
         }
 
-        @Override
         public int getItemViewType(int position) {
             //核心步骤2：根据是否包含标题内容，来判断是否为广告item
             return TextUtils.isEmpty(mData.get(position).title) ? TYPE_AD : TYPE_DATA;
         }
 
-        @Override
         public void onBindViewHolder(final CustomViewHolder customViewHolder, final int position) {
             int type = getItemViewType(position);
             if (TYPE_AD == type) {
@@ -150,7 +148,6 @@ public class NativeExpressRecyclerViewActivity extends BaseActivity {
             }
         }
 
-        @Override
         public CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
             int layoutId = (viewType == TYPE_AD) ? R.layout.item_express_ad : R.layout.item_data;
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(layoutId, null);

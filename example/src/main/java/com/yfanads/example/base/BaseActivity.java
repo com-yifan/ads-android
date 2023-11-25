@@ -1,7 +1,7 @@
 package com.yfanads.example.base;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
@@ -13,7 +13,7 @@ import com.yfanads.example.utils.ToastUtils;
  * @author JamesQian
  * @date 2023/9/11 10:27
  **/
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

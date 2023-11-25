@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
 
 import java.lang.reflect.Field;
 
@@ -76,7 +74,6 @@ public final class AppUtils {
      * @param fieldName fieldName
      * @return java.lang.Object
      **/
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static Object getBuildConfigValue(String fieldName) {
         try {
             Class<?> clazz = Class.forName(context.getPackageName() + ".BuildConfig");
@@ -154,24 +151,6 @@ public final class AppUtils {
      */
     public static int getResId(String type, String resName) {
         return context.getResources().getIdentifier(resName, type, context.getPackageName());
-    }
-
-    /**
-     * 根据context获取Activity.
-     *
-     * @author JamesQian
-     * @date 2023/9/11 9:16
-     * @param context context
-     * @return android.support.v7.app.AppCompatActivity
-     **/
-    public static AppCompatActivity findActivityByContext(Context context) {
-        while (context instanceof ContextWrapper) {
-            if (context instanceof AppCompatActivity) {
-                return (AppCompatActivity) context;
-            }
-            context = ((ContextWrapper) context).getBaseContext();
-        }
-        return null;
     }
 
     /**

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.support.annotation.NonNull;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -50,7 +49,7 @@ public final class CrashHandler implements Thread.UncaughtExceptionHandler {
      * @date 2023/9/9 14:02
      **/
     @Override
-    public void uncaughtException(@NonNull Thread t, @NonNull Throwable throwable) {
+    public void uncaughtException(Thread t, Throwable throwable) {
         File dir = new File(mContext.getExternalCacheDir(), "crash_info");
         if (!dir.exists()) {
             dir.mkdirs();

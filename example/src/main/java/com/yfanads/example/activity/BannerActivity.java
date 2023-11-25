@@ -30,6 +30,10 @@ public class BannerActivity extends BaseActivity {
     private RelativeLayout adView;
     private YFBannerListener listener;
 
+    private YFAdBanner showADBanner;
+
+    private boolean isOnlyLoad = false;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_ad_model;
@@ -68,6 +72,7 @@ public class BannerActivity extends BaseActivity {
             @Override
             public void onAdClosed() {
                 logAndToast("广告关闭");
+                isOnlyLoad = false;
             }
 
             @Override
@@ -96,8 +101,36 @@ public class BannerActivity extends BaseActivity {
      * @author JamesQian
      * @date 2023/9/9 15:47
      **/
+    public void loadOnlyAd(View view) {
+        this.isOnlyLoad = true;
+        startBanner();
+    }
+
+    /**
+     * 展示.
+     *
+     * @param view view
+     * @author JamesQian
+     * @date 2023/9/9 15:47
+     **/
+    public void showAd(View view) {
+        showAds();
+    }
+
+    /**
+     * 展示.
+     *
+     * @param view view
+     * @author JamesQian
+     * @date 2023/9/9 15:47
+     **/
     public void loadAndShowAd(View view) {
-        final YFAdBanner showADBanner = new YFAdBanner(this, adView, listener);
+        this.isOnlyLoad = false;
+        startBanner();
+    }
+
+    private void startBanner() {
+        showADBanner  = new YFAdBanner(this, adView, listener);
         logAndToast("广告请求中");
         showADBanner.toGetData(potId, new OnResultListener() {
             @Override
@@ -111,7 +144,7 @@ public class BannerActivity extends BaseActivity {
                 //如果高度传入0代表自适应高度
                 showADBanner.setViewAcceptedSize(width, height);
                 Log.d("TEST", "开始加载");
-                showADBanner.loadAndShow(jsonString);
+                startLoaderAds(jsonString);
             }
 
             @Override
@@ -119,5 +152,19 @@ public class BannerActivity extends BaseActivity {
 
             }
         });
+    }
+
+    private void startLoaderAds(String jsonString) {
+        if (isOnlyLoad) {
+            showADBanner.loadOnly(jsonString);
+        } else {
+            showADBanner.loadAndShow(jsonString);
+        }
+    }
+
+    private void showAds() {
+        if (isOnlyLoad && showADBanner != null) {
+            showADBanner.showAds();
+        }
     }
 }

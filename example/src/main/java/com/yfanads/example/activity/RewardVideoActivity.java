@@ -100,6 +100,11 @@ public class RewardVideoActivity extends BaseActivity {
                     onRewardServer(inf.rewardInf);
                 }
             }
+
+            @Override
+            public String getUserId() {
+                return "123124";
+            }
         };
         //初始化，注意需要时再初始化，不要复用。
         final YFAdRewardAds easyRewardVideo = new YFAdRewardAds(this, listener);

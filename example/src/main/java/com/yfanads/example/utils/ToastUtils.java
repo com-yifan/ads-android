@@ -4,8 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.StringRes;
+
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,7 +72,7 @@ public final class ToastUtils {
     * @date 2023/9/11 9:36
     * @param layoutId layoutId
     **/
-    public static void setView(@LayoutRes int layoutId) {
+    public static void setView(int layoutId) {
         LayoutInflater inflate = (LayoutInflater) AppUtils.getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         ToastUtils.customView = inflate.inflate(layoutId, null);
@@ -113,7 +112,7 @@ public final class ToastUtils {
      * @date 2023/9/11 9:37
      * @param resId resId
      **/
-    public static void showShortSafe(final @StringRes int resId) {
+    public static void showShortSafe(final int resId) {
         sHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -130,7 +129,7 @@ public final class ToastUtils {
      * @param resId resId
      * @param args args
      **/
-    public static void showShortSafe(final @StringRes int resId, final Object... args) {
+    public static void showShortSafe(final int resId, final Object... args) {
         sHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -190,7 +189,7 @@ public final class ToastUtils {
      *
      * @param resId 资源Id
      */
-    public static void showLongSafe(final @StringRes int resId) {
+    public static void showLongSafe(final int resId) {
         sHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -205,7 +204,7 @@ public final class ToastUtils {
      * @param resId 资源Id
      * @param args  参数
      */
-    public static void showLongSafe(final @StringRes int resId, final Object... args) {
+    public static void showLongSafe(final int resId, final Object... args) {
         sHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -243,7 +242,7 @@ public final class ToastUtils {
      *
      * @param resId 资源Id
      */
-    public static void showShort(@StringRes int resId) {
+    public static void showShort(int resId) {
         show(resId, Toast.LENGTH_SHORT);
     }
 
@@ -253,7 +252,7 @@ public final class ToastUtils {
      * @param resId 资源Id
      * @param args  参数
      */
-    public static void showShort(@StringRes int resId, Object... args) {
+    public static void showShort(int resId, Object... args) {
         show(resId, Toast.LENGTH_SHORT, args);
     }
 
@@ -281,7 +280,7 @@ public final class ToastUtils {
      *
      * @param resId 资源Id
      */
-    public static void showLong(@StringRes int resId) {
+    public static void showLong(int resId) {
         show(resId, Toast.LENGTH_LONG);
     }
 
@@ -291,7 +290,7 @@ public final class ToastUtils {
      * @param resId 资源Id
      * @param args  参数
      */
-    public static void showLong(@StringRes int resId, Object... args) {
+    public static void showLong(int resId, Object... args) {
         show(resId, Toast.LENGTH_LONG, args);
     }
 
@@ -311,7 +310,7 @@ public final class ToastUtils {
      * @param resId    资源Id
      * @param duration 显示时长
      */
-    private static void show(@StringRes int resId, int duration) {
+    private static void show(int resId, int duration) {
         show(AppUtils.getContext().getResources().getText(resId).toString(), duration);
     }
 
@@ -322,7 +321,7 @@ public final class ToastUtils {
      * @param duration 显示时长
      * @param args     参数
      */
-    private static void show(@StringRes int resId, int duration, Object... args) {
+    private static void show(int resId, int duration, Object... args) {
         show(String.format(AppUtils.getContext().getResources().getString(resId), args), duration);
     }
 

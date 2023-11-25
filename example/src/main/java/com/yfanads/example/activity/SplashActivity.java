@@ -141,7 +141,7 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void onAdFailed(YFAdError yfAdError) {
                 logAndToast("广告加载失败 code=" + yfAdError.code + " msg=" + yfAdError.msg);
-                finish();
+                goToMainActivity();
             }
 
         };

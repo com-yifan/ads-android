@@ -38,7 +38,7 @@ public class MyApplication extends Application {
 
     private void initSDK() {
         YFAdsConfig fcAdsConfig =
-                new YFAdsConfig.YFAdsConfigBuilder(GlobalConst.APP_ID, "v1.0.1", "岁友社区")
+                new YFAdsConfig.YFAdsConfigBuilder(GlobalConst.APP_ID, "v1.0.1", "岁友社区", "com.fc.example")
                         .setDebug(true)
                         .builder();
         YFAdsManager.getInstance().init(this, fcAdsConfig);

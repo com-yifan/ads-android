@@ -21,6 +21,10 @@ public class InterstitialActivity extends BaseActivity {
 
     private YFInterstitialListener listener;
 
+    private YFAdInterstitialAds easyInterstitial;
+
+    private boolean isOnlyLoad = false;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_interstitial;
@@ -31,6 +35,10 @@ public class InterstitialActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         releaseListener();
+        if (easyInterstitial != null) {
+            easyInterstitial.destroy();
+            easyInterstitial = null;
+        }
     }
 
     @Override
@@ -38,7 +46,17 @@ public class InterstitialActivity extends BaseActivity {
         String potId = getIntent().getStringExtra("potId");
 
         findViewById(R.id.loadAndShow).setOnClickListener(view -> {
+            isOnlyLoad = false;
             startInterstitial(potId);
+        });
+
+        findViewById(R.id.loadOnlyAd).setOnClickListener(view -> {
+            isOnlyLoad = true;
+            startInterstitial(potId);
+        });
+
+        findViewById(R.id.showAd).setOnClickListener(view -> {
+            showAds();
         });
     }
 
@@ -53,18 +71,32 @@ public class InterstitialActivity extends BaseActivity {
         releaseListener();
         createListener();
         //初始化
-        YFAdInterstitialAds easyInterstitial = new YFAdInterstitialAds(this, listener);
+        easyInterstitial = new YFAdInterstitialAds(this, listener);
         //必须：设置策略信息
         easyInterstitial.toGetData(adId, new OnResultListener() {
             @Override
             public void onSuccess(String jsonString) {
-                easyInterstitial.loadAndShow(jsonString);
+                startLoaderAds(jsonString);
             }
 
             @Override
             public void onFailed(int errorCode, String message) {
             }
         });
+    }
+
+    private void startLoaderAds(String jsonString) {
+        if (isOnlyLoad) {
+            easyInterstitial.loadOnly(jsonString);
+        } else {
+            easyInterstitial.loadAndShow(jsonString);
+        }
+    }
+
+    private void showAds() {
+        if (isOnlyLoad && easyInterstitial != null) {
+            easyInterstitial.showAds();
+        }
     }
 
     /**
@@ -94,11 +126,18 @@ public class InterstitialActivity extends BaseActivity {
             @Override
             public void onAdClosed() {
                 logAndToast("广告关闭");
+                if (easyInterstitial != null) {
+                    easyInterstitial.destroy();
+                    easyInterstitial = null;
+                }
+                isOnlyLoad = false;
             }
 
             @Override
             public void onAdFailed(YFAdError yfAdError) {
                 logAndToast("广告加载失败 code=" + yfAdError.code + " msg=" + yfAdError.msg);
+
+                isOnlyLoad = false;
             }
         };
     }
