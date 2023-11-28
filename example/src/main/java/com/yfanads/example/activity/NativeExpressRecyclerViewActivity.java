@@ -267,6 +267,7 @@ public class NativeExpressRecyclerViewActivity extends BaseActivity {
             }
             for (AdView adView: adViewTemp) {
                 if (adView.index < adViewList.size()) {
+                    adView.viewGroup.removeAllViews();
                     adView.viewGroup.addView(adViewList.get(adView.index));
                 }
             }

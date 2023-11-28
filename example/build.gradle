@@ -56,7 +56,7 @@ repositories {
 
 dependencies {
     // 聚合SDK start
-    implementation(name: "yfsdk-v5.0.3.11281936", ext: "aar")
+    implementation(name: "yfsdk-v5.0.3.11282112", ext: "aar")
     implementation "com.android.support:appcompat-v7:28.0.0"
     implementation "com.android.support:support-media-compat:28.0.0"
     // 聚合SDK end
