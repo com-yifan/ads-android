@@ -65,6 +65,8 @@
 | 优量汇   | ✅   | ✅    | ✅   | ✅      | ✅     | ✅    | ❌       |
 | 百青藤   | ✅   | ✅    | ✅   | ✅      | ✅     | ✅    | ❌       |
 | 快手    | ✅   | ✅    | ✅   | ✅      | ✅     | ✅    | ✅       |
+| ADX   | ✅   | ✅    | ✅   | ✅      | ❌     | ✅    | ❌       |
+| 京东    | ✅   | ❌    | ✅   | ✅      | ❌     | ❌    | ❌       |
 
 # 2. 快速接入
 
@@ -117,11 +119,8 @@ AndroidX版本
     dependencies {
         ...
         implementation (name: 'yfsdk', ext: 'aar')
-        implementation 'com.github.bumptech.glide:glide:4.8.0'
-        implementation 'com.google.code.gson:gson:2.8.9'
-        implementation 'jp.wasabeef:glide-transformations:3.0.1'
-        // 因为2.8.0及以上需要项目支持androidX，且2.7.0已经能满足日常需求，包体积更小（159kb）
-        implementation 'com.airbnb.android:lottie:2.7.0'
+        implementation "com.android.support:appcompat-v7:28.0.0"
+        implementation "com.android.support:support-media-compat:28.0.0"
         ...
     }
 ```
@@ -221,10 +220,25 @@ public class MyApplication extends Application {
     }
 
     private void initSDK() {
-        YFAdsConfig YFAdsConfig = new YFAdsConfig.YFAdsConfigBuilder(GlobalConst.APP_ID, "v1.0.0", "yfdemo")
+        YFAdsConfig YFAdsConfig = new YFAdsConfig.YFAdsConfigBuilder(GlobalConst.APP_ID, "你的应用版本", "你的应用包名")
                 .setDebug(true)
                 .builder();
+        // 当前是否有权限
+        fcAdsConfig.setCanUsePhoneState(hasPermission(Manifest.permission.READ_PHONE_STATE));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            fcAdsConfig.setCanUseAppList(hasPermission(Manifest.permission.REQUEST_INSTALL_PACKAGES));
+        } else {
+            fcAdsConfig.setCanUseAppList(true);
+        }
+        fcAdsConfig.setCanUseLocation(hasPermission(Manifest.permission.ACCESS_FINE_LOCATION));
+        fcAdsConfig.setCanUseWifiState(hasPermission(Manifest.permission.ACCESS_WIFI_STATE));
+        fcAdsConfig.setCanUseAndroidId(hasPermission(Manifest.permission.READ_PHONE_STATE));
+
         YFAdsManager.getInstance().init(this, YFAdsConfig);
+    }
+    
+    private boolean hasPermission(String permission) {
+        return ActivityCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED;
     }
 
     private String getProcessName(Context context) {
@@ -266,6 +280,7 @@ public class MyApplication extends Application {
 | public YFAdsConfigBuilder setCanUseAppList(boolean canUseAppList)              | 设置是否允许SDK主动获取应用列表，判定广告对应的应用是否在用户的app上安装，避免投放错误的广告，以此提高用户的广告体验。true可以使用，false禁止使用。默认为true |
 | public YFAdsConfigBuilder setCanUseAndroidId(boolean canUseAndroidId)          | 设置是否允许SDK主动使用AndroidId。true可以使用，false禁止使用。默认为true                                        |
 | public YFAdsConfigBuilder setLimitPersonal(boolean limitPersonal)              | 设置是否允许SDK设置个性化推荐。true限制个性化推荐，false不限制。默认为false                                           |
+| public YFAdsConfigBuilder setUseAdx(boolean isOnlyAdx)                         | 设置只使用Adx功能                                                                               |
 | public YFAdsConfig builder()                                                   | 创建配置对象实例                                                                                 |
 
 ## 2.5 隐私开关
@@ -279,20 +294,21 @@ public class MyApplication extends Application {
 
 **YFAdsConfig**
 
-| 方法名                                                              | 方法介绍                                                                                          |
-|:-----------------------------------------------------------------|:----------------------------------------------------------------------------------------------|
-| public void setCanUseLocation(boolean canUseLocation)            | 设置是否允许SDK主动使用地理位置信息。true可以获取，false禁止获取。默认为true                                                |
-| public void setYFLocation(YFLocation yfLocation)                 | 传入地理位置信息, 当canUseLocation=false时，亿帆sdk使用您传入的地理位置信息                                            |         
-| public void setCanUsePhoneState(boolean canUsePhoneState)        | 设置是否允许SDK主动使用手机硬件参数，如：imei。true可以使用，false禁止使用。默认为true                                         |
-| public void setDevImei(String devImei)                           | 可传入imei信息，当canUsePhoneState=false时，亿帆sdk使用您传入的imei信息                                          |
-| public void setCanUseWifiState(boolean canUseWifiState)          | 设置是否允许SDK主动使用ACCESS_WIFI_STATE权限获取MAC信息。true可以使用，false禁止使用。默认为true                            |
-| public void setCanUseWriteExternal(boolean canUseWriteExternal)	 | 设置是否允许SDK主动使用WRITE_EXTERNAL_STORAGE权限。true可以使用，false禁止使用。默认为true                              |	                                            |
-| public void setDevOaid(String devOaid)                           | 	传入OAID，当canUseOaid=false时，亿帆sdk使用您传入的OAID                                                    |
-| public void setCanUseAppList(boolean canUseAppList)              | 设置是否允许SDK主动获取应用列表，判定广告对应的应用是否在用户的app上安装，避免投放错误的广告，以此提高用户的广告体验。true可以使用，false禁止使用。默认为true      |
-| public void setCanUseAndroidId(boolean canUseAndroidId)          | 设置是否允许SDK主动使用AndroidId。true可以使用，false禁止使用。默认为true                                             |
-| public void setLimitPersonal(boolean limitPersonal)              | 设置是否允许SDK设置个性化推荐。true限制个性化推荐，false不限制。默认为false                                                |
+| 方法名                                                              | 方法介绍                                                                                     |
+|:-----------------------------------------------------------------|:-----------------------------------------------------------------------------------------|
+| public void setCanUseLocation(boolean canUseLocation)            | 设置是否允许SDK主动使用地理位置信息。true可以获取，false禁止获取。默认为true                                           |
+| public void setYFLocation(YFLocation yfLocation)                 | 传入地理位置信息, 当canUseLocation=false时，亿帆sdk使用您传入的地理位置信息                                       |         
+| public void setCanUsePhoneState(boolean canUsePhoneState)        | 设置是否允许SDK主动使用手机硬件参数，如：imei。true可以使用，false禁止使用。默认为true                                    |
+| public void setDevImei(String devImei)                           | 可传入imei信息，当canUsePhoneState=false时，亿帆sdk使用您传入的imei信息                                     |
+| public void setCanUseWifiState(boolean canUseWifiState)          | 设置是否允许SDK主动使用ACCESS_WIFI_STATE权限获取MAC信息。true可以使用，false禁止使用。默认为true                       |
+| public void setCanUseWriteExternal(boolean canUseWriteExternal)	 | 设置是否允许SDK主动使用WRITE_EXTERNAL_STORAGE权限。true可以使用，false禁止使用。默认为true                         |	                                            |
+| public void setDevOaid(String devOaid)                           | 	传入OAID，当canUseOaid=false时，亿帆sdk使用您传入的OAID                                               |
+| public void setCanUseAppList(boolean canUseAppList)              | 设置是否允许SDK主动获取应用列表，判定广告对应的应用是否在用户的app上安装，避免投放错误的广告，以此提高用户的广告体验。true可以使用，false禁止使用。默认为true |
+| public void setCanUseAndroidId(boolean canUseAndroidId)          | 设置是否允许SDK主动使用AndroidId。true可以使用，false禁止使用。默认为true                                        |
+| public void setLimitPersonal(boolean limitPersonal)              | 设置是否允许SDK设置个性化推荐。true限制个性化推荐，false不限制。默认为false                                           |
 
 ## 2.6 合规三步走
+
 
 * [参考合规指南](http://www.yfanads.cn/guideline.html)
 
@@ -314,10 +330,12 @@ IMEI/android ID)、SIM卡IMSI信息、地理位置信息以提供个性化推荐
 ## 2.7 关闭个性化
 
 *
+
 为遵循《个人信息保护法》相关法规，亿帆SDK将为开发者提供个性化广告关闭能力接口，开发者可以调用接口，为开发者媒体应用的用户提供个性化广告关闭能力。 </br>
 </br>
 
 *
+
 开发者应遵循法律法规要求，在客户端为用户创建可便捷查找的个性化广告关闭按钮，并保证用户点击关闭按钮后调用亿帆SDK关闭能力接口，保证个性化广告关闭功能真实有效。</br>
 
 **主要API**
@@ -340,7 +358,7 @@ IMEI/android ID)、SIM卡IMSI信息、地理位置信息以提供个性化推荐
 
 ```
   // csj
-  implementation(name: "open_ad_sdk_5512", ext: "aar")
+  implementation(name: "open_ad_sdk_5615", ext: "aar")
   ...
   }
 ```
@@ -388,8 +406,6 @@ repositories {
 ```
 
 ## 3.1.4 添加混淆
-
-亿帆SDK已经添加混淆，如有需要可单独接入
 
 ```
 # csj sdk start
@@ -443,7 +459,7 @@ repositories {
 
 ```
   // baidu
-  implementation(name: "Baidu_MobAds_SDK-release_v9314", ext: "aar")
+  implementation(name: "Baidu_MobAds_SDK-release_v93223", ext: "aar")
   ...
   }
 ```
@@ -473,8 +489,6 @@ repositories {
 ```
 
 ## 3.2.4 添加混淆
-
-亿帆SDK已经添加混淆，如有需要可单独接入
 
 ```
 #baidu start
@@ -507,7 +521,7 @@ andResGuard {
 
 ```
   // ks
-  implementation(name: "kssdk-ad-33512", ext: "aar")
+  implementation(name: "kssdk-ad-33552", ext: "aar")
   ...
   }
 ```
@@ -538,8 +552,6 @@ repositories {
 
 ## 3.3.4 添加混淆
 
-亿帆SDK已经添加混淆，如有需要可单独接入
-
 ```
 #kuaishou begin
 -keep class org.chromium.** {*;}
@@ -568,7 +580,7 @@ repositories {
 
 ```
   // ylh
-  implementation(name: "GDTSDK_4540", ext: "aar")
+  implementation(name: "GDTSDK_4542", ext: "aar")
   ...
   }
 ```
@@ -607,7 +619,6 @@ repositories {
 
 ## 3.4.4 添加混淆
 
-亿帆SDK已经添加混淆，如有需要可单独接入
 
 ```
 # GDT sdk start
@@ -615,6 +626,54 @@ repositories {
 -keep class com.qq.e.** {*;}
 -dontpreverify
 # GDT sdk end
+```
+
+## 3.5  京东SDK
+
+## 3.4.1 添加依赖
+
+* 请在工程根目录下找到一个名为 libs 的子目录;
+* 找到工程的build.gradle文件，在dependencies节点进行如下添加即可：
+  dependencies {
+
+```
+  // jd
+  implementation(name: "jad_yun_sdk_jingdong_2.5.6_20231114", ext: "aar")
+  ...
+  }
+```
+
+* 添加aar依赖需要在build.gradle文件的根节点下添加
+
+```
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+```
+
+## 3.4.2 添加权限
+
+```
+无
+```
+
+## 3.4.3 添加组件
+
+亿帆SDK已经自动导入Manifest
+
+```
+无
+```
+
+## 3.4.4 添加混淆
+
+
+```
+# JD sdk start
+-keep class com.jd.ad.sdk.** { *; }
+# JD sdk end
 ```
 
 # 4. 加载广告
@@ -668,7 +727,7 @@ Banner位广告和自渲染广告依附广告容器的上下文必须是Activity
 
 ## 4.1 Banner位（Banner和信息流）
 
-具体可参见demo中YFBannerActivity
+具体可参见demo中BannerActivity
 
 请求Banner位广告时，需要设置广告View的宽度（单位：dp），会根据设置的宽度计算出最优高度。</br>
 当选择竖版样式时，接入方可以设置广告View的高度，SDK会自动等比例缩放广告图片，如果不设置高度，会根据设置的宽度计算出最优高度。</br>
@@ -750,6 +809,8 @@ protected void onDestroy() {
 | public void setViewAcceptedSize(int expressViewWidth, int expressViewHeight)                 | 期望模板广告view的size,单位dp；注意：参数请按照平台勾选的比例去进行请求。现有1:1，3:2 ，2:3 三种比例可供选择。 |
 | public void toGetData(String adId, OnResultListener onResultListener)                        | 配置信息从缓存中读取，如果存在未过期，则缓存返回，否者请求网络，成功后回调。                             |
 | public void loadAndShow(String jsonString)                                                   | 展示当前广告                                                             |
+| public void loadOnly(String jsonString)                                                      | 请求广告（与showAds一一对应）                                                 |
+| public void showAds()                                                                        | 展示广告（与loadOnly一一对应）                                                |
 
 **YFBannerListener**
 
@@ -766,6 +827,8 @@ private void startInterstitial(String adId) {
     createListener();
     //初始化
     YFAdInterstitialAds easyInterstitial = new YFAdInterstitialAds(this, listener);
+    easyInterstitial.setKeyBackCloseAdOfSelfRender(true);
+    easyInterstitial.setClickCloseAdOfSelfRender(false);
     easyInterstitial.setViewAcceptedSize(300, 533);
     //必须：设置策略信息
     easyInterstitial.toGetData(adId, new OnResultListener() {
@@ -824,10 +887,14 @@ private void releaseListener() {
 
 | 方法名                                                                           | 方法介绍                                                                                              |
 |:------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------|
-| public YFAdInterstitialAds(Activity activity, YFBannerListener listener)      | 插屏广告位构造方法                                                                                         |                                                                                   |
+| public YFAdInterstitialAds(Activity activity, YFBannerListener listener)      | 插屏广告位构造方法                                                                                         |
+| public void setKeyBackCloseAdOfSelfRender(boolean keyBackCloseAdOfSelfRender) | 自渲染下按下back键后，关闭广告。                                                                                |
+| public void setClickCloseAdOfSelfRender(boolean clickCloseAdOfSelfRender)     | 自渲染下点击广告后，关闭广告。                                                                                   |
 | public void setViewAcceptedSize(int expressViewWidth, int expressViewHeight)  | 期望模板广告view的size,单位dp；注意：参数请按照平台勾选的比例去进行请求。现有1:1，3:2 ，2:3 三种比例可供选择。</br>自渲染下，按照宽度的9：16比例自适应，单位也是dp |
 | public void toGetData(String adId, OnResultListener onResultListener)         | 配置信息从缓存中读取，如果存在未过期，则缓存返回，否者请求网络，成功后回调。                                                            |
 | public void loadAndShow(String jsonString)                                    | 展示当前广告                                                                                            |
+| public void loadOnly(String jsonString)                                       | 请求广告（与showAds一一对应）                                                                                |
+| public void showAds()                                                         | 展示广告（与loadOnly一一对应）                                                                               |
 
 **YFInterstitialListener**
 
@@ -939,6 +1006,8 @@ private void startReward(String adId) {
 | public YFAdRewardAds(Activity activity, YFRewardVideoListener baseAdListener) | 激励视频广告位构造方法                            |
 | public void toGetData(String adId, OnResultListener onResultListener)         | 配置信息从缓存中读取，如果存在未过期，则缓存返回，否者请求网络，成功后回调。 |
 | public void loadAndShow(String jsonString)                                    | 展示当前广告                                 |
+| public void loadOnly(String jsonString)                                       | 请求广告（与showAds一一对应）                     |
+| public void showAds()                                                         | 展示广告（与loadOnly一一对应）                    |
 
 **YFRewardVideoListener**
 
@@ -955,6 +1024,22 @@ private void startReward(String adId) {
 | 变量                  | 变量介绍 |
 |:--------------------|:-----|
 | RewardInf rewardInf | 回调类型 |
+
+**RewardInf**
+
+| 变量                           | 变量介绍    |
+|:-----------------------------|:--------|
+| Type type                    | 类型      |
+| Map<String, String> appExtra | App传递的值 |
+
+**Type**
+
+| 变量  | 变量介绍 |
+|:----|:-----|
+| KS  | 快手   |
+| YLH | 优量汇  |
+| BD  | 百度   |
+| CSJ | 穿山甲  |
 
 **BDRewardInf**
 
@@ -990,58 +1075,12 @@ private void startReward(String adId) {
 具体可参见demo中SplashActivity
 
 **注意：** </br>
-**1. 展示开屏广告的容器状态必须为可见，否则广告不返回广告。**</br>
-**2. 开屏广告容器高度必须大于等于屏幕高度的75%，否则广告会出现一闪而过现象。**
+**1. 展示开屏广告的容器状态必须为可见，否则广告通不返回广告。**</br>
+**2. 开屏广告容器高度必须大于等于屏幕高度的75%，否则广告通广告会出现一闪而过现象。**
 
 <font color="red">
 重要1：开屏页请设置为全屏样式，并隐藏虚拟按键和状态栏，防止跳过按钮和广告标识被遮挡</font>
 
-```
-private void setFullScreen() {
-  if (Build.VERSION.SDK_INT >= 30) {
-      //Android11 适配
-      /**
-       * 如果编译的sdk是30以上，直接使用如下代码。
-       */
-//            getWindow().getDecorView().getWindowInsetsController().hide(
-//                    WindowInsets.Type.statusBars() | WindowInsets.Type.navigationBars());
-
-      /**
-       * 如果编译的sdk小于30，使用如下反射的方式。
-       *
-       * 由于Android版本限制，可能会遇到错误(建议还是使用大于30的sdk编译)：
-       * Error: Reflective access to getWindowInsetsController is forbidden when targeting API 29 and above [BlockedPrivateApi]
-       *  Explanation for issues of type "BlockedPrivateApi":
-       *    Usage of restricted non-SDK interface is forbidden for this targetSDK.
-       *    Accessing non-SDK methods or fields through reflection has a high
-       *    likelihood to break your app between versions, and is being restricted to
-       *    facilitate future app compatibility.
-       */
-      try {
-          View decorView = getWindow().getDecorView();
-          Method getWindowInsetsController = View.class.getDeclaredMethod("getWindowInsetsController");
-          getWindowInsetsController.setAccessible(true);
-          Object insetsController = getWindowInsetsController.invoke(decorView);
-          Class<?> windowInsetsController = Class.forName("android.view.WindowInsetsController");
-          Method hide = windowInsetsController.getMethod("hide", int.class);
-          hide.setAccessible(true);
-          hide.invoke(insetsController, 3);
-      } catch (Throwable e) {
-          e.printStackTrace();
-      }
-  } else {
-      // Note that some of these constants are new as of API 16 (Jelly Bean)
-      // and API 19 (KitKat). It is safe to use them, as they are inlined
-      // at compile-time and do nothing on earlier devices.
-      getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-              | View.SYSTEM_UI_FLAG_FULLSCREEN
-              | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-              | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-              | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-              | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-  }
-}
-```
 
 <font color="red">重要2: 开屏对物理返回键屏蔽，影响曝光数据</font>
 
@@ -1060,7 +1099,6 @@ public boolean onKeyDown(int keyCode, KeyEvent event) {
 ```
 @Override
 public void initView(Bundle savedInstanceState) {
-    setFullScreen();
     type = getIntent().getIntExtra("type", GlobalConst.ERROR_NUM);
     String potId = getIntent().getStringExtra("potId");
 
@@ -1084,6 +1122,14 @@ private void loadSplash(ViewGroup adContainer, String adId) {
     releaseListener();
     createListener();
     YFAdSplashAds fcAdSplash = new YFAdSplashAds(this, adContainer, listener);
+    // 实际展示的高度，但不低于屏幕高度的75% （屏幕高度-LOGO高度-底部状态栏区域）
+    int expressViewHeight = AppUtils.px2dip(this, AppUtils.getScreenHeight(this));
+    // 如果底部需要展示logo，此为logo的大小，单位是dp
+    expressViewHeight -= 63;
+    // 如果是沉浸式状态栏，需要加上状态栏的高度
+    expressViewHeight += AppUtils.px2dip(this, StatusBar.getStatusBarHeight(this));
+    // 设置实际请求的高度
+    fcAdSplash.setHeight(expressViewHeight);
     fcAdSplash.toGetData(adId, new OnResultListener() {
         @Override
         public void onSuccess(String jsonString) {
@@ -1169,6 +1215,8 @@ protected void onDestroy() {
 | public YFAdSplashAds(Activity activity, ViewGroup adContainer, YFSplashListener baseAdListener) | 开屏广告位构造方法                              |
 | public void toGetData(String adId, OnResultListener onResultListener)                           | 配置信息从缓存中读取，如果存在未过期，则缓存返回，否者请求网络，成功后回调。 |
 | public void loadAndShow(String jsonString)                                                      | 展示当前广告                                 |
+| public void loadOnly(String jsonString)                                                         | 请求广告（与showAds一一对应）                     |
+| public void showAds()                                                                           | 展示广告（与loadOnly一一对应）                    |
 
 **YFSplashListener** 同 **BaseAdListener**回调监听
 
@@ -1179,86 +1227,114 @@ protected void onDestroy() {
 **接入代码示例**
 
 ```
-private void loadNativeExpress(String adId, ViewGroup adContainer) {
+  @Override
+  public void onBindViewHolder(final CustomViewHolder customViewHolder, final int position) {
+      int type = getItemViewType(position);
+      if (TYPE_AD == type) {
+          // 动态计算需要渲染的位置
+          loadNativeExpress(potId, customViewHolder.container, position);
+      } else {
+          customViewHolder.title.setText(mData.get(position).getTitle());
+      }
+  }
+  
+  /**
+   * 加载并展示原生模板信息流广告.
+   *
+   * @param adId        adId
+   * @param adContainer adContainer
+   * @author JamesQian
+   * @date 2023/9/9 17:29
+   **/
+  private void loadNativeExpress(String adId, ViewGroup adContainer, int pos) {
+      // 需要计算当前的index
+      int index = (pos) / ITEMS_PER_AD;
+      Log.d("TEST", "loadNativeExpress isNativeLoading " + index);
+      // 请求下一页广告数据
+      if (index >= adViewList.size()) {
+          startRequestAds(adId, adContainer, index);
+          return;
+      }
+      if (adsStatus == 2) {
+          //同一位置广告，请求完成，直接渲染
+          addView(adContainer, index);
+          return;
+      }
 
-    if (hasNativeShow) {//同一位置广告，已展示过不再重复发起请求
-        Log.d("TEST", "loadNativeExpress hasNativeShow");
-        return;
-    }
+      if (adsStatus == 1) {
+          //同一位置广告，正在请求中，不再重复请求, 缓存对应得view和pos，请求成功后加入到视图中
+          Log.d("TEST", "loadNativeExpress isNativeLoading");
+          adViewTemp.add(new AdView(adContainer, index));
+          return;
+      }
 
-    if (isNativeLoading) {//同一位置广告，正在请求中，不再重复请求
-        Log.d("TEST", "loadNativeExpress isNativeLoading");
-        return;
-    }
-    isNativeLoading = true;
+      //广告请求
+      startRequestAds(adId, adContainer, index);
+  }
 
-    if (adContainer.getChildCount() > 0) {
-        adContainer.removeAllViews();
-    }
+  private void startRequestAds(String adId, ViewGroup adContainer, int index) {
+      adsStatus = 1;
+      adViewTemp.add(new AdView(adContainer, index));
+      final YFAdNativeExpressAds easyNativeExpress =
+              new YFAdNativeExpressAds(mActivity, new YFNativeExpressListener() {
 
+                  @Override
+                  public void onAdRenderSuccess(List<View> viewList) {
+                      logAndToast("广告渲染成功 " + viewList.size());
+                      Log.e("ad", viewList.size() + " loadNativeExpress " + adViewTemp);
+                      adViewList.addAll(viewList);
+                      addView();
+                      adsStatus = 2;
+                  }
 
-    //推荐：核心事件监听回调
-    YFNativeExpressListener listener = new YFNativeExpressListener() {
+                  @Override
+                  public void onAdSuccess() {
+                      logAndToast("广告加载成功");
+                  }
 
-        @Override
-        public void onAdRenderSuccess() {
-            logAndToast("广告渲染成功");
+                  @Override
+                  public void onAdExposure() {
+                      logAndToast("广告展示");
+                  }
 
-        }
+                  @Override
+                  public void onAdRenderFailed() {
+                      adsStatus = 0;
+                      logAndToast("广告渲染失败");
+                  }
 
-        @Override
-        public void onAdSuccess() {
-            logAndToast("广告加载成功");
-        }
+                  @Override
+                  public void onAdClicked() {
+                      logAndToast("广告点击");
+                  }
 
-        @Override
-        public void onAdExposure() {
-            hasNativeShow = true;
-            isNativeLoading = false;
-            logAndToast("广告展示");
-        }
+                  @Override
+                  public void onAdClosed() {
+                      logAndToast("广告关闭");
+                  }
 
-        @Override
-        public void onAdRenderFailed() {
-            isNativeLoading = false;
-            logAndToast("广告渲染失败");
-        }
+                  @Override
+                  public void onAdFailed(YFAdError fcAdError) {
+                      adsStatus = 0;
+                      logAndToast("广告加载失败 code=" + fcAdError.code + " msg=" + fcAdError.msg);
+                  }
 
-        @Override
-        public void onAdClicked() {
-            logAndToast("广告点击");
-        }
+              });
+      easyNativeExpress.setAdsNumbers(realAdNumber);
+      //必须：设置策略信息
+      easyNativeExpress.toGetData(adId, new OnResultListener() {
+          @Override
+          public void onSuccess(String jsonString) {
+              easyNativeExpress.loadAndShow(jsonString);
+          }
 
-        @Override
-        public void onAdClosed() {
-            logAndToast("广告关闭");
-        }
+          @Override
+          public void onFailed(int errorCode, String message) {
 
-        @Override
-        public void onAdFailed(YFAdError yfAdError) {
-            isNativeLoading = false;
-            logAndToast("广告加载失败 code=" + YFAdError.code + " msg=" + YFAdError.msg);
-        }
-
-    };
-    //初始化
-    final YFAdNativeExpressAds easyNativeExpress = new YFAdNativeExpressAds(mActivity, listener);
-    easyNativeExpress.setAdContainer(adContainer);
-    logAndToast("广告请求中");
-    //必须：设置策略信息
-    easyNativeExpress.toGetData(adId, new OnResultListener() {
-        @Override
-        public void onSuccess(String jsonString) {
-            easyNativeExpress.loadAndShow(jsonString);
-        }
-
-        @Override
-        public void onFailed(int errorCode, String message) {
-
-        }
-    });
-}
-
+          }
+      });
+      logAndToast("广告请求中");
+  }
 ```
 
 **主要API**
@@ -1271,6 +1347,8 @@ private void loadNativeExpress(String adId, ViewGroup adContainer) {
 | public void toGetData(String adId, OnResultListener onResultListener)            | 配置信息从缓存中读取，如果存在未过期，则缓存返回，否者请求网络，成功后回调。 |
 | public void setAdContainer(ViewGroup container)                                  | 设置用来展示广告的父布局                           |
 | public void loadAndShow(String jsonString)                                       | 展示当前广告                                 |
+| public void loadOnly(String jsonString)                                          | 请求广告（与showAds一一对应）                     |
+| public void showAds()                                                            | 展示广告（与loadOnly一一对应）                    |
 | public void destroy()                                                            | 资源释放                                   |
 
 **YFNativeExpressListener**
@@ -1371,6 +1449,8 @@ private void startFullVideo(String adId) {
 | public YFAdFullScreenVideoAds(Activity activity, YFFullScreenVideoListener baseAdListener) | 广告位构造方法                                |
 | public void toGetData(String adId, OnResultListener onResultListener)                      | 配置信息从缓存中读取，如果存在未过期，则缓存返回，否者请求网络，成功后回调。 |
 | public void loadAndShow(String jsonString)                                                 | 展示当前广告                                 |
+| public void loadOnly(String jsonString)                                                    | 请求广告（与showAds一一对应）                     |
+| public void showAds()                                                                      | 展示广告（与loadOnly一一对应）                    |
 
 **YFFullScreenVideoListener**
 
@@ -1387,55 +1467,53 @@ private void startFullVideo(String adId) {
 **接入代码示例**
 
 ```
-private void loadDraw(String adId, ViewGroup adContainer) {
-
-YFDrawListener listener = new YFDrawListener() {
-
-    @Override
-    public void onAdSuccess() {
-        logAndToast("广告加载成功");
-    }
-
-    @Override
-    public void onAdExposure() {
-        logAndToast("广告展示");
-
-    }
-
-    @Override
-    public void onAdClicked() {
-        logAndToast("广告点击");
-
-    }
-
-    @Override
-    public void onAdClosed() {
-        logAndToast("广告关闭");
-    }
-
-    @Override
-    public void onAdFailed(YFAdError yfAdError) {
-        logAndToast("广告加载失败 code=" + YFAdError.code + " msg=" + YFAdError.msg);
-    }
-
-
-};
-YFAdDrawAds easyAdDraw = new YFAdDrawAds(mContext, listener);
-easyAdDraw.setAdContainer(adContainer);
-logAndToast("广告请求中");
-//必须：设置策略信息
-easyAdDraw.toGetData(adId, new OnResultListener() {
+  private void loadDraw(String adId, ViewGroup adContainer) {
+  
+    YFDrawListener listener = new YFDrawListener() {
+    
+      @Override
+      public void onAdSuccess() {
+          logAndToast("广告加载成功");
+      }
+    
+      @Override
+      public void onAdExposure() {
+          logAndToast("广告展示");
+    
+      }
+    
+      @Override
+      public void onAdClicked() {
+          logAndToast("广告点击");
+    
+      }
+    
+      @Override
+      public void onAdClosed() {
+          logAndToast("广告关闭");
+      }
+    
+      @Override
+      public void onAdFailed(YFAdError yfAdError) {
+          logAndToast("广告加载失败 code=" + YFAdError.code + " msg=" + YFAdError.msg);
+      }
+  };
+  YFAdDrawAds easyAdDraw = new YFAdDrawAds(mContext, listener);
+  easyAdDraw.setAdContainer(adContainer);
+  logAndToast("广告请求中");
+  //必须：设置策略信息
+  easyAdDraw.toGetData(adId, new OnResultListener() {
     @Override
     public void onSuccess(String jsonString) {
         //必须：请求并展示广告
         easyAdDraw.loadAndShow(jsonString);
     }
-
+  
     @Override
     public void onFailed(int errorCode, String message) {
-
+  
     }
-});
+  });
 }
 
 ```
@@ -1450,40 +1528,15 @@ easyAdDraw.toGetData(adId, new OnResultListener() {
 | public void setAdContainer(final ViewGroup adContainer)               | 设置展示的布局                                |
 | public void toGetData(String adId, OnResultListener onResultListener) | 配置信息从缓存中读取，如果存在未过期，则缓存返回，否者请求网络，成功后回调。 |
 | public void loadAndShow(String jsonString)                            | 展示当前广告                                 |
+| public void loadOnly(String jsonString)                               | 请求广告（与showAds一一对应）                     |
+| public void showAds()                                                 | 展示广告（与loadOnly一一对应）                    |
 
 **YFDrawListener** 同 **BaseAdListener**
 
-# 5. Glide图片加载框架
 
-亿帆自渲染图片加载，推荐继承Glide，具体接入如下：
+# 5. 使用注意事项
 
-## 5.1 导入依赖
-
-```
-dependencies {
-  implementation 'com.github.bumptech.glide:glide:4.8.0'
-}
-```
-
-## 5.2 权限
-
-```
-<uses-permission android:name="android.permission.INTERNET" />
-```
-
-## 5.3 使用
-
-其中with后面的上下文可以是：Activity、View Context、Application，为了确保内存性能，不推荐使用Application
-
-```
-Glide.with(Activity).load(url).into(view);
-```
-
-详细的使用参考：[Glide官网](https://muyangmin.github.io/glide-docs-cn/)
-
-# 6. 使用注意事项
-
-## 6.1 常见问题
+## 5.1 常见问题
 
 ```
 Q：对接和测试中出现问题了怎么办？

@@ -174,4 +174,55 @@ public final class AppUtils {
     public static void setDebug(boolean isDebug) {
         AppUtils.isDebug = isDebug;
     }
+
+
+    public static int dip2px(Context context, float dpValue) {
+        return dip2pxC(context, dpValue);
+    }
+
+    public static int dip2pxC(Context context, float dpValue) {
+        try {
+            float scale = context.getResources().getDisplayMetrics().density;
+            return (int)(dpValue * scale + 0.5F);
+        } catch (Throwable var3) {
+            return -1;
+        }
+    }
+
+    public static int px2dip(Context context, float pxValue) {
+        return px2dipC(context, pxValue);
+    }
+
+    public static int px2dipC(Context context, float pxValue) {
+        try {
+            float scale = context.getResources().getDisplayMetrics().density;
+            return (int)(pxValue / scale + 0.5F);
+        } catch (Throwable var3) {
+            return -1;
+        }
+    }
+
+    public static int getScreenWidth(Context context) {
+        return getScreenWidthC(context);
+    }
+
+    public static int getScreenWidthC(Context context) {
+        try {
+            return context.getResources().getDisplayMetrics().widthPixels;
+        } catch (Throwable var2) {
+            return -1;
+        }
+    }
+
+    public static int getScreenHeight(Context context) {
+        return getScreenHeightC(context);
+    }
+
+    public static int getScreenHeightC(Context context) {
+        try {
+            return context.getResources().getDisplayMetrics().heightPixels;
+        } catch (Throwable var2) {
+            return -1;
+        }
+    }
 }

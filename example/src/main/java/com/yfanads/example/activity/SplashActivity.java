@@ -1,14 +1,12 @@
 package com.yfanads.example.activity;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
@@ -19,9 +17,8 @@ import com.yfanads.android.model.YFAdError;
 import com.yfanads.example.R;
 import com.yfanads.example.base.BaseActivity;
 import com.yfanads.example.global.GlobalConst;
+import com.yfanads.example.utils.AppUtils;
 import com.yfanads.example.utils.StatusBar;
-
-import java.lang.reflect.Method;
 
 /**
  * 开屏页面.
@@ -48,23 +45,12 @@ public class SplashActivity extends BaseActivity {
     }
 
     @Override
-    public int getLayoutId() {        //设置颜色为半透明
-        // Set the activity to fullscreen
-        getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-        );
-        StatusBar.setColor(this, android.R.color.transparent);
-        //隐藏状态栏
-        StatusBar.hide(this);
-
-
+    public int getLayoutId() {
         return R.layout.activity_splash_custom_logo;
     }
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        setFullScreen();
         type = getIntent().getIntExtra("type", GlobalConst.ERROR_NUM);
         String potId = getIntent().getStringExtra("potId");
 
@@ -93,6 +79,15 @@ public class SplashActivity extends BaseActivity {
         releaseListener();
         createListener();
         YFAdSplashAds fcAdSplash = new YFAdSplashAds(this, adContainer, listener);
+        // 实际展示的高度，但不低于屏幕高度的75% （屏幕高度-LOGO高度-底部状态栏区域）
+        int expressViewHeight = AppUtils.px2dip(this, AppUtils.getScreenHeight(this));
+        // 如果底部需要展示logo，此为logo的大小，单位是dp
+        expressViewHeight -= 63;
+        // 如果是沉浸式状态栏，需要加上状态栏的高度
+        expressViewHeight += AppUtils.px2dip(this, StatusBar.getStatusBarHeight(this));
+        // 设置实际请求的高度
+        fcAdSplash.setHeight(expressViewHeight);
+
         fcAdSplash.toGetData(adId, new OnResultListener() {
             @Override
             public void onSuccess(String jsonString) {
@@ -175,43 +170,5 @@ public class SplashActivity extends BaseActivity {
         super.onDestroy();
         Log.d("TEST", "SplashActivity onDestroy ");
         releaseListener();
-    }
-
-    private void setFullScreen() {
-        if (Build.VERSION.SDK_INT >= 30) {
-            //Android11 适配
-            /**
-             * 如果编译的sdk是30以上，直接使用如下代码。
-             */
-//            getWindow().getDecorView().getWindowInsetsController().hide(
-//                    WindowInsets.Type.statusBars() | WindowInsets.Type.navigationBars());
-
-            // 如果编译的sdk小于30，使用如下反射的方式.
-            // 由于Android版本限制，可能会遇到错误(建议还是使用大于30的sdk编译).
-            try {
-                View decorView = getWindow().getDecorView();
-                Method getWindowInsetsController =
-                        View.class.getDeclaredMethod("getWindowInsetsController");
-                getWindowInsetsController.setAccessible(true);
-                Object insetsController = getWindowInsetsController.invoke(decorView);
-                Class<?> windowInsetsController =
-                        Class.forName("android.view.WindowInsetsController");
-                Method hide = windowInsetsController.getMethod("hide", int.class);
-                hide.setAccessible(true);
-                hide.invoke(insetsController, 3);
-            } catch (Throwable e) {
-                e.printStackTrace();
-            }
-        } else {
-            // Note that some of these constants are new as of API 16 (Jelly Bean)
-            // and API 19 (KitKat). It is safe to use them, as they are inlined
-            // at compile-time and do nothing on earlier devices.
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-        }
     }
 }

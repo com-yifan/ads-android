@@ -100,14 +100,11 @@ public class RewardVideoActivity extends BaseActivity {
                     onRewardServer(inf.rewardInf);
                 }
             }
-
-            @Override
-            public String getUserId() {
-                return "123124";
-            }
         };
         //初始化，注意需要时再初始化，不要复用。
-        final YFAdRewardAds easyRewardVideo = new YFAdRewardAds(this, listener);
+        final YFAdRewardAds easyRewardVideo = new YFAdRewardAds(this, listener, "123456");
+        // 自由业务拓展的字段
+        easyRewardVideo.setAppExtra("packageName", "com.fc.example");
         easyRewardVideo.toGetData(adId, new OnResultListener() {
             @Override
             public void onSuccess(String jsonString) {
@@ -123,7 +120,7 @@ public class RewardVideoActivity extends BaseActivity {
 
     private void onRewardServer(YFRewardServerCallBackInf.RewardInf rewardInf) {
 
-        Log.d("reward", "type = " + rewardInf.type);
+        Log.d("reward", "type = " + rewardInf.type + " , " + rewardInf.appExtra);
 
         if (rewardInf instanceof YFRewardServerCallBackInf.BDRewardInf) {
             Log.d("reward", "type = BDRewardInf ");

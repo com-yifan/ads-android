@@ -3,6 +3,7 @@ package com.yfanads.example.utils;
 import android.app.Activity;
 import android.os.Build;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 
 /**
@@ -27,13 +28,25 @@ public final class StatusBar {
      * @param color color
      **/
     public static void setColor(Activity activity, int color) {
-        if (Build.VERSION.SDK_INT >= 21) {
-            View view = activity.getWindow().getDecorView();
-            view.setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            activity.getWindow().setStatusBarColor(activity.getResources().getColor(color));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window window = activity.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                window.setStatusBarColor(color);
+            }
         }
     }
+
+    public static int getStatusBarHeight(Activity activity) {
+        int result = 0;
+        int resourceId = activity.getResources().getIdentifier("status_bar_height", "dimen", "android");
+
+        if (resourceId > 0) {
+            result = activity.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
 
     /**
      * 隐藏状态栏.
@@ -70,4 +83,5 @@ public final class StatusBar {
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
     }
+
 }

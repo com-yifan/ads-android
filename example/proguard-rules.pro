@@ -63,3 +63,65 @@
   **[] $VALUES;
   public *;
 }
+
+
+
+# csj sdk start
+#3500以及以下版本混淆规则如下：
+-keep class com.bytedance.sdk.openadsdk.** { *; }
+-keep public interface com.bytedance.sdk.openadsdk.downloadnew.** {*;}
+-keep class com.pgl.sys.ces.* {*;}
+-keep class com.bytedance.embed_dr.** {*;}
+-keep class com.bytedance.embedapplog.** {*;}
+#3600版本-3800版本混淆规则如下：
+-keep class com.bytedance.sdk.openadsdk.** { *; }
+-keep public interface com.bytedance.sdk.openadsdk.downloadnew.** {*;}
+-keep class ms.bd.c.**{*;}
+-keep class com.bytedance.mobsec.**{*;}
+-keep class com.bytedance.embed_dr.** {*;}
+-keep class com.bytedance.embedapplog.** {*;}
+-keep interface com.bytedance.frameworks.baselib.network.http.cronet.I* {*;}
+-keepnames class com.bytedance.framwork.core.sdkmonitor.SDKMonitorUtils
+#3900版本及以上版本混淆规则如下：
+-keep class com.bytedance.sdk.openadsdk.** { *; }
+-keep class com.bytedance.frameworks.** { *; }
+-keep class ms.bd.c.Pgl.**{*;}
+-keep class com.bytedance.mobsec.metasec.ml.**{*;}
+-keep class com.ss.android.**{*;}
+-keep class com.bytedance.embedapplog.** {*;}
+-keep class com.bytedance.embed_dr.** {*;}
+-keep class com.bykv.vk.** {*;}
+
+-keep class bykvm*.**
+-keep class com.bytedance.msdk.adapter.**{ public *; }
+-keep class com.bytedance.msdk.api.** {
+ public *;
+}
+-keep class com.bytedance.msdk.base.TTBaseAd{*;}
+-keep class com.bytedance.msdk.adapter.TTAbsAdLoaderAdapter{
+    public *;
+    protected <fields>;
+}
+# csj sdk end
+
+
+#baidu start
+-keep class com.baidu.mobads.** { *; }
+
+# ks SDK
+-keep class org.chromium.** {*;}
+-keep class org.chromium.** { *; }
+-keep class aegon.chrome.** { *; }
+-keep class com.kwai.**{ *; }
+-dontwarn com.kwai.**
+-dontwarn com.kwad.**
+-dontwarn com.ksad.**
+-dontwarn aegon.chrome.**
+
+# GDT sdk start
+-dontwarn com.qq.e.**
+-keep class com.qq.e.** {*;}
+-dontpreverify
+
+# JD SDK
+-keep class com.jd.ad.sdk.** { *; }
