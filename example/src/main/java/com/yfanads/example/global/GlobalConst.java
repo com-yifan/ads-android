@@ -23,8 +23,8 @@ public final class GlobalConst {
     //开屏广告
     public static final String SPLASH_AD_ID = "90906223b4e6427da7a1885b44afacc8";
 
-    //插屏广告
-    public static final String INSERT_AD_ID = "92cc655a182942e8ad6d10d45c9fcf75";
+    //Adx插屏广告(92cc655a182942e8ad6d10d45c9fcf75)
+    public static final String INSERT_AD_ID = "2280d6f76e5a44baa5a6f79e4b836e74";
 
     //draw视频信息流广告
     public static final String DRAW_AD_ID = "e4f3d7df761b44939b92f6e3d8f2590e";
