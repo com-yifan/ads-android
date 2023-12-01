@@ -966,7 +966,7 @@ private void startReward(String adId) {
         }
     };
     //初始化，注意需要时再初始化，不要复用。
-    final YFAdRewardAds easyRewardVideo = new YFAdRewardAds(this, listener);
+    final YFAdRewardAds easyRewardVideo = new YFAdRewardAds(this, listener, "123");
     easyRewardVideo.toGetData(adId, new OnResultListener() {
         @Override
         public void onSuccess(String jsonString) {
@@ -1002,13 +1002,13 @@ private void startReward(String adId) {
 
 **YFAdRewardAds**
 
-| 方法名                                                                           | 方法介绍                                   |
-|:------------------------------------------------------------------------------|:---------------------------------------|
-| public YFAdRewardAds(Activity activity, YFRewardVideoListener baseAdListener) | 激励视频广告位构造方法                            |
-| public void toGetData(String adId, OnResultListener onResultListener)         | 配置信息从缓存中读取，如果存在未过期，则缓存返回，否者请求网络，成功后回调。 |
-| public void loadAndShow(String jsonString)                                    | 展示当前广告                                 |
-| public void loadOnly(String jsonString)                                       | 请求广告（与showAds一一对应）                     |
-| public void showAds()                                                         | 展示广告（与loadOnly一一对应）                    |
+| 方法名                                                                                          | 方法介绍                                   |
+|:---------------------------------------------------------------------------------------------|:---------------------------------------|
+| public YFAdRewardAds(Activity activity, YFRewardVideoListener baseAdListener, String userId) | 激励视频广告位构造方法,userId：用户ID                |
+| public void toGetData(String adId, OnResultListener onResultListener)                        | 配置信息从缓存中读取，如果存在未过期，则缓存返回，否者请求网络，成功后回调。 |
+| public void loadAndShow(String jsonString)                                                   | 展示当前广告                                 |
+| public void loadOnly(String jsonString)                                                      | 请求广告（与showAds一一对应）                     |
+| public void showAds()                                                                        | 展示广告（与loadOnly一一对应）                    |
 
 **YFRewardVideoListener**
 
@@ -1035,12 +1035,15 @@ private void startReward(String adId) {
 
 **Type**
 
-| 变量  | 变量介绍 |
-|:----|:-----|
-| KS  | 快手   |
-| YLH | 优量汇  |
-| BD  | 百度   |
-| CSJ | 穿山甲  |
+| 变量   | 变量介绍 |
+|:-----|:--|
+| KS   | 快手 |
+| YLH  | 优量汇 |
+| BD   | 百度 |
+| CSJ  | 穿山甲 |
+| XM   | 小米 |
+| OPPO | 穿山甲 |
+| HW   | 华为  |
 
 **BDRewardInf**
 
