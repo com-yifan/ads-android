@@ -32,7 +32,7 @@ import java.util.List;
  **/
 public class NativeExpressRecyclerViewActivity extends BaseActivity {
     public static final int MAX_ITEMS = 50;
-    public static final int ITEMS_PER_AD = 4;     // 每间隔10个条目插入一条广告
+    public static final int ITEMS_PER_AD = 10;     // 每间隔10个条目插入一条广告
 
     private static final int maxAd = 10;
 
@@ -236,6 +236,7 @@ public class NativeExpressRecyclerViewActivity extends BaseActivity {
                         }
 
                     });
+            // 设置期望的广告的数量，一次请求不能超过5条，返回0-5条数据。
             easyNativeExpress.setAdsNumbers(realAdNumber);
             //必须：设置策略信息
             easyNativeExpress.toGetData(adId, new OnResultListener() {
