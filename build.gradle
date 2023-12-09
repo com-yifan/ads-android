@@ -4,6 +4,14 @@ apply from: "config.gradle"
 buildscript {
     repositories {
         mavenCentral()
+        maven {
+            url "http://192.168.3.56:8081/repository/maven-public/"
+            allowInsecureProtocol true
+        }
+        maven {
+            url "http://192.168.3.56:8081/repository/maven-snapshots/"
+            allowInsecureProtocol true
+        }
         maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
         google()
         maven { url "https://jitpack.io" }
@@ -20,6 +28,14 @@ buildscript {
 allprojects {
     repositories {
         mavenCentral()
+        maven {
+            url "http://192.168.3.56:8081/repository/maven-public/"
+            allowInsecureProtocol true
+        }
+        maven {
+            url "http://192.168.3.56:8081/repository/maven-snapshots/"
+            allowInsecureProtocol true
+        }
         maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
         google()
         maven { url "https://jitpack.io" }

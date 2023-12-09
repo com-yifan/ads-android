@@ -1,6 +1,6 @@
 ext {
     compileSdk = 28
-    minSdk = 17
+    minSdk = 19
     targetSdk = 28
     fcAdsSdk = '5.0.2'
     isReleaseSdk = true

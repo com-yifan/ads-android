@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.yfanads.android.callback.OnResultListener;
 import com.yfanads.android.core.nat.YFAdNativeExpressAds;
 import com.yfanads.android.core.nat.YFNativeExpressListener;
+import com.yfanads.android.model.NatExpView;
 import com.yfanads.android.model.YFAdError;
 import com.yfanads.example.R;
 import com.yfanads.example.base.BaseActivity;
@@ -204,6 +205,11 @@ public class NativeExpressRecyclerViewActivity extends BaseActivity {
                         }
 
                         @Override
+                        public ViewGroup getViewGroup() {
+                            return adContainer;
+                        }
+
+                        @Override
                         public void onAdSuccess() {
                             logAndToast("广告加载成功");
                         }
@@ -258,7 +264,12 @@ public class NativeExpressRecyclerViewActivity extends BaseActivity {
                 if (adContainer.getChildCount() > 0) {
                     adContainer.removeAllViews();
                 }
-                adContainer.addView(adViewList.get(index));
+                View view = adViewList.get(index);
+                if (view instanceof NatExpView) {
+                    Log.d("TEST", "addView is natExpView, return.");
+                } else {
+                    adContainer.addView(view);
+                }
             }
         }
 
@@ -266,10 +277,15 @@ public class NativeExpressRecyclerViewActivity extends BaseActivity {
             if (adViewTemp == null || adViewTemp.isEmpty()) {
                 return;
             }
-            for (AdView adView: adViewTemp) {
+            for (AdView adView : adViewTemp) {
                 if (adView.index < adViewList.size()) {
-                    adView.viewGroup.removeAllViews();
-                    adView.viewGroup.addView(adViewList.get(adView.index));
+                    View view = adViewList.get(adView.index);
+                    if (view instanceof NatExpView) {
+                        Log.d("TEST", "addView is natExpView, continue.");
+                    } else {
+                        adView.viewGroup.removeAllViews();
+                        adView.viewGroup.addView(view);
+                    }
                 }
             }
         }

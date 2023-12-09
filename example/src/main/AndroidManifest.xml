@@ -48,16 +48,27 @@
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
 
-        <!--穿山甲-->
+<!--        &lt;!&ndash;穿山甲&ndash;&gt;-->
+<!--        <provider-->
+<!--            android:name="com.bytedance.sdk.openadsdk.TTFileProvider"-->
+<!--            android:authorities="${applicationId}.TTFileProvider"-->
+<!--            android:exported="false"-->
+<!--            android:grantUriPermissions="true">-->
+<!--            <meta-data-->
+<!--                android:name="android.support.FILE_PROVIDER_PATHS"-->
+<!--                android:resource="@xml/ea_csj_file_paths" />-->
+<!--        </provider>-->
+
         <provider
-            android:name="com.bytedance.sdk.openadsdk.TTFileProvider"
-            android:authorities="${applicationId}.TTFileProvider"
+            android:name="com.yfanads.android.adx.download.AdxFileProvider"
+            android:authorities="${applicationId}.AdxFileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/ea_csj_file_paths" />
+                android:resource="@xml/adxfilepaths" />
         </provider>
+
         <provider
             android:name="com.bytedance.sdk.openadsdk.multipro.TTMultiProvider"
             android:authorities="${applicationId}.TTMultiProvider"

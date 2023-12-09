@@ -10,6 +10,8 @@ import android.webkit.WebView;
 import com.hjq.toast.ToastUtils;
 import com.yfanads.android.YFAdsConfig;
 import com.yfanads.android.YFAdsManager;
+import com.yfanads.android.libs.net.UrlConst;
+import com.yfanads.android.model.YFLogLevel;
 import com.yfanads.example.utils.AppUtils;
 import com.yfanads.example.utils.CrashHandler;
 
@@ -17,9 +19,9 @@ import com.yfanads.example.utils.CrashHandler;
  * 全局Application.
  *
  * @author JamesQian
+ * @version 1.0
  * @copyright 亿帆
  * @date 2023/9/9 17:25
- * @version 1.0
  **/
 public class MyApplication extends Application {
 
@@ -38,10 +40,14 @@ public class MyApplication extends Application {
 
     private void initSDK() {
         YFAdsConfig fcAdsConfig =
-                new YFAdsConfig.YFAdsConfigBuilder(GlobalConst.APP_ID, "v1.0.1", "岁友社区", "com.fc.example")
-                        .setDebug(true)
-                        .builder();
+                new YFAdsConfig.YFAdsConfigBuilder(GlobalConst.APP_ID, "v1.0.1", "岁友社区",
+                        "com.fc.example")
+                        .setUseAdx(true)
+                        .setDebug(true).builder();
+        fcAdsConfig.setYFLogLevel(YFLogLevel.HIGH);
         YFAdsManager.getInstance().init(this, fcAdsConfig);
+        //TODO 切换到测试环境
+        UrlConst.setTestEnv();
     }
 
     private String getProcessName(Context context) {

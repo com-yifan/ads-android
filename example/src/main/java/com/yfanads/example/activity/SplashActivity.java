@@ -98,6 +98,7 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void onFailed(int errorCode, String message) {
                 logAndToast("广告请求失败");
+                goToMainActivity();
                 finish();
             }
         });
