@@ -56,8 +56,7 @@ repositories {
 
 dependencies {
     // 聚合SDK start
-    implementation(name: "build-sdk-release", ext: "aar")
-    implementation(name: "adapter-yfadx-v5.3.0", ext: "aar")
+    implementation("com.yfanads.ads:sdk-core:5.3.0.2")
     // 聚合SDK end
 
     // 百度SDK
