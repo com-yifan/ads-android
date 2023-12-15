@@ -203,12 +203,6 @@ public class NativeExpressRecyclerViewActivity extends BaseActivity {
                             addView();
                             adsStatus = 2;
                         }
-
-                        @Override
-                        public ViewGroup getViewGroup() {
-                            return adContainer;
-                        }
-
                         @Override
                         public void onAdSuccess() {
                             logAndToast("广告加载成功");
