@@ -48,16 +48,16 @@
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
 
-<!--        &lt;!&ndash;穿山甲&ndash;&gt;-->
-<!--        <provider-->
-<!--            android:name="com.bytedance.sdk.openadsdk.TTFileProvider"-->
-<!--            android:authorities="${applicationId}.TTFileProvider"-->
-<!--            android:exported="false"-->
-<!--            android:grantUriPermissions="true">-->
-<!--            <meta-data-->
-<!--                android:name="android.support.FILE_PROVIDER_PATHS"-->
-<!--                android:resource="@xml/ea_csj_file_paths" />-->
-<!--        </provider>-->
+        <!--穿山甲-->
+        <provider
+            android:name="com.bytedance.sdk.openadsdk.TTFileProvider"
+            android:authorities="${applicationId}.TTFileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/ea_csj_file_paths" />
+        </provider>
 
         <provider
             android:name="com.yfanads.android.adx.download.AdxFileProvider"
@@ -88,6 +88,7 @@
         <activity
             android:name="com.yfanads.example.activity.SplashActivity"
             android:theme="@style/AppTheme.FullScreen"
+            android:exported="true"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

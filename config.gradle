@@ -1,10 +1,10 @@
 ext {
-    compileSdk = 28
+    compileSdk = 31
     minSdk = 19
-    targetSdk = 28
-    fcAdsSdk = '5.0.2'
+    targetSdk = 31
+    fcAdsSdk = '5.3.0.10'
     isReleaseSdk = true
-    versionCode = 502
-    versionName = '5.0.2'
+    versionCode = 5301
+    versionName = 5301
 }
 

@@ -42,12 +42,9 @@ public class MyApplication extends Application {
         YFAdsConfig fcAdsConfig =
                 new YFAdsConfig.YFAdsConfigBuilder(GlobalConst.APP_ID, "v1.0.1", "岁友社区",
                         "com.fc.example")
-                        .setUseAdx(true)
                         .setDebug(true).builder();
         fcAdsConfig.setYFLogLevel(YFLogLevel.HIGH);
         YFAdsManager.getInstance().init(this, fcAdsConfig);
-        //TODO 切换到测试环境
-        UrlConst.setTestEnv();
     }
 
     private String getProcessName(Context context) {
