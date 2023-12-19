@@ -1,4 +1,4 @@
-# 亿帆SDK-Android 快速指引
+# 亿帆SDK-Android 快速指引(迁移国内https://gitee.com/nanjing-yao-play-club-network/ads-android)
 
 # 目录
 
